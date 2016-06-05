@@ -1,9 +1,9 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Megaman", "Megaman\Megaman\Megaman.csproj", "{D7511D8A-5C7A-46B5-9E82-98F4433CE70C}"
-EndProject
-Project("{96E2B04D-8817-42C6-938A-82C39BA4D311}") = "MegamanContent", "Megaman\MegamanContent\MegamanContent.contentproj", "{2A709200-78B0-4DD8-81DB-EEA3A0E7B5EE}"
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25123.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Megaman", "Megaman\Megaman.csproj", "{947BBB35-DB48-4048-A624-58E6307ADB33}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,12 +11,10 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{D7511D8A-5C7A-46B5-9E82-98F4433CE70C}.Debug|x86.ActiveCfg = Debug|x86
-		{D7511D8A-5C7A-46B5-9E82-98F4433CE70C}.Debug|x86.Build.0 = Debug|x86
-		{D7511D8A-5C7A-46B5-9E82-98F4433CE70C}.Release|x86.ActiveCfg = Release|x86
-		{D7511D8A-5C7A-46B5-9E82-98F4433CE70C}.Release|x86.Build.0 = Release|x86
-		{2A709200-78B0-4DD8-81DB-EEA3A0E7B5EE}.Debug|x86.ActiveCfg = Debug|x86
-		{2A709200-78B0-4DD8-81DB-EEA3A0E7B5EE}.Release|x86.ActiveCfg = Release|x86
+		{947BBB35-DB48-4048-A624-58E6307ADB33}.Debug|x86.ActiveCfg = Debug|x86
+		{947BBB35-DB48-4048-A624-58E6307ADB33}.Debug|x86.Build.0 = Debug|x86
+		{947BBB35-DB48-4048-A624-58E6307ADB33}.Release|x86.ActiveCfg = Release|x86
+		{947BBB35-DB48-4048-A624-58E6307ADB33}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

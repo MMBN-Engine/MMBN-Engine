@@ -1,6 +1,4 @@
-using System;
-
-namespace Megaman
+﻿namespace Megaman
 {
 #if WINDOWS || XBOX
     static class Program

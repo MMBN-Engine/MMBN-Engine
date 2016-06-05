@@ -8,7 +8,6 @@ using Megaman.Chips;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
@@ -38,6 +37,7 @@ namespace Megaman
             Content.RootDirectory = "Content";
             graphics.PreferredBackBufferWidth = 240;
             graphics.PreferredBackBufferHeight = 160;
+            Window.Title = "MegaMan Battle Network";
 
         }
 
