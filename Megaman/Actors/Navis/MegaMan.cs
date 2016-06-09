@@ -89,7 +89,7 @@ namespace Megaman.Actors.Navis
             {
                 palette2 = Null;
             }
-            AquaBody = true;
+
             staticSprite.map = staticSprite.map.changeColor(palette1, palette2);
             moveSprite.map = moveSprite.map.changeColor(palette1, palette2);
             busterSprite.map = busterSprite.map.changeColor(palette1, palette2);
