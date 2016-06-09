@@ -30,7 +30,7 @@ namespace Megaman.Actors.Viruses
             moveSprite = genericMove;
             staticSprite.Initialize(content.Load<Texture2D>("sprites/virus/mettaur/virus"),
                 new Vector2(-7, 22), 22, 0, true);
-            pallete1 = content.Load<Texture2D>("sprites/virus/mettaur/mettaur").getPallete();
+            palette1 = content.Load<Texture2D>("sprites/virus/mettaur/mettaur").getPalette();
 
             MetNum = 0;
         
@@ -141,9 +141,9 @@ namespace Megaman.Actors.Viruses
         {
             base.Initialize(content, position, stage);
             
-            pallete2 = content.Load<Texture2D>("sprites/virus/mettaur/mettaur2").getPallete();
+            palette2 = content.Load<Texture2D>("sprites/virus/mettaur/mettaur2").getPalette();
 
-            staticSprite.map = base.staticSprite.map.changeColor(pallete1, pallete2);
+            staticSprite.map = base.staticSprite.map.changeColor(palette1, palette2);
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -165,9 +165,9 @@ namespace Megaman.Actors.Viruses
         {
             base.Initialize(content, position, stage);
 
-            pallete2 = content.Load<Texture2D>("sprites/virus/mettaur/mettaur3").getPallete();
+            palette2 = content.Load<Texture2D>("sprites/virus/mettaur/mettaur3").getPalette();
 
-            staticSprite.map = base.staticSprite.map.changeColor(pallete1, pallete2);
+            staticSprite.map = base.staticSprite.map.changeColor(palette1, palette2);
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -189,9 +189,9 @@ namespace Megaman.Actors.Viruses
         {
             base.Initialize(content, position, stage);
 
-            pallete2 = content.Load<Texture2D>("sprites/virus/mettaur/mettaurΩ").getPallete();
+            palette2 = content.Load<Texture2D>("sprites/virus/mettaur/mettaurΩ").getPalette();
 
-            staticSprite.map = base.staticSprite.map.changeColor(pallete1, pallete2);
+            staticSprite.map = base.staticSprite.map.changeColor(palette1, palette2);
         }
 
         public override void Draw(SpriteBatch spriteBatch)

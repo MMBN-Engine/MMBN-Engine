@@ -17,7 +17,7 @@ namespace Megaman.Actors
         public string color;
         public Animation staticSprite, moveSprite;
         public List<Animation> attackSprites;
-        public List<Color> pallete1, pallete2;
+        public List<Color> palette1, palette2;
         public int[] panelHeight;
 
         public bool AquaBody, ElecBody, FireBody, WoodBody;

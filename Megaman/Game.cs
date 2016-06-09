@@ -12,6 +12,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using CustomExtensions;
+using System.IO;
 
 namespace Megaman
 {
@@ -28,7 +29,7 @@ namespace Megaman
         Stage stage;
         Custom custom;
         
-        ProtoMan navi;
+        MegaMan navi;
         List<Virus> virus;
         
         public Game()
@@ -54,13 +55,13 @@ namespace Megaman
             stage = new Stage();
             custom = new Custom();
             
-            navi = new ProtoMan(100);
+            navi = new MegaMan(100);
 
             virus = new List<Virus>();
             virus.Add(new Mettaur());
             virus.Add(new Mettaur2());
             virus.Add(new MettaurΩ());
- 
+
             base.Initialize();
         }
 
@@ -84,9 +85,12 @@ namespace Megaman
 
             battleStart();
 
-            //Content.Load<Texture2D>("sprites/navi/megaman/navi").saveTexture("null");
+            //Content.Load<Texture2D>("sprites/navi/megaman/palettes/elecBug").saveTexture("elec");
+            //List<Color> Null = Content.Load<Texture2D>("sprites/navi/megaman/null").getPalette();
+            //List<Color> Elec = Content.Load<Texture2D>("sprites/navi/megaman/elec").getPalette();
+            //Content.Load<Texture2D>("sprites/navi/megaman/team").changeColor(Elec,Null).saveImage("team");
         }
-        
+
         /// <summary>
         /// UnloadContent will be called once per game and is the place to unload
         /// all content.
@@ -124,11 +128,11 @@ namespace Megaman
             //if (JustPressed(Keys.T)) stage.setStage("Hole");
             //if (JustPressed(Keys.Q)) navi.AirShoe = true;
             //if (JustPressed(Keys.W)) navi.AirShoe = false;
-            //if (JustPressed(Keys.E)) navi.styleChange("Elec");
-            //if (JustPressed(Keys.A)) navi.styleChange("Aqua");
-            //if (JustPressed(Keys.H)) navi.styleChange("Heat");
-            //if (JustPressed(Keys.W)) navi.styleChange("Wood");
-            //if (JustPressed(Keys.N)) navi.styleChange("Null");            
+            if (JustPressed(Keys.E)) navi.styleChange("Elec","Bug");
+            if (JustPressed(Keys.A)) navi.styleChange("Aqua","Bug");
+            if (JustPressed(Keys.H)) navi.styleChange("Heat","Bug");
+            if (JustPressed(Keys.W)) navi.styleChange("Wood","Bug");
+            if (JustPressed(Keys.N)) navi.styleChange("Null","Bug");            
             
             //if (JustPressed(Keys.U)) attack.doDamage(navi.position, 10, "Fire", stage);
 

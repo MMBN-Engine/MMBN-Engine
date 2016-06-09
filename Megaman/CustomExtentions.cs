@@ -9,21 +9,21 @@ namespace CustomExtensions
 {
     public static class CustomExtentions
     {
-        public static List<Color> getPallete(this Texture2D texture)
+        public static List<Color> getPalette(this Texture2D texture)
         {
             Color[] colorMap = new Color[texture.Width * texture.Height];
             texture.GetData(colorMap);
             
             //Sets up list of colors in sprite
-            List<Color> pallete = new List<Color>();
+            List<Color> palette = new List<Color>();
             for (int i = 0; i < colorMap.Length; i++)
-                if (!pallete.Contains(colorMap[i]))
-                    pallete.Add(colorMap[i]);
+                if (!palette.Contains(colorMap[i]))
+                    palette.Add(colorMap[i]);
 
-            return pallete;
+            return palette;
         }
 
-        public static Texture2D changeColor(this Texture2D map, List<Color> pallete, List<Color> pallete2)
+        public static Texture2D changeColor(this Texture2D map, List<Color> palette, List<Color> palette2)
         {
             Texture2D output = new Texture2D(map.GraphicsDevice, map.Width, map.Height);
 
@@ -33,8 +33,8 @@ namespace CustomExtensions
             for (int i = 0; i < colorMap.Length; i++)
             {
                 int index;
-                index = pallete.FindIndex(color => color == colorMap[i]);
-                if(index > -1) colorMap[i] = pallete2[index];
+                index = palette.FindIndex(color => color == colorMap[i]);
+                if(index > -1) colorMap[i] = palette2[index];
             }
 
             output.SetData(colorMap);
@@ -43,10 +43,28 @@ namespace CustomExtensions
 
         public static void saveTexture(this Texture2D texture, string filename)
         {
-            List<Color> pallete = texture.getPallete();
+            List<Color> palette = texture.getPalette();
 
-            Texture2D output = new Texture2D(texture.GraphicsDevice, 1, pallete.Count());
-            output.SetData(pallete.ToArray());
+            Texture2D output = new Texture2D(texture.GraphicsDevice, 1, palette.Count());
+            output.SetData(palette.ToArray());
+
+            Stream stream = File.OpenWrite(filename + ".png");
+            output.SaveAsPng(stream, output.Width, output.Height);
+        }
+
+        public static void saveImage(this Texture2D texture, string filename)
+        {
+            Stream stream = File.OpenWrite(filename + ".png");
+            texture.SaveAsPng(stream, texture.Width, texture.Height);
+        }
+
+        public static void mergePalette(this Texture2D texture, List<Color> palette2, string filename)
+        {
+            List<Color> palette = texture.getPalette();
+            palette = palette.Union(palette2).ToList();
+
+            Texture2D output = new Texture2D(texture.GraphicsDevice, 1, palette.Count());
+            output.SetData(palette.ToArray());
 
             Stream stream = File.OpenWrite(filename + ".png");
             output.SaveAsPng(stream, output.Width, output.Height);

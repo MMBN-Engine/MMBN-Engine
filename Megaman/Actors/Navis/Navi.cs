@@ -33,8 +33,6 @@ namespace Megaman.Actors.Navis
         public bool isSlashing;
         internal Vector2 swordLocation;
 
-        public List<Color> Aqua, Elec, Heat, Wood, Null;
-
         public attackMethod attackHandle;
 
         internal int damage;

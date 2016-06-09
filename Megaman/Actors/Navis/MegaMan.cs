@@ -11,6 +11,8 @@ namespace Megaman.Actors.Navis
 {
     class MegaMan : Navi
     {
+        public List<Color> Aqua, Elec, Heat, Wood, Null;
+
         public MegaMan(int HP) : base(HP)
         {
             armLocation = new Vector2(30, -32);
@@ -20,7 +22,7 @@ namespace Megaman.Actors.Navis
         {
             base.Initialize(content, position, stage);
             
-            staticSprite.Initialize(content.Load<Texture2D>("sprites/navi/megaman/navi"),
+            staticSprite.Initialize(content.Load<Texture2D>("sprites/navi/megaman/bug"),
                 new Vector2(0, 46), 34, 0, true);
 
             moveSprite.Initialize(content.Load<Texture2D>("sprites/navi/megaman/move"),
@@ -36,14 +38,15 @@ namespace Megaman.Actors.Navis
             busterSprite.Initialize(content.Load<Texture2D>("sprites/navi/megaman/buster"),
                 new Vector2(0, 3), 41, 30, false);
 
-            Null = content.Load<Texture2D>("sprites/navi/megaman/null").getPallete();
-            Aqua = content.Load<Texture2D>("sprites/navi/megaman/aqua").getPallete();
-            Elec = content.Load<Texture2D>("sprites/navi/megaman/elec").getPallete();
-            Heat = content.Load<Texture2D>("sprites/navi/megaman/heat").getPallete();
-            Wood = content.Load<Texture2D>("sprites/navi/megaman/wood").getPallete();
-            pallete1 = Null;
+            Null = content.Load<Texture2D>("sprites/navi/megaman/palettes/null").getPalette();
+            Aqua = content.Load<Texture2D>("sprites/navi/megaman/palettes/aqua").getPalette();
+            Elec = content.Load<Texture2D>("sprites/navi/megaman/palettes/elec").getPalette();
+            Heat = content.Load<Texture2D>("sprites/navi/megaman/palettes/heat").getPalette();
+            Wood = content.Load<Texture2D>("sprites/navi/megaman/palettes/wood").getPalette();
 
-            //Need to redo attack sprites!, wrong pallete!!!!          
+            palette1 = Null;
+
+            //Need to redo attack sprites!, wrong palette!!!!          
         }
 
         public void chargedAttack()
@@ -51,7 +54,7 @@ namespace Megaman.Actors.Navis
             Shoot(busterSprite, Attack * 10, "Null", new List<string>(), Gun, null);
         }
 
-        public void styleChange(String Element)
+        public void styleChange(String Element, String Style)
         {
             AquaBody = false;
             ElecBody = false;
@@ -61,51 +64,38 @@ namespace Megaman.Actors.Navis
             if (Element == "Aqua")
             {
                 AquaBody = true;
-                staticSprite.map = staticSprite.map.changeColor(pallete1, Aqua);
-                moveSprite.map = moveSprite.map.changeColor(pallete1, Aqua);
-                busterSprite.map = busterSprite.map.changeColor(pallete1, Aqua);
-                foreach (Animation foo in attackSprites) foo.map = foo.map.changeColor(pallete1, Aqua);
-                pallete1 = Aqua;
+                palette2 = Aqua;
             }
             
             if (Element == "Elec")
             {
                 ElecBody = true;
-                staticSprite.map = staticSprite.map.changeColor(pallete1, Elec);
-                moveSprite.map = moveSprite.map.changeColor(pallete1, Elec); 
-                busterSprite.map = busterSprite.map.changeColor(pallete1, Elec);
-                foreach (Animation foo in attackSprites) foo.map = foo.map.changeColor(pallete1, Elec);
-                pallete1 = Elec;
+                palette2 = Elec;
             }
 
             if (Element == "Wood")
             {
                 WoodBody = true;
-                staticSprite.map = staticSprite.map.changeColor(pallete1, Wood);
-                moveSprite.map = moveSprite.map.changeColor(pallete1, Wood);
-                busterSprite.map = busterSprite.map.changeColor(pallete1, Wood);
-                foreach (Animation foo in attackSprites) foo.map = foo.map.changeColor(pallete1, Wood);
-                pallete1 = Wood;
+                palette2 = Wood;
             }
 
             if (Element == "Heat")
             {
                 FireBody = true;
-                staticSprite.map = staticSprite.map.changeColor(pallete1, Heat);
-                moveSprite.map = moveSprite.map.changeColor(pallete1, Heat);                
-                busterSprite.map = busterSprite.map.changeColor(pallete1, Heat);
-                foreach (Animation foo in attackSprites) foo.map = foo.map.changeColor(pallete1, Heat);
-                pallete1 = Heat;
+                palette2 = Heat;
             }
 
             if (Element == "Null")
             {
-                staticSprite.map = staticSprite.map.changeColor(pallete1, Null);
-                moveSprite.map = moveSprite.map.changeColor(pallete1, Null);                
-                busterSprite.map = busterSprite.map.changeColor(pallete1, Null);
-                foreach (Animation foo in attackSprites) foo.map = foo.map.changeColor(pallete1, Null);
-                pallete1 = Null;
+                palette2 = Null;
             }
+            AquaBody = true;
+            staticSprite.map = staticSprite.map.changeColor(palette1, palette2);
+            moveSprite.map = moveSprite.map.changeColor(palette1, palette2);
+            busterSprite.map = busterSprite.map.changeColor(palette1, palette2);
+            foreach (Animation foo in attackSprites) foo.map = foo.map.changeColor(palette1, palette2);
+            palette1 = palette2;
+
         }
     }           
 }
