@@ -22,7 +22,7 @@ namespace Megaman.Actors.Navis
         {
             base.Initialize(content, position, stage);
             
-            staticSprite.Initialize(content.Load<Texture2D>("sprites/navi/megaman/bug"),
+            staticSprite.Initialize(content.Load<Texture2D>("sprites/navi/megaman/navi"),
                 new Vector2(0, 46), 34, 0, true);
 
             moveSprite.Initialize(content.Load<Texture2D>("sprites/navi/megaman/move"),
@@ -35,7 +35,9 @@ namespace Megaman.Actors.Navis
             attackSprites[1].Initialize(content.Load<Texture2D>("sprites/navi/megaman/sword"),
                 new Vector2(3, 53), 66, 30, false);
 
-            busterSprite.Initialize(content.Load<Texture2D>("sprites/navi/megaman/buster"),
+            busterSprite.Initialize(content.Load<Texture2D>("sprites/navi/megaman/busterGuts"),
+                new Vector2(-1, 3), 40, 30, false);
+            busterSprite.Initialize(content.Load<Texture2D>("sprites/navi/megaman/busterShield"),
                 new Vector2(0, 3), 41, 30, false);
 
             Null = content.Load<Texture2D>("sprites/navi/megaman/palettes/null").getPalette();
@@ -54,7 +56,7 @@ namespace Megaman.Actors.Navis
             Shoot(busterSprite, Attack * 10, "Null", new List<string>(), Gun, null);
         }
 
-        public void styleChange(String Element, String Style)
+        public override void styleChange(String Element, String Style)
         {
             AquaBody = false;
             ElecBody = false;

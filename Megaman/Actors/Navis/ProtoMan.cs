@@ -37,7 +37,7 @@ namespace Megaman.Actors.Navis
                 new Vector2(0, 3), 41, 30, false);         
         }
 
-        public void chargedAttack()
+        public override void chargedAttack()
         {
             Slash(busterSprite, Attack * 10, "Null", new List<string>(), Sword, null);
         }        

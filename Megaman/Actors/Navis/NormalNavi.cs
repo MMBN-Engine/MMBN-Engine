@@ -21,11 +21,11 @@ namespace Megaman.Actors.Navis
         {
             base.Initialize(content, position, stage);
 
-            staticSprite.Initialize(content.Load<Texture2D>("sprites/navi/heelnavi/navi"),
-                new Vector2(0, 46), 34, 0, true);
+            staticSprite.Initialize(content.Load<Texture2D>("sprites/navi/normalnavi/navi"),
+                new Vector2(0, 49), 34, 0, true);
 
-            moveSprite.Initialize(content.Load<Texture2D>("sprites/navi/megaman/move"),
-                new Vector2(0, 46), 35, 20, false);
+            moveSprite.Initialize(content.Load<Texture2D>("sprites/navi/normalnavi/move"),
+                new Vector2(0, 49), 35, 20, false);
 
             attackSprites.Add(new Animation());
             attackSprites[0].Initialize(content.Load<Texture2D>("sprites/navi/megaman/shoot"),

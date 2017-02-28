@@ -73,7 +73,7 @@ namespace Megaman.Actors.Navis
 
             charge.Initialize(content.Load<Texture2D>("sprites/navi/charge"), new Vector2(10, 55), 64, 25, true);
 
-            //fix this sprite late, seems to be a little bit jerky, not a priority now
+            //fix this sprite later, seems to be a little bit jerky, not a priority now
             chargeFull.Initialize(content.Load<Texture2D>("sprites/navi/charge-full"), new Vector2(10, 55), 64, 25, true);
         }
 
@@ -167,5 +167,8 @@ namespace Megaman.Actors.Navis
         {
             Shoot(busterSprite, Attack, "null", new List<string>(), Gun, null);
         }
+
+        public virtual void styleChange(String Element, String Style) { }
+        public virtual void chargedAttack() { }
     }
 }
