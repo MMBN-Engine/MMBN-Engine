@@ -84,6 +84,7 @@ namespace Megaman
 
         public void Reset()
         {
+            active = true;
             elapsedTime = 0;
             currentFrame = 0;
         }       
