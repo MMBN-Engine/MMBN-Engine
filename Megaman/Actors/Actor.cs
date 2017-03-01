@@ -15,7 +15,7 @@ namespace Megaman.Actors
         public int HP, MaxHP;
         public Vector2 position;
         public string color;
-        public Animation staticSprite, moveSprite;
+        public Animation staticSprite, moveSprite, guardSprite;
         public List<Animation> attackSprites;
         public List<Color> palette1, palette2;
         public int[] panelHeight;
@@ -26,7 +26,11 @@ namespace Megaman.Actors
 
         protected int attackNum;
         protected bool isAttacking;
-        protected bool isGuarding;
+
+        protected bool isGuarding;    //Check if we are in the process of doing the guard animation
+        public bool Guard;         //True - guard effect is active
+        internal int guardTime;    //Maximum time before guard resests
+        internal int guardElapsed; //Time since timer was set 
 
         protected bool moveStart, moveFin, isSliding;
         protected Vector2 move;
@@ -52,6 +56,7 @@ namespace Megaman.Actors
             staticSprite = new Animation();
             moveSprite = new Animation();
             attackSprites = new List<Animation>();
+            guardSprite = new Animation();
 
         }
 
@@ -109,6 +114,27 @@ namespace Megaman.Actors
                 if (!attackSprites[attackNum].active) isAttacking = false;
             }
 
+            //Sets guard when sprite animation finishes
+            if (isGuarding)
+            {
+                guardSprite.Update(gameTime);
+                if (!guardSprite.active)
+                {
+                    isGuarding = false;
+                    Guard = true;
+                }
+            }
+
+            //Advance the guard timer, break guard if over
+            if (Guard)
+            {
+                guardElapsed += (int)gameTime.ElapsedGameTime.TotalMilliseconds;
+                if ((guardElapsed > guardTime) && (guardTime > 0))
+                {
+                    breakGuard();
+                }
+            }
+
             enemyPosition = checkEnemy();
             friendPosition = checkFriend();
 
@@ -147,6 +173,7 @@ namespace Megaman.Actors
 
             if (moveStart | moveFin) moveSprite.Draw(spriteBatch, location);
             else if (isAttacking) attackSprites[attackNum].Draw(spriteBatch, location);
+            else if (isGuarding | Guard) guardSprite.Draw(spriteBatch, location);
             else staticSprite.Draw(spriteBatch, location);
         }
 
@@ -157,6 +184,9 @@ namespace Megaman.Actors
 
             //checks to see if we're attacking
             if (isAttacking) return false;
+
+            //checks to see if we are guarding
+            if (isGuarding | Guard) return false;
            
             //checks to see if the tile exists and is controlled by the right dude and no one is there
             if (position.X + move.X > -1 && position.X + move.X < stage.PanelType.GetLength(0) &&
@@ -192,8 +222,6 @@ namespace Megaman.Actors
             position += move;
             stage.actorArray[(int)position.X, (int)position.Y] = this;
         }
-
-
 
         public bool canAttack()
         {
@@ -296,15 +324,17 @@ namespace Megaman.Actors
             }
         }
 
-
-        public void Guard()
+        //Initialize the guard animation and sets time to zero
+        public void setGuard()
         {
+            guardSprite.Reset();
             isGuarding = true;
+            guardElapsed = 0;
         }
 
         public void breakGuard()
         {
-            isGuarding = false;
+            Guard = false;
         }
 
         public bool isRed(int x, int y)
@@ -346,7 +376,7 @@ namespace Megaman.Actors
             if ((panel == "Ice" | panel == "Metal") && damageType == "Elec") damReturn += damage;
             if (panel == "holy") damReturn = damReturn / 2;
 
-            if ((target.isGuarding) &! (effects.Contains("Break"))) damReturn = 0;
+            if ((target.Guard) &! (effects.Contains("Break"))) damReturn = 0;
             
             target.HP -= damReturn;
         }
