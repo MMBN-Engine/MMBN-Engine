@@ -196,8 +196,6 @@ namespace Megaman
                 //spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
                 foo.Draw(spriteBatch);
             }
-
-            foreach (Virus foo in virus) foo.DrawHP(spriteBatch);
             
             //Draw this last
             custom.Draw(spriteBatch);

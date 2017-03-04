@@ -146,8 +146,9 @@ namespace Megaman
             if (panel == "holy") damReturn = damReturn / 2;
 
             if ((target.Guard) &! (effects.Contains("Break"))) damReturn = 0;
-            
+
             target.HP -= damReturn;
+            if (target.HP < 1) target.isDead = true;
         }
     }
 }

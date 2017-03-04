@@ -37,6 +37,15 @@ namespace Megaman.Actors.Viruses
             AI(gameTime);
         }
 
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            if (!isDead)
+            {
+                base.Draw(spriteBatch);
+                DrawHP(spriteBatch);
+            }
+        }
+
         public void DrawHP(SpriteBatch spriteBatch)
         {
             //Probably only works for mettaurs, will need to change

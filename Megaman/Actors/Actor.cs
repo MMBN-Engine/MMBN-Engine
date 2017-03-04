@@ -35,7 +35,7 @@ namespace Megaman.Actors
         //Atributes
         public bool FlotShoe, AirShoe;
 
-        public bool dead;
+        public bool isDead;
   
         public Actor()
         {
