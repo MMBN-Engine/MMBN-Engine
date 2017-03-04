@@ -165,12 +165,11 @@ namespace Megaman
                 foreach (Actor foo in stage.actorArray)
                 {
                     if (foo!=null) foo.Update(gameTime);
-                }    
-                        
+                }
 
                 stage.Update(gameTime);
             }
-            
+
             custom.Update(gameTime);
 
             base.Update(gameTime);
@@ -195,6 +194,12 @@ namespace Megaman
             foreach (Actor foo in stage.actorArray)
             {
                 if (foo != null) foo.Draw(spriteBatch);
+            }
+
+            //Draw effects on top of actors
+            for (int i = 0; i < stage.stageEffects.effect.Count; i++)
+            {
+                stage.stageEffects.effect[i].Draw(spriteBatch, stage.stageEffects.location[i]);
             }
 
             //Draw this last

@@ -24,8 +24,22 @@ namespace Megaman
 
         public Texture2D texture;
 
+        public struct effectsList
+        {
+            public List<Animation> effect;
+            public List<Vector2> location;
+            public effectsList(List<Animation> effect1, List<Vector2> location1)
+            {
+                effect = effect1;
+                location = location1;
+            }
+        }
+        public effectsList stageEffects;
+
         public Stage() 
         {
+            stageEffects = new effectsList(new List<Animation>(), new List<Vector2>());
+
             width = 6;
             height = 3;
 
@@ -34,8 +48,7 @@ namespace Megaman
             spriteHeight[0] = 24;
             spriteHeight[1] = 23;
             spriteHeight[2] = 33;
-
-     
+    
             PanelType = new string[width,height];
             Area = new string[width, height];
             actorArray = new Actor[width, height];
@@ -104,6 +117,17 @@ namespace Megaman
 
         public void Update(GameTime gameTime)
         {
+            for (int i = stageEffects.effect.Count - 1; i >= 0; i--)
+            {
+                if (!stageEffects.effect[i].active)
+                {
+                    stageEffects.effect.RemoveAt(i);
+                    stageEffects.location.RemoveAt(i);
+                }
+            }
+
+            foreach (Animation foo in stageEffects.effect)
+                foo.Update(gameTime);
         }
 
         public void setStage(string value)
@@ -121,6 +145,7 @@ namespace Megaman
             int stageY;
 
             for (int k = 0; k < tileDraw.GetLength(2); k++)
+            {
                 for (int i = 0; i < tileDraw.GetLength(0); i++)
                 {
                     stageY = 0;
@@ -138,6 +163,13 @@ namespace Megaman
                         stageY += spriteHeight[j];
                     }
                 }
+            }
+        }
+
+        public virtual void addEffect(Animation animation, Vector2 location)
+        {
+            stageEffects.effect.Add(animation);
+            stageEffects.location.Add(location);
         }
     }
 }
