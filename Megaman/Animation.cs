@@ -64,9 +64,12 @@ namespace Megaman
 
                 if (currentFrame == frameCount && forward)
                 {
-                    currentFrame = 0;
                     if (!looping)
+                    {
                         active = false;
+                        currentFrame--;
+                    }
+                    else currentFrame = 0;
                 }
 
                 if (currentFrame == 0 && !forward)

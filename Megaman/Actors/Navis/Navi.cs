@@ -136,7 +136,7 @@ namespace Megaman.Actors.Navis
         {
             if (!canAttack()) return;
             gunSprite = animation;
-            busterSprite.active = true;
+            gunSprite.Reset();
             doAttack(0);
             isShooting = true;
 

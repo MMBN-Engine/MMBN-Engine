@@ -233,7 +233,7 @@ namespace Megaman.Actors
         {
             if (canAttack())
             {
-                attackSprites[attackNum].active = true;
+                attackSprites[attackNum].Reset();
                 isAttacking = true;
                 this.attackNum = attackNum;
             }
