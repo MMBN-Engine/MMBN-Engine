@@ -39,11 +39,8 @@ namespace Megaman.Actors.Viruses
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            if (!isDead)
-            {
-                base.Draw(spriteBatch);
-                DrawHP(spriteBatch);
-            }
+            base.Draw(spriteBatch);
+            DrawHP(spriteBatch);
         }
 
         public void DrawHP(SpriteBatch spriteBatch)

@@ -162,8 +162,11 @@ namespace Megaman
                     navi.charged = false;
                 }
 
-                navi.Update(gameTime);
-                foreach (Virus foo in virus) foo.Update(gameTime);
+                foreach (Actor foo in stage.actorArray)
+                {
+                    if (foo!=null) foo.Update(gameTime);
+                }    
+                        
 
                 stage.Update(gameTime);
             }
@@ -188,15 +191,12 @@ namespace Megaman
             custom.drawBars(spriteBatch);
             
             stage.Draw(spriteBatch);
-            navi.Draw(spriteBatch);
 
-            foreach (Virus foo in virus)
+            foreach (Actor foo in stage.actorArray)
             {
-                //Will need this when I add stunned etc. effects
-                //spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
-                foo.Draw(spriteBatch);
+                if (foo != null) foo.Draw(spriteBatch);
             }
-            
+
             //Draw this last
             custom.Draw(spriteBatch);
 
