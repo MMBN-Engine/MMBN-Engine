@@ -55,7 +55,7 @@ namespace Megaman
             stage = new Stage();
             custom = new Custom();
             
-            navi = new NormalNavi(100);
+            navi = new MegaMan(100);
 
             virus = new List<Virus>();
             virus.Add(new Mettaur());
@@ -153,7 +153,7 @@ namespace Megaman
                 if (JustPressed(Keys.Z)) navi.Buster(); 
                 
                 //Does a charged attack                
-                if (IsHeld(Keys.Z) && !navi.charged) navi.isCharging = true;
+                if (IsHeld(Keys.Z) && !(navi.charged | navi.isAttacking)) navi.isCharging = true;
                 
                 if (IsReleased(Keys.Z))
                 {

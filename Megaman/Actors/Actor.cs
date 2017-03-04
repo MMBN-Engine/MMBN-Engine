@@ -25,7 +25,7 @@ namespace Megaman.Actors
         public Stage stage;
 
         protected int attackNum;
-        protected bool isAttacking;
+        public bool isAttacking;
 
         protected bool isGuarding;    //Check if we are in the process of doing the guard animation
         public bool Guard;         //True - guard effect is active
