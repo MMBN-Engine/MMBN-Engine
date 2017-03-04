@@ -27,7 +27,7 @@ namespace Megaman.Actors.Viruses
 
             genericMove.Initialize(content.Load<Texture2D>("sprites/move"),new Vector2(-2, 42), 30, 15, false);
 
-            HpDisplay = content.Load<SpriteFont>("virus-hp");        
+            HpDisplay = content.Load<SpriteFont>("virus-hp");  
         }
         
         public override void Update(GameTime gameTime)

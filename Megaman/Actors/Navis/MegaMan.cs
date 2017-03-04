@@ -20,8 +20,6 @@ namespace Megaman.Actors.Navis
 
         public override void Initialize(ContentManager content, Vector2 position, Stage stage)
         {
-            base.Initialize(content, position, stage);
-            
             staticSprite.Initialize(content.Load<Texture2D>("sprites/navi/megaman/navi"),
                 new Vector2(0, 46), 34, 0, true);
 
@@ -48,10 +46,13 @@ namespace Megaman.Actors.Navis
 
             palette1 = Null;
 
+            //This needs to be last, textures have to be initialized first so they are assigned correctly
+            base.Initialize(content, position, stage);
+
             //Need to redo attack sprites!, wrong palette!!!!          
         }
 
-        public void chargedAttack()
+        public override void chargedAttack()
         {
             Shoot(busterSprite, Attack * 10, "Null", new List<string>(), Gun, null);
         }

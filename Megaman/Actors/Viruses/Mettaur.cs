@@ -26,14 +26,25 @@ namespace Megaman.Actors.Viruses
 
         public override void Initialize(ContentManager content, Vector2 position, Stage stage)
         {
-            base.Initialize(content, position, stage);
             moveSprite = genericMove;
             staticSprite.Initialize(content.Load<Texture2D>("sprites/virus/mettaur/virus"),
                 new Vector2(-7, 22), 22, 0, true);
+            //guardSprite.Initialize(content.Load<Texture2D>("sprites/virus/mettaur/guard"),
+            //    new Vector2(-7, 26), 23, 1000, false);
+
+            guardSprite.Initialize(content.Load<Texture2D>("sprites/virus/mettaur/attack"),
+                new Vector2(14, 44), 67, 65, false);
+
+            attackSprites.Add(new Animation());
+            attackSprites[0].Initialize(content.Load<Texture2D>("sprites/virus/mettaur/attack"),
+                new Vector2(14, 44), 67, 1000, false);
+
             palette1 = content.Load<Texture2D>("sprites/virus/mettaur/mettaur").getPalette();
 
             MetNum = 0;
-        
+            
+            //This needs to be last, textures have to be initialized first so they are assigned correctly
+            base.Initialize(content, position, stage);
         }
 
         public override void AiInitialize()
@@ -78,7 +89,7 @@ namespace Megaman.Actors.Viruses
                             }
                             
                             MetMoveStatus = false;
-                            Guard();
+                            setGuard();
 
                             int index = (MetNum + 1) % metPosition.Count;
                             MettaurBase Met = (MettaurBase)stage.actorArray[(int)metPosition[index].X, (int)metPosition[index].Y];
@@ -144,6 +155,7 @@ namespace Megaman.Actors.Viruses
             palette2 = content.Load<Texture2D>("sprites/virus/mettaur/mettaur2").getPalette();
 
             staticSprite.map = base.staticSprite.map.changeColor(palette1, palette2);
+            guardSprite.map = base.guardSprite.map.changeColor(palette1, palette2);
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -168,6 +180,7 @@ namespace Megaman.Actors.Viruses
             palette2 = content.Load<Texture2D>("sprites/virus/mettaur/mettaur3").getPalette();
 
             staticSprite.map = base.staticSprite.map.changeColor(palette1, palette2);
+            guardSprite.map = base.guardSprite.map.changeColor(palette1, palette2);
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -192,6 +205,7 @@ namespace Megaman.Actors.Viruses
             palette2 = content.Load<Texture2D>("sprites/virus/mettaur/mettaurΩ").getPalette();
 
             staticSprite.map = base.staticSprite.map.changeColor(palette1, palette2);
+            guardSprite.map = base.guardSprite.map.changeColor(palette1, palette2);
         }
 
         public override void Draw(SpriteBatch spriteBatch)
