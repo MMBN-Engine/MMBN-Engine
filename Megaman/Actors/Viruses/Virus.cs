@@ -26,6 +26,7 @@ namespace Megaman.Actors.Viruses
             base.Initialize(content, position, stage);
 
             genericMove.Initialize(content.Load<Texture2D>("sprites/move"),new Vector2(-2, 42), 30, 15, false);
+            deathSprite.Initialize(content.Load<Texture2D>("sprites/effects/explosion"), new Vector2(7, 34), 50, 30, false);
 
             HpDisplay = content.Load<SpriteFont>("virus-hp");  
         }
@@ -57,6 +58,12 @@ namespace Megaman.Actors.Viruses
 
         public virtual void AI(GameTime gameTime)
         {
+        }
+
+        public override void Delete()
+        {
+            stage.addEffect(deathSprite, location);
+            stage.actorArray[(int)position.X, (int)position.Y] = null;
         }
     }
 }

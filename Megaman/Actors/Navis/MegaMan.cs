@@ -49,7 +49,7 @@ namespace Megaman.Actors.Navis
             //This needs to be last, textures have to be initialized first so they are assigned correctly
             base.Initialize(content, position, stage);
 
-            //Need to redo attack sprites!, wrong palette!!!!          
+            //Need to redo attack sprites!, wrong palette!!!!       
         }
 
         public override void chargedAttack()

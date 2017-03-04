@@ -148,7 +148,7 @@ namespace Megaman
             if ((target.Guard) &! (effects.Contains("Break"))) damReturn = 0;
 
             target.HP -= damReturn;
-            if (target.HP < 10) stage.actorArray[(int)position.X, (int)position.Y] = null;
+            if (target.HP < 1) target.Delete();
         }
     }
 }

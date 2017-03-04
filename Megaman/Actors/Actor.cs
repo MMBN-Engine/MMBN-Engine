@@ -17,6 +17,8 @@ namespace Megaman.Actors
         public List<Animation> attackSprites;
         public List<Color> palette1, palette2;
 
+        public Animation deathSprite;  //Sprite to play when we die
+
         public bool AquaBody, ElecBody, FireBody, WoodBody;
 
         protected int attackNum;
@@ -43,6 +45,7 @@ namespace Megaman.Actors
             moveSprite = new Animation();
             attackSprites = new List<Animation>();
             guardSprite = new Animation();
+            deathSprite = new Megaman.Animation();
         }
 
         public override void Initialize(ContentManager content,  Vector2 position, Stage stage)
@@ -275,6 +278,10 @@ namespace Megaman.Actors
         {
             activeSprite = staticSprite;
             Guard = false;
+        }
+
+        public virtual void Delete()
+        {
         }
     }
 }
