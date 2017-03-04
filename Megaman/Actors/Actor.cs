@@ -14,8 +14,17 @@ namespace Megaman.Actors
     {
         public int HP, MaxHP;
         public Animation staticSprite, moveSprite, guardSprite;
+        public Animation busterSprite;
         public List<Animation> attackSprites;
         public List<Color> palette1, palette2;
+
+        public Animation gunSprite;
+        public bool isShooting;
+
+        internal int damage;
+        internal string damageType;
+        internal List<string> effects;
+        internal List<Animation> explosionSprites;
 
         public Animation deathSprite;  //Sprite to play when we die
 
@@ -23,6 +32,8 @@ namespace Megaman.Actors
 
         protected int attackNum;
         public bool isAttacking;
+
+        internal AttackList attackTypes;
 
         protected bool isGuarding;    //Check if we are in the process of doing the guard animation
         public bool Guard;         //True - guard effect is active
@@ -33,14 +44,17 @@ namespace Megaman.Actors
         protected Vector2 move;
 
         public delegate void attackMethod(int dammage, string damageType, List<String> effects, List<Animation> sprites);
+        public attackMethod attackHandle;
 
         //Atributes
         public bool FlotShoe, AirShoe;
 
         public bool isDead;
   
-        public Actor()
+        public Actor(AttackList attacks)
         {
+            attackTypes = attacks;
+
             staticSprite = new Animation();
             moveSprite = new Animation();
             attackSprites = new List<Animation>();
@@ -278,6 +292,22 @@ namespace Megaman.Actors
         {
             activeSprite = staticSprite;
             Guard = false;
+        }
+
+        public void Shoot(Animation animation, int damage, string damageType, List<string> effects, attackMethod attackHandle,
+            List<Animation> sprites)
+        {
+            if (!canAttack()) return;
+            gunSprite = animation;
+            gunSprite.Reset();
+            doAttack(0);
+            isShooting = true;
+
+            this.attackHandle = attackHandle;
+            this.damage = damage;
+            this.damageType = damageType;
+            this.effects = effects;
+            explosionSprites = sprites;
         }
 
         public virtual void Delete()

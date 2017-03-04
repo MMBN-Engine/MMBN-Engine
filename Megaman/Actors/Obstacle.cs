@@ -7,5 +7,8 @@ namespace Megaman.Actors
 {
     class Obstacle : Actor
     {
+        Obstacle(AttackList attackTypes) : base(attackTypes)
+        {
+        }
     }
 }

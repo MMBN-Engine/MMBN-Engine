@@ -13,7 +13,7 @@ namespace Megaman.Actors.Navis
     {
         public List<Color> Aqua, Elec, Heat, Wood, Null;
 
-        public MegaMan(int HP) : base(HP)
+        public MegaMan(AttackList attackTypes, int HP) : base(attackTypes, HP)
         {
             armLocation = new Vector2(30, -32);
         }
@@ -54,7 +54,7 @@ namespace Megaman.Actors.Navis
 
         public override void chargedAttack()
         {
-            Shoot(busterSprite, Attack * 10, "Null", new List<string>(), Gun, null);
+            attackTypes.MegaBuster(this, Attack * 10);
         }
 
         public override void styleChange(String Element, String Style)

@@ -24,23 +24,13 @@ namespace Megaman.Actors.Navis
         public bool isCharging, charged;
         public int chargeTime, chargeElapsed;
 
-        public Animation busterSprite;
-        public Animation gunSprite;
-        public bool isShooting;
         internal Vector2 armLocation;
 
         public Animation swordSprite;
         public bool isSlashing;
         internal Vector2 swordLocation;
 
-        public attackMethod attackHandle;
-
-        internal int damage;
-        internal string damageType;
-        internal List<string> effects;
-        internal List<Animation> explosionSprites;
-
-        public Navi(int HP)
+        public Navi(AttackList attackTypes, int HP) : base(attackTypes)
         {
             color = "red";
             this.HP = HP;
@@ -131,22 +121,6 @@ namespace Megaman.Actors.Navis
             if (charged) chargeFull.Draw(spriteBatch, location);
         }
 
-        public void Shoot(Animation animation, int damage, string damageType, List<string> effects, attackMethod attackHandle,
-            List<Animation> sprites)
-        {
-            if (!canAttack()) return;
-            gunSprite = animation;
-            gunSprite.Reset();
-            doAttack(0);
-            isShooting = true;
-
-            this.attackHandle = attackHandle;
-            this.damage = damage;
-            this.damageType = damageType;
-            this.effects = effects;
-            explosionSprites = sprites;
-        }
-
         public void Slash(Animation animation, int damage, string damageType, List<string> effects, attackMethod attackHandle,
             List<Animation> sprites)
         {
@@ -165,7 +139,7 @@ namespace Megaman.Actors.Navis
 
         public void Buster()
         {
-            Shoot(busterSprite, Attack, "null", new List<string>(), Gun, null);
+            attackTypes.MegaBuster(this, Attack);
         }
 
         public virtual void styleChange(String Element, String Style) { }

@@ -20,7 +20,7 @@ namespace Megaman.Actors.Viruses
         public bool MetMoveStatus;
         public int MetNum;
 
-        protected MettaurBase()
+        protected MettaurBase(AttackList attackTypes) : base(attackTypes)
         {
         }
 
@@ -131,7 +131,7 @@ namespace Megaman.Actors.Viruses
 
     class Mettaur : MettaurBase
     {
-        public Mettaur()
+        public Mettaur(AttackList attackTypes) : base(attackTypes)
         {
             HP = 40;
             MaxHP = 40;
@@ -141,7 +141,7 @@ namespace Megaman.Actors.Viruses
 
     class Mettaur2 : MettaurBase
     {        
-        public Mettaur2()
+        public Mettaur2(AttackList attackTypes) : base(attackTypes)
         {
             HP = 80;
             MaxHP = 80;
@@ -166,7 +166,7 @@ namespace Megaman.Actors.Viruses
 
     class Mettaur3 : MettaurBase
     {
-        public Mettaur3()
+        public Mettaur3(AttackList attackTypes) : base(attackTypes)
         {
             HP = 120;
             MaxHP = 120;
@@ -191,7 +191,7 @@ namespace Megaman.Actors.Viruses
 
     class MettaurΩ : MettaurBase
     {
-        public MettaurΩ()
+        public MettaurΩ(AttackList attackTypes) : base(attackTypes)
         {
             HP = 160;
             MaxHP = 120;

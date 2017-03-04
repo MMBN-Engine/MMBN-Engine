@@ -28,6 +28,8 @@ namespace Megaman
         KeyboardState oldKeyboard;
         Stage stage;
         Custom custom;
+
+        AttackList attackTypes;
         
         Navi navi;
         List<Virus> virus;
@@ -50,17 +52,19 @@ namespace Megaman
         /// </summary>
         protected override void Initialize()
         {
+            attackTypes = new AttackList();
+
             currentKeyboard = new KeyboardState();
             oldKeyboard = new KeyboardState();
             stage = new Stage();
             custom = new Custom();
             
-            navi = new MegaMan(100);
+            navi = new MegaMan(attackTypes, 100);
 
             virus = new List<Virus>();
-            virus.Add(new Mettaur());
-            virus.Add(new Mettaur2());
-            virus.Add(new MettaurΩ());
+            virus.Add(new Mettaur(attackTypes));
+            virus.Add(new Mettaur2(attackTypes));
+            virus.Add(new MettaurΩ(attackTypes));
 
             base.Initialize();
         }
@@ -71,7 +75,9 @@ namespace Megaman
         /// </summary>
         protected override void LoadContent()
         {            
-            navi.Initialize(Content, new Vector2(1,1), stage);            
+            navi.Initialize(Content, new Vector2(1,1), stage);
+
+            attackTypes.Initialize(Content);     
             
             virus[0].Initialize(Content, new Vector2(4, 1), stage);
             virus[1].Initialize(Content, new Vector2(3, 0), stage);

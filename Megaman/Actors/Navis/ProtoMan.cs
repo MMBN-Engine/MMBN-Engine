@@ -11,7 +11,7 @@ namespace Megaman.Actors.Navis
 {
     class ProtoMan : Navi
     {
-        public ProtoMan(int HP) : base(HP)
+        public ProtoMan(AttackList attackTypes, int HP) : base(attackTypes, HP)
         {
             armLocation = new Vector2(30, -32);
         }

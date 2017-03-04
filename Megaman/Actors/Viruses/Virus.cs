@@ -14,7 +14,7 @@ namespace Megaman.Actors.Viruses
         internal Animation genericMove;
         SpriteFont HpDisplay;
 
-        public Virus()
+        public Virus(AttackList attackTypes) : base(attackTypes)
         {
             color = "blue";
 

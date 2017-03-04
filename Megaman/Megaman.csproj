@@ -38,6 +38,7 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="AttackList.cs" />
     <Compile Include="Object.cs" />
     <Compile Include="Actors\Actor.cs" />
     <Compile Include="Actors\Navis\HeelNavi.cs" />
