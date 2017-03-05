@@ -11,7 +11,7 @@ namespace Megaman
     {
         public Texture2D map;
         int elapsedTime;
-        int frameTime;
+        public int frameTime;
         public int frameCount;
         public int currentFrame;
         Rectangle frame = new Rectangle();
@@ -19,6 +19,8 @@ namespace Megaman
         private int frameHeight;
         public bool active;
         public bool looping;
+
+        public bool flip;
         
         //for which direction it will play, so far it is only for non looping but i can
         //extend it if i need to
@@ -82,7 +84,11 @@ namespace Megaman
        
         public void Draw(SpriteBatch spriteBatch, Vector2 position)
         {
-            spriteBatch.Draw(map, position - origin, frame, Color.White);
+            if (flip)
+                spriteBatch.Draw(texture: map, position: position - origin, sourceRectangle: frame,
+                    color: Color.White, effects: SpriteEffects.FlipHorizontally);
+            else
+                spriteBatch.Draw(map, position - origin, frame, Color.White);
         }
 
         public void Reset()
@@ -95,6 +101,12 @@ namespace Megaman
         public Animation Clone()
         {
             return (Animation)this.MemberwiseClone();
-        }    
+        }
+
+        public void Flip()
+        {
+            flip = true;
+            origin.X = - 40 + (frameWidth - origin.X);
+        }
     }
 }
