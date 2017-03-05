@@ -16,6 +16,7 @@ namespace Megaman
         public Vector2 position;
         public string color;
         public int[] panelHeight;
+        public int stageWidth;
 
         public Animation activeSprite;
 
@@ -34,6 +35,8 @@ namespace Megaman
             panelHeight = new int[2];
             panelHeight[0] = 23;
             panelHeight[1] = 24;
+
+            stageWidth = 40;
 
             activeSprite = new Animation(); //This is the actual sprite we draw
 
@@ -78,14 +81,23 @@ namespace Megaman
             activeSprite.Draw(spriteBatch, location);
         }
 
+        //Determine if an enemy occupies the grid at position
+        public bool checkEnemyLocation(Vector2 position)
+        {
+            int i = (int)position.X;
+            int j = (int)position.Y;
+            if (stage.actorArray[i, j] != null && stage.actorArray[i, j].color != color
+                        && !(stage.actorArray[i, j] is Obstacle)) return true;
+            else return false;
+        }
+
         public List<Vector2> checkEnemy()
         {
             List<Vector2> enemies = new List<Vector2>();
             for (int i = 0; i < stage.actorArray.GetLength(0); i++)
                 for (int j = 0; j < stage.actorArray.GetLength(1); j++)
                 {
-                    if (stage.actorArray[i,j] != null && stage.actorArray[i, j].color != color
-                        && !(stage.actorArray[i,j] is Obstacle))
+                    if (checkEnemyLocation(new Vector2(i, j)))
                         enemies.Add(stage.actorArray[i, j].position);
                 }
 

@@ -5,6 +5,7 @@ using Megaman.Actors;
 using Megaman.Actors.Viruses;
 using Megaman.Actors.Navis;
 using Megaman.Chips;
+using Megaman.Projectiles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
@@ -201,6 +202,9 @@ namespace Megaman
             {
                 if (foo != null) foo.Draw(spriteBatch);
             }
+
+            foreach (Projectile foo in stage.projectileList)
+                foo.Draw(spriteBatch);
 
             //Draw effects on top of actors
             for (int i = 0; i < stage.stageEffects.effect.Count; i++)

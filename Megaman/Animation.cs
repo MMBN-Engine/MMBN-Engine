@@ -90,6 +90,11 @@ namespace Megaman
             active = true;
             elapsedTime = 0;
             currentFrame = 0;
-        }       
+        }
+
+        public Animation Clone()
+        {
+            return (Animation)this.MemberwiseClone();
+        }    
     }
 }

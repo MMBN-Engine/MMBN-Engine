@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Megaman.Actors;
 using Megaman.Actors.Viruses;
+using Megaman.Projectiles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -34,11 +35,13 @@ namespace Megaman
                 location = location1;
             }
         }
+        public List<Projectile> projectileList;
         public effectsList stageEffects;
 
         public Stage() 
         {
             stageEffects = new effectsList(new List<Animation>(), new List<Vector2>());
+            projectileList = new List<Projectile>();
 
             width = 6;
             height = 3;
@@ -126,7 +129,17 @@ namespace Megaman
                 }
             }
 
+            for (int i = projectileList.Count - 1; i >= 0; i--)
+            {
+                if (!projectileList[i].isActive)
+                {
+                    projectileList.RemoveAt(i);
+                }
+            }
+
             foreach (Animation foo in stageEffects.effect)
+                foo.Update(gameTime);
+            foreach (Projectile foo in projectileList)
                 foo.Update(gameTime);
         }
 
@@ -170,6 +183,11 @@ namespace Megaman
         {
             stageEffects.effect.Add(animation);
             stageEffects.location.Add(location);
+        }
+
+        public virtual void addProjectile(Projectile projectile)
+        {
+            projectileList.Add(projectile);
         }
     }
 }
