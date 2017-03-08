@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using static Megaman.AttackList;
+using Megaman.Projectiles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -15,16 +17,19 @@ namespace Megaman.Actors
         public int HP, MaxHP;
         public Animation staticSprite, moveSprite, guardSprite;
         public Animation busterSprite;
+
         public List<Animation> attackSprites;
+        // 0 - shoot
+        // 1 - sword
+        // 2 - bomb
+        // 3 - hammer
+
         public List<Color> palette1, palette2;
 
         public Animation gunSprite;
         public bool isShooting;
 
-        internal int damage;
-        internal string damageType;
-        internal List<string> effects;
-        internal List<Animation> explosionSprites;
+        public int Attack; //We need this here so the Attacklist class understands the megabuster
 
         public Animation deathSprite;  //Sprite to play when we die
 
@@ -32,6 +37,7 @@ namespace Megaman.Actors
 
         protected int attackNum;
         public bool isAttacking;
+        public bool isSlashing;
 
         internal AttackList attackTypes;
 
@@ -43,8 +49,9 @@ namespace Megaman.Actors
         protected bool moveStart, moveFin, isSliding;
         protected Vector2 move;
 
-        public delegate void attackMethod(int dammage, string damageType, List<String> effects, List<Animation> sprites);
+        public delegate void attackMethod(attackSpecs info);
         public attackMethod attackHandle;
+        public attackSpecs info;                //structure containing attack information
 
         //Atributes
         public bool FlotShoe, AirShoe;
@@ -60,6 +67,13 @@ namespace Megaman.Actors
             attackSprites = new List<Animation>();
             guardSprite = new Animation();
             deathSprite = new Megaman.Animation();
+
+            attackSprites.Add(new Animation());
+            attackSprites.Add(new Animation());
+            attackSprites.Add(new Animation());
+            attackSprites.Add(new Animation());
+
+            info = new attackSpecs();
         }
 
         public override void Initialize(ContentManager content,  Vector2 position, Stage stage)
@@ -228,7 +242,7 @@ namespace Megaman.Actors
             if (actor.HP > actor.MaxHP) actor.HP = actor.MaxHP;
         }
 
-        public void Gun(int damage, string damageType, List<String> effects, List<Animation> sprites)
+        public void Gun(attackSpecs info)
         {
             int y = (int)position.Y;
 
@@ -238,7 +252,7 @@ namespace Megaman.Actors
                 {
                     if (isBlue(i, y))
                     {
-                        doDamage(new Vector2(i, y), damage, damageType, effects);
+                        doDamage(new Vector2(i, y), info.damage, info.damageType, info.effects);
                         break;
                     }
                 }
@@ -250,14 +264,14 @@ namespace Megaman.Actors
                 {
                     if (isRed(i, y))
                     {
-                        doDamage(new Vector2(i, y), damage, damageType, effects);
+                        doDamage(new Vector2(i, y), info.damage, info.damageType, info.effects);
                         break;
                     }
                 }
             }
         }
 
-        public void Sword(int damage, string damageType, List<String> effects, List<Animation> sprites)
+        public void Sword(attackSpecs info)
         {
             int x = (int) position.X;
             int y = (int) position.Y;
@@ -266,7 +280,7 @@ namespace Megaman.Actors
             {
                 if (x < 5 && isBlue(x + 1, y))
                 {
-                    doDamage(new Vector2(x + 1, y), damage, damageType, effects);
+                    doDamage(new Vector2(x + 1, y), info.damage, info.damageType, info.effects);
                 }
             }
 
@@ -274,9 +288,34 @@ namespace Megaman.Actors
             {
                 if (x > -1  && isRed(x - 1, y))
                 {
-                    doDamage(new Vector2(x - 1, y), damage, damageType, effects);
+                    doDamage(new Vector2(x - 1, y), info.damage, info.damageType, info.effects);
                 }
             }
+        }
+
+        public void Slash(Animation animation, int damage, string damageType, List<string> effects, attackMethod attackHandle,
+            List<Animation> sprites)
+        {
+            if (!canAttack()) return;
+            //swordSprite.active = true;
+            //swordSprite = animation;
+            doAttack(1);
+            isSlashing = true;
+
+            this.attackHandle = attackHandle;
+            this.info.damage = damage;
+            this.info.damageType = damageType;
+            this.info.effects = effects;
+        }
+
+        public void createShot(attackSpecs info)
+        {
+            new Shot(this);
+        }
+
+        public void createWave(attackSpecs info)
+        {
+            new Wave(this);
         }
 
         //Initialize the guard animation and sets time to zero
@@ -294,8 +333,7 @@ namespace Megaman.Actors
             Guard = false;
         }
 
-        public void Shoot(Animation animation, int damage, string damageType, List<string> effects, attackMethod attackHandle,
-            List<Animation> sprites)
+        public void Shoot(Animation animation, attackMethod attackHandle)
         {
             if (!canAttack()) return;
             gunSprite = animation;
@@ -304,10 +342,6 @@ namespace Megaman.Actors
             isShooting = true;
 
             this.attackHandle = attackHandle;
-            this.damage = damage;
-            this.damageType = damageType;
-            this.effects = effects;
-            explosionSprites = sprites;
         }
 
         public virtual void Delete()

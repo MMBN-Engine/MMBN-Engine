@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Megaman.Actors;
+using static Megaman.AttackList;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -14,12 +16,12 @@ namespace Megaman.Projectiles
     {
         public bool isActive;
   
-        public Projectile(Animation sprite, string color, Vector2 position, Stage stage)
+        public Projectile(Actor actor)
         {
-            activeSprite = sprite;
-            stage.addProjectile(this);
-            this.color = color;
-            base.Initialize(null, position, stage);
+            activeSprite = actor.info.sprite;
+            actor.stage.addProjectile(this);
+            color = actor.color;
+            base.Initialize(null, actor.info.position, actor.stage);
             isActive = true;
         }
 

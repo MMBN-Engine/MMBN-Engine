@@ -29,14 +29,10 @@ namespace Megaman.Actors.Viruses
             moveSprite = genericMove;
             staticSprite.Initialize(content.Load<Texture2D>("sprites/virus/mettaur/virus"),
                 new Vector2(-7, 22), 22, 0, true);
-            //guardSprite.Initialize(content.Load<Texture2D>("sprites/virus/mettaur/guard"),
-            //    new Vector2(-7, 26), 23, 1000, false);
+            guardSprite.Initialize(content.Load<Texture2D>("sprites/virus/mettaur/guard"),
+                new Vector2(-7, 26), 23, 1000, false);
 
-            guardSprite.Initialize(content.Load<Texture2D>("sprites/virus/mettaur/attack"),
-                new Vector2(14, 44), 67, 65, false);
-
-            attackSprites.Add(new Animation());
-            attackSprites[0].Initialize(content.Load<Texture2D>("sprites/virus/mettaur/attack"),
+            attackSprites[3].Initialize(content.Load<Texture2D>("sprites/virus/mettaur/attack"),
                 new Vector2(14, 44), 67, 1000, false);
 
             palette1 = content.Load<Texture2D>("sprites/virus/mettaur/mettaur").getPalette();

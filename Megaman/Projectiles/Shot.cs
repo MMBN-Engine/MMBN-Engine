@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Megaman.Actors;
+using static Megaman.AttackList;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -18,18 +20,12 @@ namespace Megaman.Projectiles
         public string damageType;
         public List<String> effects;
 
-        public Shot(Animation sprite, String color, Vector2 position, Stage stage, Vector2 speed, 
-            int damage, String damageType, List<string> effects) : base(sprite, color, position, stage)
+        public Shot(Actor actor) : base(actor)           
         {
-            activeSprite = sprite;
-            stage.addProjectile(this);
-            base.Initialize(null, position, stage);
-            isActive = true;
-
-            this.speed = speed;
-            this.damage = damage;
-            this.damageType = damageType;
-            this.effects = effects;
+            speed = new Vector2(1, 0) * (float)actor.info.speed * 46;
+            damage = actor.info.damage;
+            damageType = actor.info.damageType;
+            effects = actor.info.effects;
         }
 
         public override void Update(GameTime gameTime)

@@ -26,8 +26,6 @@ namespace Megaman.Actors.Navis
             moveSprite.Initialize(content.Load<Texture2D>("sprites/navi/megaman/move"),
                 new Vector2(0, 46), 35, 20, false);
 
-            attackSprites.Add(new Animation());
-            attackSprites.Add(new Animation());
             attackSprites[0].Initialize(content.Load<Texture2D>("sprites/navi/megaman/shoot"),
                 new Vector2(0, 46), 35, 30, false);
             attackSprites[1].Initialize(content.Load<Texture2D>("sprites/navi/megaman/sword"),
@@ -54,7 +52,8 @@ namespace Megaman.Actors.Navis
 
         public override void chargedAttack()
         {
-            attackTypes.MegaBuster(this, Attack * 10);
+            //attackTypes.MegaBuster(this, Attack * 10);
+            attackTypes.Wave(this, 10, 0.1);
         }
 
         public override void styleChange(String Element, String Style)

@@ -139,8 +139,9 @@ namespace Megaman
 
             foreach (Animation foo in stageEffects.effect)
                 foo.Update(gameTime);
-            foreach (Projectile foo in projectileList)
-                foo.Update(gameTime);
+            //This needs to be a for loop, since projectiles may clone during run
+            //And we can't do foreach of the size changes
+            for (int i = 0; i < projectileList.Count; i++) projectileList[i].Update(gameTime);
         }
 
         public void setStage(string value)

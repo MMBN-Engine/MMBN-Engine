@@ -11,7 +11,7 @@ namespace Megaman
     {
         public Texture2D map;
         int elapsedTime;
-        public int frameTime;
+        public double frameTime;
         public int frameCount;
         public int currentFrame;
         Rectangle frame = new Rectangle();

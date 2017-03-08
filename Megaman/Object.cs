@@ -64,7 +64,6 @@ namespace Megaman
 
         public virtual void Draw(SpriteBatch spriteBatch)
         {
-            int stageWidth = 40;
             int heightSum = 72;
             for (int i = 0; i < position.Y; i++)
                 heightSum += panelHeight[i];
@@ -75,7 +74,7 @@ namespace Megaman
 
             //finds the location to draw it in
             location = new Vector2(offSet.X + position.X * stageWidth, offSet.Y + heightSum);
-            //shif with the draw offset
+            //shitf with the draw offset
             location = Vector2.Add(location, drawOffset);
 
             activeSprite.Draw(spriteBatch, location);
