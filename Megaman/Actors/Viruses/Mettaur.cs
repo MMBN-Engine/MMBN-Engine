@@ -150,6 +150,12 @@ namespace Megaman.Actors.Viruses
             Met.elapsedTime = 0;
             Met.MetMoveStatus = true;
         }
+
+        public override void Delete()
+        {
+            base.Delete();
+            activateNext();
+        }
     }
 
     class Mettaur : MettaurBase

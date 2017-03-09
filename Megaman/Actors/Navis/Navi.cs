@@ -98,6 +98,7 @@ namespace Megaman.Actors.Navis
                 {
                     isShooting = false;
                     attackHandle(info);
+                    attackHandle = null;
                 }
             }
 
