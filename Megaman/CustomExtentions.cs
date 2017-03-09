@@ -25,6 +25,8 @@ namespace CustomExtensions
 
         public static Texture2D changeColor(this Texture2D map, List<Color> palette, List<Color> palette2)
         {
+            if (map == null) return null;
+
             Texture2D output = new Texture2D(map.GraphicsDevice, map.Width, map.Height);
 
             Color[] colorMap = new Color[map.Width * map.Height];
