@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Megaman.Actors;
+using CustomExtensions;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -12,6 +13,7 @@ namespace Megaman.Actors.Viruses
     class Virus : Actor
     {
         internal Animation genericMove;
+        public bool didAttack;  //Lets us know if we did attack already, useful for virus ai
         SpriteFont HpDisplay;
 
         public Virus(AttackList attackTypes) : base(attackTypes)
@@ -65,5 +67,22 @@ namespace Megaman.Actors.Viruses
             stage.addEffect(deathSprite, location);
             stage.actorArray[(int)position.X, (int)position.Y] = null;
         }
+
+        public override void doAttack(int attackNum)
+        {
+            base.doAttack(attackNum);
+            didAttack = true;
+        }
+
+        public void paletteSwap()
+        {
+            staticSprite.map = staticSprite.map.changeColor(palette1, palette2);
+            guardSprite.map = guardSprite.map.changeColor(palette1, palette2);
+            foreach (Animation foo in attackSprites)
+            {
+                foo.map = foo.map.changeColor(palette1, palette2);
+            }
+        }
+
     }
 }

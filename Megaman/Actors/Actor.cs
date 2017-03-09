@@ -23,13 +23,12 @@ namespace Megaman.Actors
         // 1 - sword
         // 2 - bomb
         // 3 - hammer
+        public List<int> attackFrame;  //Animation frame for which attack is done, 0 is last frame
 
         public List<Color> palette1, palette2;
 
         public Animation gunSprite;
         public bool isShooting;
-
-        public int Attack; //We need this here so the Attacklist class understands the megabuster
 
         public Animation deathSprite;  //Sprite to play when we die
 
@@ -45,6 +44,8 @@ namespace Megaman.Actors
         public bool Guard;         //True - guard effect is active
         internal int guardTime;    //Maximum time before guard resests
         internal int guardElapsed; //Time since timer was set 
+
+        public bool noGuarding;  //If true, we can't guard
 
         protected bool moveStart, moveFin, isSliding;
         protected Vector2 move;
@@ -122,10 +123,21 @@ namespace Megaman.Actors
 
             if (isAttacking)
             {
-                if (!attackSprites[attackNum].active)
+                int Frame = activeSprite.currentFrame;
+                int Target = attackFrame[attackNum];
+
+                if ((Frame >= Target) && (Target > 0) && (attackHandle != null))
+                {
+                    attackHandle(info);
+                    attackHandle = null;
+                }
+
+                if (!activeSprite.active && !isShooting)
                 {
                     isAttacking = false;
                     activeSprite = staticSprite;
+                    //Shooting and slashing have special conditions for attacking
+                    attackHandle?.Invoke(info);
                 }
             }
 
@@ -221,11 +233,11 @@ namespace Megaman.Actors
 
         public bool canAttack()
         {
-            if (moveStart | moveFin | isSliding | isAttacking) return false;
+            if (moveStart | moveFin | isSliding | isAttacking | isGuarding) return false;
             else return true;
         }
 
-        public void doAttack(int attackNum)
+        public virtual void doAttack(int attackNum)
         {
             if (canAttack())
             {
@@ -293,19 +305,26 @@ namespace Megaman.Actors
             }
         }
 
-        public void Slash(Animation animation, int damage, string damageType, List<string> effects, attackMethod attackHandle,
-            List<Animation> sprites)
+        // Attack commands take two inputs, a sprite and an Attack handel
+        // All other information for the attack (damage, damageType, etc.) is handled in the AttackList class
+        // Eventually these methods should be unified to a single method
+        public void Slash(Animation animation, attackMethod attackHandle)
         {
             if (!canAttack()) return;
             //swordSprite.active = true;
             //swordSprite = animation;
             doAttack(1);
             isSlashing = true;
+        }
+
+        public void Hammer(Animation animation, attackMethod attackHandle)
+        {
+            if (!canAttack()) return;
+            //gunSprite = animation;
+            //gunSprite.Reset();
+            doAttack(3);
 
             this.attackHandle = attackHandle;
-            this.info.damage = damage;
-            this.info.damageType = damageType;
-            this.info.effects = effects;
         }
 
         public void createShot(attackSpecs info)
@@ -321,6 +340,8 @@ namespace Megaman.Actors
         //Initialize the guard animation and sets time to zero
         public void setGuard()
         {
+            if (noGuarding) return;
+
             guardSprite.Reset();
             activeSprite = guardSprite;
             isGuarding = true;
@@ -335,7 +356,7 @@ namespace Megaman.Actors
 
         public void Shoot(Animation animation, attackMethod attackHandle)
         {
-            if (!canAttack()) return;
+            if (!canGuard()) return;
             gunSprite = animation;
             gunSprite.Reset();
             doAttack(0);
@@ -346,6 +367,12 @@ namespace Megaman.Actors
 
         public virtual void Delete()
         {
+        }
+
+        public bool canGuard()
+        {
+            if (moveStart | moveFin | isAttacking | isGuarding | noGuarding) return false;
+            else return true;
         }
     }
 }

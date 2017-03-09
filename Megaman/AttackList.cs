@@ -53,7 +53,7 @@ namespace Megaman
 
         public void Initialize(ContentManager content)
         {
-            waveSprite.Initialize(content.Load<Texture2D>("sprites/effects/wave"), new Vector2(10, 48),
+            waveSprite.Initialize(content.Load<Texture2D>("sprites/effects/wave"), new Vector2(4, 48),
                 46, 125, false);
         }
 
@@ -81,7 +81,7 @@ namespace Megaman
 
             projectileInitialization(actor);
 
-            actor.Shoot(actor.busterSprite, actor.createWave);
+            actor.Hammer(null, actor.createWave);
         }
 
         internal void projectileInitialization(Actor actor)

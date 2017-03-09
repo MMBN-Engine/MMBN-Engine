@@ -53,7 +53,7 @@ namespace Megaman.Actors.Navis
         public override void chargedAttack()
         {
             //attackTypes.MegaBuster(this, Attack * 10);
-            attackTypes.Wave(this, 10, 0.1);
+            attackTypes.MegaBuster(this, 10);
         }
 
         public override void styleChange(String Element, String Style)

@@ -14,11 +14,13 @@ namespace Megaman.Actors.Viruses
         int elapsedTime;
         internal int timer;
 
+        internal int damage;
+        internal double speed;
+
         protected List<Vector2> metPosition;
 
         //1 if moving, 0 if shielded
         public bool MetMoveStatus;
-        public int MetNum;
 
         protected MettaurBase(AttackList attackTypes) : base(attackTypes)
         {
@@ -30,14 +32,16 @@ namespace Megaman.Actors.Viruses
             staticSprite.Initialize(content.Load<Texture2D>("sprites/virus/mettaur/virus"),
                 new Vector2(-7, 22), 22, 0, true);
             guardSprite.Initialize(content.Load<Texture2D>("sprites/virus/mettaur/guard"),
-                new Vector2(-7, 26), 23, 1000, false);
+                new Vector2(-7, 26), 23, 100, false);
 
             attackSprites[3].Initialize(content.Load<Texture2D>("sprites/virus/mettaur/attack"),
-                new Vector2(14, 44), 67, 1000, false);
+                new Vector2(14, 44), 67, 100, false);
 
             palette1 = content.Load<Texture2D>("sprites/virus/mettaur/mettaur").getPalette();
 
-            MetNum = 0;
+            attackFrame = new List<int> { 0, 0, 0, 6 };
+
+            setSpeed();
             
             //This needs to be last, textures have to be initialized first so they are assigned correctly
             base.Initialize(content, position, stage);
@@ -47,11 +51,12 @@ namespace Megaman.Actors.Viruses
         {
             base.AiInitialize();
 
-            metPosition = checkFriend();
+            metPosition = checkMet();
 
             //Sets the ai status for the first mettaur to move, rest to guard
             MettaurBase Met = (MettaurBase) stage.actorArray[(int) metPosition[0].X, (int) metPosition[0].Y];
             Met.MetMoveStatus = true;
+            if (!(this == Met)) setGuard();
         }
 
         public override void Update(GameTime gameTime)
@@ -65,6 +70,14 @@ namespace Megaman.Actors.Viruses
         {
             if (MetMoveStatus == true)
             {
+                if (didAttack && !isAttacking)
+                {
+                    activateNext();
+
+                    MetMoveStatus = false;
+                    setGuard();
+                }
+
                 elapsedTime += (int)gameTime.ElapsedGameTime.Milliseconds;
 
                 if (elapsedTime > timer)
@@ -74,23 +87,9 @@ namespace Megaman.Actors.Viruses
                         if (enemyPosition[i].Y == position.Y)
                         {
                             //Sets the next guy to move mode
-                            int MetNum = 0;
-                            for (int j = 0; j < metPosition.Count; j++)
-                            {
-                                if (stage.actorArray[(int)metPosition[j].X, (int)metPosition[j].Y] == this)
-                                {
-                                    MetNum = j;
-                                    break;
-                                }
-                            }
-                            
-                            MetMoveStatus = false;
-                            setGuard();
 
-                            int index = (MetNum + 1) % metPosition.Count;
-                            MettaurBase Met = (MettaurBase)stage.actorArray[(int)metPosition[index].X, (int)metPosition[index].Y];
-                            Met.breakGuard();
-                            Met.MetMoveStatus = true;
+                            attackTypes.Wave(this, damage, speed);
+
                             break;
                         }
                         if (enemyPosition[i].Y < position.Y)
@@ -123,6 +122,34 @@ namespace Megaman.Actors.Viruses
 
             return enemies;
         }
+
+        public void setSpeed()
+        {
+            timer = 1500/(int) speed;
+            guardSprite.frameTime = guardSprite.frameTime / speed;
+            attackSprites[3].frameTime = attackSprites[3].frameTime / speed;
+        }
+
+        //Sets the next mettaur to active
+        public void activateNext()
+        {
+            int MetNum = 0;
+            for (int j = 0; j < metPosition.Count; j++)
+            {
+                if (stage.actorArray[(int)metPosition[j].X, (int)metPosition[j].Y] == this)
+                {
+                    MetNum = j;
+                    break;
+                }
+            }
+
+            int index = (MetNum + 1) % metPosition.Count;
+            MettaurBase Met = (MettaurBase)stage.actorArray[(int)metPosition[index].X, (int)metPosition[index].Y];
+            Met.breakGuard();
+            Met.didAttack = false;
+            Met.elapsedTime = 0;
+            Met.MetMoveStatus = true;
+        }
     }
 
     class Mettaur : MettaurBase
@@ -131,7 +158,9 @@ namespace Megaman.Actors.Viruses
         {
             HP = 40;
             MaxHP = 40;
-            timer = 1500;
+            damage = 10;
+            noGuarding = true;
+            speed = 1;
         }
     }
 
@@ -142,6 +171,8 @@ namespace Megaman.Actors.Viruses
             HP = 80;
             MaxHP = 80;
             timer = 1000;
+            damage = 40;
+            speed = 1.3;
         }
 
         public override void Initialize(ContentManager content, Vector2 position, Stage stage)
@@ -149,14 +180,7 @@ namespace Megaman.Actors.Viruses
             base.Initialize(content, position, stage);
             
             palette2 = content.Load<Texture2D>("sprites/virus/mettaur/mettaur2").getPalette();
-
-            staticSprite.map = base.staticSprite.map.changeColor(palette1, palette2);
-            guardSprite.map = base.guardSprite.map.changeColor(palette1, palette2);
-        }
-
-        public override void Draw(SpriteBatch spriteBatch)
-        {            
-            base.Draw(spriteBatch);
+            paletteSwap();
         }
     }
 
@@ -167,6 +191,8 @@ namespace Megaman.Actors.Viruses
             HP = 120;
             MaxHP = 120;
             timer = 500;
+            damage = 80;
+            speed = 1.6;
         }
 
         public override void Initialize(ContentManager content, Vector2 position, Stage stage)
@@ -174,14 +200,7 @@ namespace Megaman.Actors.Viruses
             base.Initialize(content, position, stage);
 
             palette2 = content.Load<Texture2D>("sprites/virus/mettaur/mettaur3").getPalette();
-
-            staticSprite.map = base.staticSprite.map.changeColor(palette1, palette2);
-            guardSprite.map = base.guardSprite.map.changeColor(palette1, palette2);
-        }
-
-        public override void Draw(SpriteBatch spriteBatch)
-        {
-            base.Draw(spriteBatch);
+            paletteSwap();
         }
     }
 
@@ -192,6 +211,8 @@ namespace Megaman.Actors.Viruses
             HP = 160;
             MaxHP = 120;
             timer = 250;
+            damage = 150;
+            speed = 2.5;
         }
 
         public override void Initialize(ContentManager content, Vector2 position, Stage stage)
@@ -199,14 +220,7 @@ namespace Megaman.Actors.Viruses
             base.Initialize(content, position, stage);
 
             palette2 = content.Load<Texture2D>("sprites/virus/mettaur/mettaurΩ").getPalette();
-
-            staticSprite.map = base.staticSprite.map.changeColor(palette1, palette2);
-            guardSprite.map = base.guardSprite.map.changeColor(palette1, palette2);
-        }
-
-        public override void Draw(SpriteBatch spriteBatch)
-        {
-            base.Draw(spriteBatch);
+            paletteSwap();
         }
     }
 }

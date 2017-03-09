@@ -19,7 +19,7 @@ namespace Megaman.Actors.Navis
 
         public int Custom;
 
-        public int Rapid, Charge;
+        public int Attack, Rapid, Charge;
 
         public bool isCharging, charged;
         public int chargeTime, chargeElapsed;
@@ -53,6 +53,8 @@ namespace Megaman.Actors.Navis
             busterSprite = new Animation();
             gunSprite = new Animation();
             swordSprite = new Animation();
+
+            attackFrame = new List<int>() { 0, 4, 0, 0 };
         }
 
         public override void Initialize(ContentManager content, Vector2 position, Stage stage)
@@ -99,13 +101,6 @@ namespace Megaman.Actors.Navis
                 }
             }
 
-            if (isSlashing)
-            {
-                //swordSprite.Update(gameTime)
-                if (attackSprites[1].currentFrame == 4) attackHandle(info);
-                if (!attackSprites[1].active) isSlashing = false;                                                    
-            }
-
             if (charged) chargeFull.Update(gameTime);
         }
 
@@ -117,21 +112,6 @@ namespace Megaman.Actors.Navis
 
             if (isCharging) charge.Draw(spriteBatch, location);
             if (charged) chargeFull.Draw(spriteBatch, location);
-        }
-
-        public void Slash(Animation animation, int damage, string damageType, List<string> effects, attackMethod attackHandle,
-            List<Animation> sprites)
-        {
-            if (!canAttack()) return;
-            //swordSprite.active = true;
-            //swordSprite = animation;
-            doAttack(1);
-            isSlashing = true;
-
-            this.attackHandle = attackHandle;
-            this.info.damage = damage;
-            this.info.damageType = damageType;
-            this.info.effects = effects;
         }
 
         public void Buster()
