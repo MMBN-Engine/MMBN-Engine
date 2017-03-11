@@ -39,7 +39,7 @@ namespace Megaman.Chips
             //background = content.Load<Texture2D>("sprites/chips/" + type);
         }
 
-        public void Use(Actor actor)
+        public virtual void Use(Actor actor)
         {
 
         }

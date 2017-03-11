@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Megaman.Actors;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -120,16 +121,6 @@ namespace Megaman.Chips
             name = "AreaGrab";
             element = "null";
             MB = 15;
-        }
-    }
-
-    class Recover10 : standardChip
-    {
-        public Recover10(string code) : base(code)
-        {
-            name = "Recov10";
-            element = "null";
-            MB = 5;
         }
     }
 

@@ -162,7 +162,7 @@ namespace Megaman
                 if (moveKey() != new Vector2(0, 0)) navi.Move(moveKey());
 
                 if (JustPressed(Keys.Z)) navi.Buster(); 
-                if (JustPressed(Keys.X) && navi.chips.Count() > 0)
+                if (JustPressed(Keys.X) && navi.chips.Count() > 0 && navi.canAttack())
                 {
                     navi.chips[0].Use(navi);
                     navi.chips.RemoveAt(0);

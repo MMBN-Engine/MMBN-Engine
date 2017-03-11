@@ -45,16 +45,20 @@ namespace Megaman
         }
 
         internal Animation waveSprite;
+        internal Animation recoverSprite;
 
         public AttackList()
         {
             waveSprite = new Animation();
+            recoverSprite = new Animation();
         }
 
         public void Initialize(ContentManager content)
         {
             waveSprite.Initialize(content.Load<Texture2D>("sprites/effects/wave"), new Vector2(4, 48),
                 46, 125, false);
+            recoverSprite.Initialize(content.Load<Texture2D>("sprites/effects/recover"), new Vector2(4, 60),
+                43, 20, false);
         }
 
         public void MegaBuster(Actor actor, int damage)
@@ -82,6 +86,12 @@ namespace Megaman
             projectileInitialization(actor);
 
             actor.Hammer(null, actor.createWave);
+        }
+
+        public void Recover(Actor actor, int recov)
+        {
+            actor.Heal(actor, recov);
+            actor.stage.addEffect(recoverSprite.Clone(), actor.location);
         }
 
         internal void projectileInitialization(Actor actor)

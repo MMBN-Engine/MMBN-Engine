@@ -39,6 +39,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AttackList.cs" />
+    <Compile Include="Chips\Recov.cs" />
     <Compile Include="Object.cs" />
     <Compile Include="Actors\Actor.cs" />
     <Compile Include="Actors\Navis\HeelNavi.cs" />
