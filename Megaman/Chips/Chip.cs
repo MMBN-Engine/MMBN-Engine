@@ -23,6 +23,8 @@ namespace Megaman.Chips
         public Texture2D icon;
         public Texture2D background;
 
+        public bool selected;
+
         public List<string> effects;
 
         public Chip(string code) 

@@ -145,17 +145,20 @@ namespace Megaman
 
             if (JustPressed(Keys.A)) navi.Heal(navi, -1);
 
-            if (JustPressed(Keys.Space) && custom.open == true) custom.Close();
-            if (JustPressed(Keys.Space) && custom.closed == true && custom.custom == custom.customMax) 
-                custom.Open();
+            //Custom screen commands
+            if (custom.open)
+            {
+                if (JustPressed(Keys.Space)) custom.Close();
+                if (moveKey() != new Vector2(0, 0)) custom.moveCursor(moveKey());
+            }
 
             //Only run these during battle
             if (custom.closed)
             {
-                if (JustPressed(Keys.Left)) navi.Move(new Vector2(-1, 0));
-                if (JustPressed(Keys.Right)) navi.Move(new Vector2(1, 0));
-                if (JustPressed(Keys.Up)) navi.Move(new Vector2(0, -1));
-                if (JustPressed(Keys.Down)) navi.Move(new Vector2(0, 1));
+                if (JustPressed(Keys.Space) && custom.custom == custom.customMax)
+                    custom.Open();
+
+                if (moveKey() != new Vector2(0, 0)) navi.Move(moveKey());
 
                 if (JustPressed(Keys.Z)) navi.Buster(); 
                 
@@ -212,7 +215,7 @@ namespace Megaman
                 stage.stageEffects.effect[i].Draw(spriteBatch, stage.stageEffects.location[i]);
             }
 
-            //Draw this last
+            //Draw this last, we want this to be on top of everything
             custom.Draw(spriteBatch);
 
             spriteBatch.End();
@@ -271,6 +274,15 @@ namespace Megaman
             }
         }
 
+        public Vector2 moveKey()
+        {
+            if (JustPressed(Keys.Left)) return new Vector2(-1, 0);
+            if (JustPressed(Keys.Right)) return new Vector2(1, 0);
+            if (JustPressed(Keys.Up)) return new Vector2(0, -1);
+            if (JustPressed(Keys.Down)) return new Vector2(0, 1);
+            else return new Vector2(0, 0);
+        }
+
         public void newGame()
         {            
             navi.chipFolder[0] = new Cannon("A");
@@ -309,6 +321,8 @@ namespace Megaman
 
         public void battleStart()
         {
+            foreach (Chip foo in navi.chipFolder) foo.selected = false;
+
             navi.customFolder = navi.chipFolder.ToList();
             navi.customFolder.Shuffle();
 
