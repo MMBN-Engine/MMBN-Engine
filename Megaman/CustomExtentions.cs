@@ -86,5 +86,15 @@ namespace CustomExtensions
             }
         }
 
+        public static Vector2 Mod(this Vector2 vector2, Vector2 add, Vector2 mod)
+        {
+            float x = (vector2.X + add.X) % mod.X;
+            float y = (vector2.Y + add.Y) % mod.Y;
+
+            if (x < 0) x += mod.X;
+            if (y < 0) y += mod.Y;
+
+            return new Vector2(x, y);
+        }
     }
 }
