@@ -149,6 +149,7 @@ namespace Megaman
             if (custom.open)
             {
                 if (JustPressed(Keys.Space)) custom.Select();
+                if (JustPressed(Keys.Z) | JustPressed(Keys.X)) custom.unSelect();
                 if (moveKey() != new Vector2(0, 0)) custom.moveCursor(moveKey());
             }
 
@@ -161,6 +162,11 @@ namespace Megaman
                 if (moveKey() != new Vector2(0, 0)) navi.Move(moveKey());
 
                 if (JustPressed(Keys.Z)) navi.Buster(); 
+                if (JustPressed(Keys.X) && navi.chips.Count() > 0)
+                {
+                    navi.chips[1].Use(navi);
+                    navi.chips.RemoveAt(1);
+                }
                 
                 //Does a charged attack                
                 if (IsHeld(Keys.Z) && !(navi.charged | navi.isAttacking)) navi.isCharging = true;

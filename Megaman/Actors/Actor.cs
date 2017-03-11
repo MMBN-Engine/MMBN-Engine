@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using static Megaman.AttackList;
+using Megaman.Chips;
 using Megaman.Projectiles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -54,6 +55,9 @@ namespace Megaman.Actors
         public attackMethod attackHandle;
         public attackSpecs info;                //structure containing attack information
 
+        public List<Chip> chips;  //Battle chips that can be used
+
+
         //Atributes
         public bool FlotShoe, AirShoe;
 
@@ -75,12 +79,15 @@ namespace Megaman.Actors
             attackSprites.Add(new Animation());
 
             info = new attackSpecs();
+
+            chips = new List<Chip>();
         }
 
         public override void Initialize(ContentManager content,  Vector2 position, Stage stage)
         {
             base.Initialize(content, position, stage);
 
+            
             stage.actorArray[(int)position.X, (int)position.Y] = this;
             activeSprite = staticSprite;
         }
@@ -183,6 +190,15 @@ namespace Megaman.Actors
         public override void Draw(SpriteBatch spriteBatch)
         {
             base.Draw(spriteBatch);
+
+            //Draw the chips
+            if (chips.Count() > 0)
+            {
+                for (int i = chips.Count() - 1; i >= 0; i--)
+                {
+                    spriteBatch.Draw(chips[i].icon, location + new Vector2(16 - 2 * i, -58 - 2 * i), Color.White);
+                }
+            }
         }
 
         public bool canMove(Vector2 move)

@@ -136,6 +136,9 @@ namespace Megaman
         {
             speed = -speed_mod;
             open = false;
+
+            for (int i = navi.customFolder.Count() - 1; i >= 0; i--)
+                if (navi.customFolder[i].selected) navi.customFolder.RemoveAt(i);
         }
 
         public void Open()
@@ -149,6 +152,8 @@ namespace Megaman
             cursorOK.Reset();
             chipSelected = 0;
 
+            //Draw new chips and remove unused ones
+            navi.chips = new List<Chip>();
             resetChipArray();
         }
 
@@ -167,6 +172,7 @@ namespace Megaman
 
                 Chip chip = chipArray[(int)cursorPosition.X, (int)cursorPosition.Y];
 
+                //Draw chip
                 if (chip != null)
                 {
                     spriteBatch.Draw(chip.image, new Vector2(8, 24), Color.White);
@@ -182,12 +188,30 @@ namespace Megaman
                     }
                 }
 
-                for (int i = 0; i < navi.Custom; i++)
+                //Draw chip icons and codes
+                for (int i = 0; i < Math.Min(navi.Custom, navi.customFolder.Count()); i++)
                 {
-                    if (i < 5) spriteBatch.Draw(navi.customFolder[i].icon, new Vector2(9 + 16 * i, 105), Color.White);
-                    else spriteBatch.Draw(navi.customFolder[i].icon, new Vector2(9 + 16 * (i - 5), 129), Color.White);
+                    if (i < 5)
+                    {
+                        if (!chipArray[i, 0].selected)
+                        {
+                            spriteBatch.Draw(chipArray[i, 0].icon, new Vector2(9 + 16 * i, 105), Color.White);
+                        }
+                    }
+                    else
+                    {
+                        if (!chipArray[i - 5, 1].selected)
+                        {
+                            spriteBatch.Draw(chipArray[i - 5, 1].icon, new Vector2(9 + 16 * i, 129), Color.White);
+                        }
+                    }
                 }
 
+                //Draw selected chips
+                for (int i = 0; i < navi.chips.Count(); i++)
+                    spriteBatch.Draw(navi.chips[i].icon, new Vector2(98, 26 + 16 * i), Color.White);
+
+                //Draw cursor
                 Vector2 cursorDraw = new Vector2(9 + 16 * cursorPosition.X, 105 + 24 * cursorPosition.Y);
                 if (cursorPosition == new Vector2(5, 0))
                     cursorOK.Draw(spriteBatch, new Vector2(9 + 16 * cursorPosition.X, 105 + 24 * cursorPosition.Y));
@@ -230,7 +254,27 @@ namespace Megaman
 
         public void Select()
         {
+            Chip chip = chipArray[(int)cursorPosition.X, (int)cursorPosition.Y];
+
+            if (chip != null)
+            {
+                if (cursorPosition.X < 5 && !chip.selected)
+                {
+                    navi.chips.Add(chip);
+                    chip.selected = true;
+                }
+            }
             if (cursorPosition == new Vector2(5, 0)) Close();
+        }
+
+        public void unSelect()
+        {
+            int count = navi.chips.Count();
+            if (count > 0)
+            {
+                navi.chips[count - 1].selected = false;
+                navi.chips.RemoveAt(count - 1);
+            }
         }
 
         //Draws the top chips off the deck
@@ -242,7 +286,7 @@ namespace Megaman
             for (int i = 0; i < Math.Min(navi.Custom, navi.customFolder.Count()); i++)
             {
                 if (i < 5) chipArray[i, 0] = navi.customFolder[i];
-                else chipArray[i - 5, 0] = navi.customFolder[i];
+                else chipArray[i - 5, 1] = navi.customFolder[i];
             }
         }
     }

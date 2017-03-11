@@ -39,6 +39,11 @@ namespace Megaman.Chips
             //background = content.Load<Texture2D>("sprites/chips/" + type);
         }
 
+        public void Use(Actor actor)
+        {
+
+        }
+
         public void attackPlus(int i, Navi navi)
         {
             //check to see if chip before exists/ has attack then add i
