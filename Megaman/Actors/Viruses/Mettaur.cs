@@ -154,7 +154,7 @@ namespace Megaman.Actors.Viruses
         public override void Delete()
         {
             base.Delete();
-            activateNext();
+            if (MetMoveStatus)activateNext();
         }
     }
 
