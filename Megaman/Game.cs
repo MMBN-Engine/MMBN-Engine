@@ -148,7 +148,7 @@ namespace Megaman
             //Custom screen commands
             if (custom.open)
             {
-                if (JustPressed(Keys.Space)) custom.Close();
+                if (JustPressed(Keys.Space)) custom.Select();
                 if (moveKey() != new Vector2(0, 0)) custom.moveCursor(moveKey());
             }
 
