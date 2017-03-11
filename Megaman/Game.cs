@@ -164,8 +164,8 @@ namespace Megaman
                 if (JustPressed(Keys.Z)) navi.Buster(); 
                 if (JustPressed(Keys.X) && navi.chips.Count() > 0)
                 {
-                    navi.chips[1].Use(navi);
-                    navi.chips.RemoveAt(1);
+                    navi.chips[0].Use(navi);
+                    navi.chips.RemoveAt(0);
                 }
                 
                 //Does a charged attack                
