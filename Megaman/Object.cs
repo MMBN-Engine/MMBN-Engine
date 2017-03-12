@@ -41,7 +41,7 @@ namespace Megaman
             stageWidth = 40;
 
             activeSprite = new Animation(); //This is the actual sprite we draw
-            effectSprite = new Animation(); //Effects such as explosions etc.
+            effectSprite = null; //Effects such as explosions etc.
 
             drawOffset = new Vector2(0, 0);
         }
@@ -138,14 +138,18 @@ namespace Megaman
         public void doDamage(Vector2 position, int damage, string damageType, List<string> effects, Animation effectSprite)
         {
             this.effectSprite = effectSprite;
-            List<Actor> targetList = new List<Actor>();
+            List<Vector2> targetList = new List<Vector2>();
 
             if (effects.Contains("wide"))
             {
                 for (int i = (int)position.Y - 1; i <= (int)position.Y + 1; i++)
                 {
                     Vector2 targetLocation = new Vector2((int)position.X, i);
-                    if (!(i < 0 | i > 2)) targetList.Add(getTarget(targetLocation));
+                    if (!(i < 0 | i > 2))
+                    {
+                        targetList.Add(targetLocation);
+                        if (effectSprite != null) stage.addEffect(effectSprite.Clone(), getLocation(targetLocation));
+                    }
                 }
             }
             else if (effects.Contains("V"))
@@ -161,11 +165,13 @@ namespace Megaman
                         if (!(i < 0 | i > 2))
                         {
                             Vector2 targetLocation = new Vector2(x, i);
-                            targetList.Add(getTarget(targetLocation));
+                            targetList.Add(targetLocation);
+                            if (effectSprite != null) stage.addEffect(effectSprite.Clone(), getLocation(targetLocation));
                         }
                     }
                 }
-                targetList.Add(getTarget(position));
+                targetList.Add(position);
+                if (effectSprite != null) stage.addEffect(effectSprite.Clone(), getLocation(position));
             }
             else if (effects.Contains("long"))
             {
@@ -173,8 +179,14 @@ namespace Megaman
                 if (color == "red") x += 1;
                 else x -= 1;
 
-                if (!(x < 0 | x > 5)) targetList.Add(getTarget(new Vector2(x, (int)position.Y)));
-                targetList.Add(getTarget(position));
+                if (!(x < 0 | x > 5))
+                {
+                    targetList.Add(new Vector2(x, (int)position.Y));
+                    if (effectSprite != null) stage.addEffect(effectSprite.Clone(), getLocation(new Vector2(x, (int)position.Y)));
+                }
+                targetList.Add(position);
+
+                if (effectSprite != null) stage.addEffect(effectSprite.Clone(), getLocation(position));
             }
             else if (effects.Contains("spread"))
             {
@@ -183,7 +195,11 @@ namespace Megaman
                     for (int j = (int)position.Y - 1; j <= (int)position.Y + 1; j++)
                     {
                         Vector2 targetLocation = new Vector2(i, j);
-                        if (!(i < 0 | i > 5 | j < 0 | j > 2)) targetList.Add(getTarget(targetLocation));
+                        if (!(i < 0 | i > 5 | j < 0 | j > 2))
+                        {
+                            targetList.Add(targetLocation);
+                            if (effectSprite != null) stage.addEffect(effectSprite.Clone(), getLocation(targetLocation));
+                        }
                     }
                 }
             }
@@ -194,57 +210,70 @@ namespace Megaman
                     for (int j = (int)position.Y - 1; j <= (int)position.Y + 1; j += 2)
                     {
                         Vector2 targetLocation = new Vector2(i, j);
-                        if (!(i < 0 | i > 5 | j < 0 | j > 2)) targetList.Add(getTarget(targetLocation));
+                        if (!(i < 0 | i > 5 | j < 0 | j > 2))
+                        {
+                            targetList.Add(targetLocation);
+                            if (effectSprite != null) stage.addEffect(effectSprite.Clone(), getLocation(targetLocation));
+                        }
                     }
                 }
+                targetList.Add(position);
+                if (effectSprite != null) stage.addEffect(effectSprite.Clone(), getLocation(position));
             }
-            else targetList.Add(getTarget(position));
-
-            //No friendly fire
-            foreach (Actor foo in targetList)
+            else
             {
-                if (foo != null) if (foo.color != color) applyDamage(foo, damage, damageType, effects);
+                targetList.Add(position);
+                if (effectSprite != null) stage.addEffect(effectSprite.Clone(), getLocation(position));
             }
-        }
 
-        //Get the target and apply sprites
-        public Actor getTarget(Vector2 position)
-        {
-            if (effectSprite != null) stage.addEffect(effectSprite, getLocation(position));
-            return stage.actorArray[(int)position.X, (int)position.Y];
+            foreach (Vector2 foo in targetList)
+            {
+                applyDamage(foo, damage, damageType, effects);
+            }
         }
 
         //Acutally apply the damage
-        public void applyDamage(Actor target, int damage, string damageType, List<string> effects)
+        public void applyDamage(Vector2 position, int damage, string damageType, List<string> effects)
         {
             //Applies damage
             int damReturn = damage;
-            string panel = stage.PanelType[(int)target.position.X, (int)target.position.Y];
+            Actor target = stage.getActor(position);
+            string panel = stage.getPanelType(position);
 
             //Checks body type
-            if (target.AquaBody && damageType == "Elec") damReturn += damage;
-            if (target.ElecBody && damageType == "Wood") damReturn += damage;
-            if (target.FireBody && damageType == "Aqua") damReturn += damage;
-            if (target.WoodBody && damageType == "Fire") damReturn += damage;
+            if (target != null)
+            {
+                if (target.AquaBody && damageType == "elec") damReturn += damage;
+                if (target.ElecBody && damageType == "wood") damReturn += damage;
+                if (target.FireBody && damageType == "aqua") damReturn += damage;
+                if (target.WoodBody && damageType == "fire") damReturn += damage;
+            }
 
             //Checks stage type
-            if (panel == "Grass" && damageType == "Fire")
+            if (panel == "Grass" && damageType == "fire")
             {
                 damReturn += damage;
-                stage.PanelType[(int)position.X, (int)position.Y] = "null";
+                stage.setPanel(position, "null");
             }
-            if (panel == "Lava" && damageType == "Aqua")
+            if (panel == "Lava" && damageType == "aqua")
             {
                 damReturn += damage;
-                stage.PanelType[(int)position.X, (int)position.Y] = "null";
+                stage.setPanel(position, "null");
             }
-            if ((panel == "Ice" | panel == "Metal") && damageType == "Elec") damReturn += damage;
+            if ((panel == "Ice" | panel == "Metal") && damageType == "elec") damReturn += damage;
             if (panel == "holy") damReturn = damReturn / 2;
 
-            if ((target.Guard) & !(effects.Contains("Break"))) damReturn = 0;
+            if (target != null) if ((target.Guard) & !(effects.Contains("Break"))) damReturn = 0;
 
-            target.HP -= damReturn;
-            if (target.HP < 1) target.Delete();
+            //no friendly fire
+            if (target != null)
+            {
+                if (target.color != color)
+                {
+                    target.HP -= damReturn;
+                    if (target.HP < 1) target.Delete();
+                }
+            }
         }
     }
 }

@@ -62,25 +62,25 @@ namespace Megaman.Actors.Navis
             FireBody = false;
             WoodBody = false;
 
-            if (Element == "Aqua")
+            if (Element == "aqua")
             {
                 AquaBody = true;
                 palette2 = Aqua;
             }
             
-            if (Element == "Elec")
+            if (Element == "elec")
             {
                 ElecBody = true;
                 palette2 = Elec;
             }
 
-            if (Element == "Wood")
+            if (Element == "wood")
             {
                 WoodBody = true;
                 palette2 = Wood;
             }
 
-            if (Element == "Heat")
+            if (Element == "fire")
             {
                 FireBody = true;
                 palette2 = Heat;

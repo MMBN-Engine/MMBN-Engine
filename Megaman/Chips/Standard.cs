@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Megaman.Chips
 {
-    class standardChip : Chip
+    abstract class standardChip : Chip
     {
         public standardChip(string code) : base(code)
         {

@@ -45,7 +45,7 @@ namespace Megaman
                 effects = new List<string>();
                 position = new Vector2();
                 sound = null;
-                effectSprite = new Animation();
+                effectSprite = null;
             }
         }
 
@@ -58,11 +58,19 @@ namespace Megaman
         internal Animation spreaderSprite;
         internal SoundEffect spreaderSound;
 
+        internal Animation bubblerSprite;
+        internal SoundEffect bubblerSound;
+
+        internal Animation heaterSprite;
+        internal SoundEffect heaterSound;
+
         public AttackList()
         {
             waveSprite = new Animation();
             recoverSprite = new Animation();
             spreaderSprite = new Animation();
+            heaterSprite = new Animation();
+            bubblerSprite = new Animation();
         }
 
         public void Initialize(ContentManager content)
@@ -76,8 +84,15 @@ namespace Megaman
             recoverSound = content.Load<SoundEffect>("soundFX/battle/recover");
 
             spreaderSprite.Initialize(content.Load<Texture2D>("sprites/effects/spreader"), new Vector2(4, 30),
-                42, 35, false);
+                42, 40, false);
             spreaderSound = content.Load<SoundEffect>("soundFX/battle/spreader");
+
+            bubblerSprite.Initialize(content.Load<Texture2D>("sprites/effects/spreader"), new Vector2(4, 30),
+                42, 40, false);
+            bubblerSound = content.Load<SoundEffect>("soundFX/battle/bubbler");
+
+            heaterSprite.Initialize(content.Load<Texture2D>("sprites/effects/explosion"), new Vector2(7, 34), 50, 30, false);
+            heaterSound = content.Load<SoundEffect>("soundFX/battle/heater");
         }
 
         public void MegaBuster(Actor actor, int damage)
@@ -88,14 +103,38 @@ namespace Megaman
             actor.Shoot(actor.busterSprite, actor.Gun);
         }
 
-        public void Spreader(Actor actor, int damage, string damageType, string effect)
+        public void Spreader(Actor actor, int damage, string effect)
         {
             actor.info.Reset();
             actor.info.damage = damage;
-            actor.info.damageType = damageType;
+            actor.info.damageType = "null";
             actor.info.effects.Add(effect);
             actor.info.effectSprite = spreaderSprite.Clone();
             actor.info.sound = spreaderSound;
+
+            actor.Shoot(actor.busterSprite, actor.Gun);
+        }
+
+        public void Heater(Actor actor, int damage, string effect)
+        {
+            actor.info.Reset();
+            actor.info.damage = damage;
+            actor.info.damageType = "fire";
+            actor.info.effects.Add(effect);
+            actor.info.effectSprite = heaterSprite.Clone();
+            actor.info.sound = heaterSound;
+
+            actor.Shoot(actor.busterSprite, actor.Gun);
+        }
+
+        public void Bubbler(Actor actor, int damage, string effect)
+        {
+            actor.info.Reset();
+            actor.info.damage = damage;
+            actor.info.damageType = "aqua";
+            actor.info.effects.Add(effect);
+            actor.info.effectSprite = bubblerSprite.Clone();
+            actor.info.sound = bubblerSound;
 
             actor.Shoot(actor.busterSprite, actor.Gun);
         }

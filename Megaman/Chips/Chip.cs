@@ -23,6 +23,10 @@ namespace Megaman.Chips
         public Texture2D icon;
         public Texture2D background;
 
+        public int damage;   //damage that is actually applied
+
+        public string effect;
+
         public bool selected;
 
         public List<string> effects;
@@ -42,7 +46,7 @@ namespace Megaman.Chips
 
         public virtual void Use(Actor actor)
         {
-
+            damage = (attack + damageMod) * damageMult;
         }
 
         public void attackPlus(int i, Navi navi)

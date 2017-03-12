@@ -186,6 +186,21 @@ namespace Megaman
             stageEffects.location.Add(location);
         }
 
+        public Actor getActor(Vector2 position)
+        {
+            return actorArray[(int)position.X, (int)position.Y];
+        }
+
+        public string getPanelType(Vector2 position)
+        {
+            return PanelType[(int)position.X, (int)position.Y];
+        }
+
+        public void setPanel(Vector2 position, string panelType)
+        {
+            PanelType[(int)position.X, (int)position.Y] = panelType;
+        }
+
         public virtual void addProjectile(Projectile projectile)
         {
             projectileList.Add(projectile);
