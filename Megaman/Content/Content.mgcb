@@ -1313,3 +1313,9 @@
 /processorParam:TextureFormat=Color
 /build:sprites/chips/images/Recov300.png
 
+#begin music/battle.ogg
+/importer:OggImporter
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:music/battle.ogg
+

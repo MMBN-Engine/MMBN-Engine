@@ -30,6 +30,8 @@ namespace Megaman
         Stage stage;
         Custom custom;
 
+        Song song;
+
         public float screenSize;
 
         AttackList attackTypes;
@@ -90,6 +92,10 @@ namespace Megaman
             foreach (Virus foo in virus) foo.AiInitialize();
             
             spriteBatch = new SpriteBatch(GraphicsDevice);
+
+            song = Content.Load<Song>("music/battle");
+            MediaPlayer.Play(song);
+            MediaPlayer.IsRepeating = true;
 
             newGame();
 
