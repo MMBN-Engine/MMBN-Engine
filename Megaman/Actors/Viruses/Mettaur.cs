@@ -70,7 +70,7 @@ namespace Megaman.Actors.Viruses
         {
             if (MetMoveStatus == true)
             {
-                if (didAttack && !isAttacking)
+                if (didAttack && !isAttacking && metPosition.Count > 1)
                 {
                     activateNext();
 
@@ -153,8 +153,9 @@ namespace Megaman.Actors.Viruses
 
         public override void Delete()
         {
+            //We need to do this first so the virus isn't removed 
+            if (MetMoveStatus) activateNext();
             base.Delete();
-            if (MetMoveStatus)activateNext();
         }
     }
 
