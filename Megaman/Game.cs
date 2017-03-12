@@ -30,6 +30,9 @@ namespace Megaman
         Stage stage;
         Custom custom;
 
+        SoundEffect charge, chargeComplete, redHPSound;
+        bool playedCharge, playedChargeComplete;
+
         Song song;
 
         public float screenSize;
@@ -97,6 +100,9 @@ namespace Megaman
             MediaPlayer.Volume = 0.2f;
             MediaPlayer.Play(song);
             MediaPlayer.IsRepeating = true;
+
+            charge = Content.Load<SoundEffect>("soundFX/battle/charge");
+            chargeComplete = Content.Load<SoundEffect>("soundFX/battle/chargeComplete");
 
             newGame();
 
@@ -177,13 +183,31 @@ namespace Megaman
                     navi.chips[0].Use(navi);
                     navi.chips.RemoveAt(0);
                 }
-                
+
                 //Does a charged attack                
-                if (IsHeld(Keys.Z) && !(navi.charged | navi.isAttacking)) navi.isCharging = true;
+                if (IsHeld(Keys.Z))
+                {
+                    if (!(navi.charged | navi.isAttacking))
+                    {
+                        navi.isCharging = true;
+                        if (!playedCharge)
+                        {
+                            charge.Play();
+                            playedCharge = true;
+                        }
+                    }
+                    if (!playedChargeComplete && navi.charged)
+                    {
+                        playedChargeComplete = true;
+                        chargeComplete.Play();
+                    }
+                }
                 
                 if (IsReleased(Keys.Z))
                 {
                     if (navi.charged) navi.chargedAttack();
+                    playedCharge = false;
+                    playedChargeComplete = false;
                     navi.isCharging = false;
                     navi.charged = false;
                 }

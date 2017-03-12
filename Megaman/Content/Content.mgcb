@@ -1355,3 +1355,51 @@
 /processorParam:Quality=Best
 /build:soundFX/custom/customScreenOpen.ogg
 
+#begin soundFX/battle/recover.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:soundFX/battle/recover.ogg
+
+#begin soundFX/battle/explode.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:soundFX/battle/explode.ogg
+
+#begin soundFX/battle/explodeShort.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:soundFX/battle/explodeShort.ogg
+
+#begin soundFX/battle/wave.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:soundFX/battle/wave.ogg
+
+#begin soundFX/battle/charge.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:soundFX/battle/charge.ogg
+
+#begin soundFX/battle/chargeComplete.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:soundFX/battle/chargeComplete.ogg
+
+#begin soundFX/battle/spreader.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:soundFX/battle/spreader.ogg
+
+#begin soundFX/custom/redHP.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:soundFX/custom/redHP.ogg
+

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Audio;
 using Megaman.Actors;
 using Megaman.Projectiles;
 
@@ -23,6 +24,7 @@ namespace Megaman
             public Animation sprite;
             public List<string> effects;
             public Vector2 position;
+            public SoundEffect sound;
             public attackSpecs(int damage, string damageType, double speed, Animation sprite)
             {
                 this.damage = damage;
@@ -31,6 +33,7 @@ namespace Megaman
                 this.sprite = sprite;
                 this.position = new Vector2();
                 this.effects = new List<string>();
+                sound = null;
             }
             public attackSpecs( int damage, string damageType, float speed, Animation sprite, 
                 List<string> effects)
@@ -41,6 +44,7 @@ namespace Megaman
                 this.sprite = sprite;
                 this.effects = effects;
                 this.position = new Vector2();
+                sound = null;
             }
             public void Reset()
             {
@@ -50,11 +54,17 @@ namespace Megaman
                 sprite = new Animation();
                 effects = new List<string>();
                 position = new Vector2();
+                sound = null;
             }
         }
 
         internal Animation waveSprite;
+        internal SoundEffect waveSound;
+
         internal Animation recoverSprite;
+        internal SoundEffect recoverSound;
+
+        internal SoundEffect spreaderSound;
 
         public AttackList()
         {
@@ -66,8 +76,13 @@ namespace Megaman
         {
             waveSprite.Initialize(content.Load<Texture2D>("sprites/effects/wave"), new Vector2(4, 48),
                 46, 125, false);
+            waveSound = content.Load<SoundEffect>("soundFX/battle/wave");
+
             recoverSprite.Initialize(content.Load<Texture2D>("sprites/effects/recover"), new Vector2(4, 60),
                 43, 20, false);
+            recoverSound = content.Load<SoundEffect>("soundFX/battle/recover");
+
+            spreaderSound = content.Load<SoundEffect>("soundFX/battle/spreader");
         }
 
         public void MegaBuster(Actor actor, int damage)
@@ -84,6 +99,7 @@ namespace Megaman
             actor.info.damage = damage;
             actor.info.damageType = damageType;
             actor.info.effects.Add(effect);
+            actor.info.sound = spreaderSound;
 
             actor.Shoot(actor.busterSprite, actor.Gun);
         }
@@ -98,6 +114,7 @@ namespace Megaman
             actor.info.speed = speed;
             actor.info.sprite = temp;
             actor.info.damage = damage;
+            actor.info.sound = waveSound;
 
             projectileInitialization(actor);
 
@@ -106,6 +123,7 @@ namespace Megaman
 
         public void Recover(Actor actor, int recov)
         {
+            recoverSound.Play();
             actor.Heal(actor, recov);
             actor.stage.addEffect(recoverSprite.Clone(), actor.location);
         }

@@ -7,6 +7,7 @@ using static Megaman.AttackList;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Audio;
 
 //right now all movement code is for teleporting, will change it to allow sliding later
 
@@ -21,6 +22,7 @@ namespace Megaman.Projectiles
         public List<String> effects;
         public float waveTimer;
         public float waveTime;  //Time to advance the wave
+        public SoundEffect sound;
 
         public Wave(Actor actor) : base(actor)           
         {
@@ -28,6 +30,9 @@ namespace Megaman.Projectiles
             damage = actor.info.damage;
             damageType = actor.info.damageType;
             effects = actor.info.effects;
+
+            sound = actor.info.sound;
+            sound?.Play();
         }
 
         public override void Update(GameTime gameTime)
@@ -69,6 +74,7 @@ namespace Megaman.Projectiles
                 newWave.Reset();
                 newWave.position += new Vector2(1, 0) * Math.Sign(speed.X);
                 stage.addProjectile(newWave);
+                sound?.Play();
             }
         }
 

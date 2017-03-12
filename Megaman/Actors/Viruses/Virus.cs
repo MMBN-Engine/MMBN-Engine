@@ -7,6 +7,7 @@ using CustomExtensions;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Audio;
 
 namespace Megaman.Actors.Viruses
 {
@@ -29,6 +30,7 @@ namespace Megaman.Actors.Viruses
 
             genericMove.Initialize(content.Load<Texture2D>("sprites/move"),new Vector2(-2, 42), 30, 15, false);
             deathSprite.Initialize(content.Load<Texture2D>("sprites/effects/explosion"), new Vector2(7, 34), 50, 30, false);
+            deathSound = content.Load<SoundEffect>("soundFX/battle/explodeShort");
 
             HpDisplay = content.Load<SpriteFont>("virus-hp");  
         }
@@ -68,6 +70,7 @@ namespace Megaman.Actors.Viruses
         {
             stage.addEffect(deathSprite, location);
             stage.actorArray[(int)position.X, (int)position.Y] = null;
+            deathSound.Play();
         }
 
         public override void doAttack(int attackNum)

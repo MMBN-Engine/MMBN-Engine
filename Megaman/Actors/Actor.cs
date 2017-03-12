@@ -8,6 +8,7 @@ using Megaman.Projectiles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Audio;
 
 //right now all movement code is for teleporting, will change it to allow sliding later
 
@@ -18,6 +19,8 @@ namespace Megaman.Actors
         public int HP, MaxHP;
         public Animation staticSprite, moveSprite, guardSprite;
         public Animation busterSprite;
+
+        public SoundEffect deathSound;
 
         public List<Animation> attackSprites;
         // 0 - shoot

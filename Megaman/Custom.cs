@@ -31,7 +31,6 @@ namespace Megaman
 
         internal bool playedMaxSound;
 
-        int HP, maxHP;
         SpriteFont font, fontBase, fontRed, fontGreen, fontGray;
 
         private Texture2D screen, hpDisplay, bar, color;
@@ -40,6 +39,8 @@ namespace Megaman
 
         private SoundEffect chipCancel, chipChoose, chipConfirm, chipSelect;
         private SoundEffect custBarFull, customScreenOpen;
+        private SoundEffect redHPSound;
+        private SoundEffectInstance redHPInstance;
 
         private Navi navi;
 
@@ -94,6 +95,10 @@ namespace Megaman
             custBarFull = content.Load<SoundEffect>("soundFX/custom/custBarFull");
             customScreenOpen = content.Load<SoundEffect>("soundFX/custom/customScreenOpen");
 
+            redHPSound = content.Load<SoundEffect>("soundFX/custom/redHP");
+            redHPInstance = redHPSound.CreateInstance();
+            redHPInstance.IsLooped = true;
+            
             full.Initialize(content.Load<Texture2D>("sprites/custom/custom-full"),
                 new Vector2(0, 0), 147, 180, true);
             cursor.Initialize(content.Load<Texture2D>("sprites/custom/cursor"),
@@ -110,6 +115,8 @@ namespace Megaman
 
         public void Update(GameTime gameTime)
         {
+            if (navi.HP <= navi.MaxHP / 4) redHPInstance.Play();
+
             position.X += speed;
 
             if (position.X < -screen.Width)
@@ -254,15 +261,14 @@ namespace Megaman
 
             spriteBatch.Draw(hpDisplay, new Vector2(X, position.Y) * resolution, 
                 scale: new Vector2(1,1)*resolution, color: Color.White);
-            HP = navi.HP;
 
             //Draw the actual HP
-            if (HP <= maxHP / 4) font = fontRed;
+            if (navi.HP <= navi.MaxHP / 4) font = fontRed;
             else font = fontBase;
 
             Vector2 hpOffset = new Vector2(40, 3);
-            int justify = (int)font.MeasureString(HP.ToString()).X;
-            spriteBatch.DrawString(font, HP.ToString(), (new Vector2(X - justify, position.Y) + hpOffset) * resolution,
+            int justify = (int)font.MeasureString(navi.HP.ToString()).X;
+            spriteBatch.DrawString(font, navi.HP.ToString(), (new Vector2(X - justify, position.Y) + hpOffset) * resolution,
                 scale: resolution, color: Color.White, rotation: 0, origin: new Vector2(), effects: SpriteEffects.None,
                 layerDepth: 0);
 

@@ -96,6 +96,7 @@ namespace Megaman.Actors.Navis
                 gunSprite.Update(gameTime);
                 if (!gunSprite.active)
                 {
+                    info.sound?.Play();
                     isShooting = false;
                     attackHandle(info);
                     attackHandle = null;
