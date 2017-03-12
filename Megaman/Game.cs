@@ -94,6 +94,7 @@ namespace Megaman
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             song = Content.Load<Song>("music/battle");
+            MediaPlayer.Volume = 0.2f;
             MediaPlayer.Play(song);
             MediaPlayer.IsRepeating = true;
 

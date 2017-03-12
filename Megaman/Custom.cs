@@ -8,6 +8,7 @@ using Megaman.Actors.Navis;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Audio;
 using CustomExtensions;
 
 namespace Megaman
@@ -28,6 +29,8 @@ namespace Megaman
         public float customRate;
         private Vector2 barPosition;
 
+        internal bool playedMaxSound;
+
         int HP, maxHP;
         SpriteFont font, fontBase, fontRed, fontGreen, fontGray;
 
@@ -35,11 +38,12 @@ namespace Megaman
         public Texture2D nullElem, heatElem, elecElem, aquaElem, woodElem; 
         private Animation full, cursor, cursorOK, cursorAdd;
 
+        private SoundEffect chipCancel, chipChoose, chipConfirm, chipSelect;
+        private SoundEffect custBarFull, customScreenOpen;
+
         private Navi navi;
 
         internal Chip[,] chipArray;
-
-        public int chipSelected;
 
         public Custom() 
         {
@@ -57,8 +61,6 @@ namespace Megaman
 
             barPosition.X = 12;
             barPosition.Y = 9;
-
-            chipSelected = 0;  //The chip we are going to draw
 
             full = new Animation();
             cursor = new Animation();
@@ -83,7 +85,15 @@ namespace Megaman
             fontRed = content.Load<SpriteFont>("navi-hp-red");
             fontGreen = content.Load<SpriteFont>("navi-hp-green");
             fontGray = content.Load<SpriteFont>("font-gray");
-            
+
+            chipCancel = content.Load<SoundEffect>("soundFX/custom/chipCancel");
+            chipChoose = content.Load<SoundEffect>("soundFX/custom/chipChoose");
+            chipConfirm = content.Load<SoundEffect>("soundFX/custom/chipConfirm");
+            chipSelect = content.Load<SoundEffect>("soundFX/custom/chipSelect");
+
+            custBarFull = content.Load<SoundEffect>("soundFX/custom/custBarFull");
+            customScreenOpen = content.Load<SoundEffect>("soundFX/custom/customScreenOpen");
+
             full.Initialize(content.Load<Texture2D>("sprites/custom/custom-full"),
                 new Vector2(0, 0), 147, 180, true);
             cursor.Initialize(content.Load<Texture2D>("sprites/custom/cursor"),
@@ -150,7 +160,10 @@ namespace Megaman
             cursor.Reset();
             cursorAdd.Reset();
             cursorOK.Reset();
-            chipSelected = 0;
+            cursorPosition = new Vector2();
+            playedMaxSound = false;
+
+            customScreenOpen.Play();
 
             //Draw new chips and remove unused ones
             navi.chips = new List<Chip>();
@@ -161,6 +174,7 @@ namespace Megaman
         public void moveCursor(Vector2 move)
         {
             cursorPosition = cursorPosition.Mod(move, new Vector2(6, 2));
+            chipSelect.Play();
             //cursorPosition += move;
         }
         
@@ -264,7 +278,14 @@ namespace Megaman
                     Color.White);
 
                 if (custom == customMax)
+                {
                     full.Draw(spriteBatch, new Vector2(X + hpDisplay.Width, position.Y), resolution);
+                    if (!playedMaxSound)
+                    {
+                        custBarFull.Play();
+                        playedMaxSound = true;
+                    }
+                }
             }
         }
 
@@ -278,9 +299,14 @@ namespace Megaman
                 {
                     navi.chips.Add(chip);
                     chip.selected = true;
+                    chipChoose.Play();
                 }
             }
-            if (cursorPosition == new Vector2(5, 0)) Close();
+            if (cursorPosition == new Vector2(5, 0))
+            {
+                Close();
+                chipConfirm.Play();
+            }
         }
 
         public void unSelect()
@@ -290,6 +316,7 @@ namespace Megaman
             {
                 navi.chips[count - 1].selected = false;
                 navi.chips.RemoveAt(count - 1);
+                chipCancel.Play();
             }
         }
 

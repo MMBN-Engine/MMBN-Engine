@@ -1319,3 +1319,39 @@
 /processorParam:Quality=Best
 /build:music/battle.ogg
 
+#begin soundFX/custom/chipCancel.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:soundFX/custom/chipCancel.ogg
+
+#begin soundFX/custom/chipChoose.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:soundFX/custom/chipChoose.ogg
+
+#begin soundFX/custom/chipConfirm.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:soundFX/custom/chipConfirm.ogg
+
+#begin soundFX/custom/chipSelect.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:soundFX/custom/chipSelect.ogg
+
+#begin soundFX/custom/custBarFull.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:soundFX/custom/custBarFull.ogg
+
+#begin soundFX/custom/customScreenOpen.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:soundFX/custom/customScreenOpen.ogg
+
