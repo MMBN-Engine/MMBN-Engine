@@ -82,13 +82,15 @@ namespace Megaman
             frame = new Rectangle(currentFrame * frameWidth, 0, frameWidth, frameHeight);
         }
        
-        public void Draw(SpriteBatch spriteBatch, Vector2 position)
+        public void Draw(SpriteBatch spriteBatch, Vector2 position, float resolution)
         {
             if (flip)
-                spriteBatch.Draw(texture: map, position: position - origin, sourceRectangle: frame,
-                    color: Color.White, effects: SpriteEffects.FlipHorizontally);
+                spriteBatch.Draw(texture: map, position: (position - origin) * resolution, sourceRectangle: frame,
+                    color: Color.White, scale: new Vector2(1, 1) * resolution,
+                    effects: SpriteEffects.FlipHorizontally);
             else
-                spriteBatch.Draw(map, position - origin, frame, Color.White);
+                spriteBatch.Draw(texture: map, position: (position - origin) * resolution, sourceRectangle: frame,
+                    color: Color.White, scale: new Vector2(1, 1) * resolution);
         }
 
         public void Reset()

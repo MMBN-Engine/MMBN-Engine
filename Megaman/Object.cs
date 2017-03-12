@@ -62,7 +62,7 @@ namespace Megaman
         //eventually we want to move some of the movement code here,
         //so it can be used by projectiles, viruses, etc.
 
-        public virtual void Draw(SpriteBatch spriteBatch)
+        public virtual void Draw(SpriteBatch spriteBatch, float resolution)
         {
             int heightSum = 72;
             for (int i = 0; i < position.Y; i++)
@@ -77,7 +77,7 @@ namespace Megaman
             //shitf with the draw offset
             location = Vector2.Add(location, drawOffset);
 
-            activeSprite.Draw(spriteBatch, location);
+            activeSprite.Draw(spriteBatch, location, resolution);
         }
 
         //Determine if an enemy occupies the grid at position

@@ -40,18 +40,20 @@ namespace Megaman.Actors.Viruses
             AI(gameTime);
         }
 
-        public override void Draw(SpriteBatch spriteBatch)
+        public override void Draw(SpriteBatch spriteBatch, float resolution)
         {
-            base.Draw(spriteBatch);
-            DrawHP(spriteBatch);
+            base.Draw(spriteBatch, resolution);
+            DrawHP(spriteBatch, resolution);
         }
 
-        public void DrawHP(SpriteBatch spriteBatch)
+        public void DrawHP(SpriteBatch spriteBatch, float resolution)
         {
             //Probably only works for mettaurs, will need to change
             int length = (int)HpDisplay.MeasureString(HP.ToString()).X;
             spriteBatch.DrawString(HpDisplay, HP.ToString(),
-                location + new Vector2(26 - length, -3), Color.White);
+                (location + new Vector2(26 - length, -3)) * resolution,
+                scale: resolution, color: Color.White, rotation: 0, origin: new Vector2(), effects: SpriteEffects.None,
+                layerDepth: 0);
         }
 
         public virtual void AiInitialize()

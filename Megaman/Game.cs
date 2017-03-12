@@ -30,6 +30,8 @@ namespace Megaman
         Stage stage;
         Custom custom;
 
+        public float screenSize;
+
         AttackList attackTypes;
         
         Navi navi;
@@ -37,10 +39,11 @@ namespace Megaman
         
         public Game()
         {
+            screenSize = 2;
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            graphics.PreferredBackBufferWidth = 240;
-            graphics.PreferredBackBufferHeight = 160;
+            graphics.PreferredBackBufferWidth = (int) (240 * screenSize);
+            graphics.PreferredBackBufferHeight = (int) (160 * screenSize);
             Window.Title = "MegaMan Battle Network";
 
         }
@@ -203,26 +206,26 @@ namespace Megaman
 
             //Draws the custom bar and hp windom (maybe emotion window later)
             //ONly the background should be drawed before this
-            custom.drawBars(spriteBatch);
+            custom.drawBars(spriteBatch, screenSize);
             
-            stage.Draw(spriteBatch);
+            stage.Draw(spriteBatch, screenSize);
 
             foreach (Actor foo in stage.actorArray)
             {
-                if (foo != null) foo.Draw(spriteBatch);
+                if (foo != null) foo.Draw(spriteBatch, screenSize);
             }
 
             foreach (Projectile foo in stage.projectileList)
-                foo.Draw(spriteBatch);
+                foo.Draw(spriteBatch, screenSize);
 
             //Draw effects on top of actors
             for (int i = 0; i < stage.stageEffects.effect.Count; i++)
             {
-                stage.stageEffects.effect[i].Draw(spriteBatch, stage.stageEffects.location[i]);
+                stage.stageEffects.effect[i].Draw(spriteBatch, stage.stageEffects.location[i], screenSize);
             }
 
             //Draw this last, we want this to be on top of everything
-            custom.Draw(spriteBatch);
+            custom.Draw(spriteBatch, screenSize);
 
             spriteBatch.End();
 

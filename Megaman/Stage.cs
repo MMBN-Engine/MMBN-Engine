@@ -151,7 +151,7 @@ namespace Megaman
                     PanelType[i, j] = value;
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        public void Draw(SpriteBatch spriteBatch, float resolution)
         {
             int[, ,] tileDraw = stageDraw();
             int stagePositionX = 0;
@@ -171,8 +171,8 @@ namespace Megaman
                             spriteWidth, spriteHeight[j]);
 
                         spriteBatch.Draw(texture,
-                            new Vector2(stagePositionX + i * spriteWidth, stagePositionY + stageY),
-                            panel, Color.White);
+                            new Vector2(stagePositionX + i * spriteWidth, stagePositionY + stageY) * resolution,
+                            sourceRectangle: panel, scale: new Vector2(1, 1) * resolution, color: Color.White);
 
                         stageY += spriteHeight[j];
                     }

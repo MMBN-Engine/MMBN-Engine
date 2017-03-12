@@ -164,9 +164,10 @@ namespace Megaman
             //cursorPosition += move;
         }
         
-        public void Draw(SpriteBatch spriteBatch)
+        public void Draw(SpriteBatch spriteBatch, float resolution)
         {
-            spriteBatch.Draw(screen, position, Color.White);
+            spriteBatch.Draw(screen, position * resolution,
+                scale: new Vector2(1, 1) * resolution, color: Color.White);
             if (open == true)
             {
 
@@ -175,16 +176,20 @@ namespace Megaman
                 //Draw chip
                 if (chip != null)
                 {
-                    spriteBatch.Draw(chip.image, new Vector2(8, 24), Color.White);
+                    spriteBatch.Draw(chip.image, new Vector2(8, 24) * resolution, 
+                        scale: new Vector2(1,1)* resolution, color: Color.White);
 
                     Texture2D element = (Texture2D)typeof(Custom).GetField("nullElem").GetValue(this);
-                    spriteBatch.Draw(element, new Vector2(25, 81), Color.White);
+                    spriteBatch.Draw(element, new Vector2(25, 81) * resolution, 
+                        scale: new Vector2(1, 1) * resolution, color: Color.White);
 
                     if (chip.attack != 0)
                     {
                         int length = (int)fontGray.MeasureString(chip.attack.ToString()).X;
                         spriteBatch.DrawString(fontGray, chip.attack.ToString(),
-                            new Vector2(71 - length, 83), Color.White);
+                            new Vector2(71 - length, 83) * resolution,
+                            scale: resolution, color: Color.White, rotation: 0, origin: new Vector2(), effects: SpriteEffects.None,
+                            layerDepth: 0);
                     }
                 }
 
@@ -195,42 +200,46 @@ namespace Megaman
                     {
                         if (!chipArray[i, 0].selected)
                         {
-                            spriteBatch.Draw(chipArray[i, 0].icon, new Vector2(9 + 16 * i, 105), Color.White);
+                            spriteBatch.Draw(chipArray[i, 0].icon,  new Vector2(9 + 16 * i, 105) * resolution,
+                                scale: new Vector2(1,1)* resolution, color: Color.White);
                         }
                     }
                     else
                     {
                         if (!chipArray[i - 5, 1].selected)
                         {
-                            spriteBatch.Draw(chipArray[i - 5, 1].icon, new Vector2(9 + 16 * i, 129), Color.White);
+                            spriteBatch.Draw(chipArray[i - 5, 1].icon, new Vector2(9 + 16 * i, 129) * resolution,
+                                scale: new Vector2(1,1) * resolution, color: Color.White);
                         }
                     }
                 }
 
                 //Draw selected chips
                 for (int i = 0; i < navi.chips.Count(); i++)
-                    spriteBatch.Draw(navi.chips[i].icon, new Vector2(98, 26 + 16 * i), Color.White);
+                    spriteBatch.Draw(navi.chips[i].icon, new Vector2(98, 26 + 16 * i) * resolution, 
+                        scale: new Vector2(1, 1) * resolution, color: Color.White);
 
                 //Draw cursor
                 Vector2 cursorDraw = new Vector2(9 + 16 * cursorPosition.X, 105 + 24 * cursorPosition.Y);
                 if (cursorPosition == new Vector2(5, 0))
-                    cursorOK.Draw(spriteBatch, new Vector2(9 + 16 * cursorPosition.X, 105 + 24 * cursorPosition.Y));
+                    cursorOK.Draw(spriteBatch, new Vector2(9 + 16 * cursorPosition.X, 105 + 24 * cursorPosition.Y), resolution);
                 else if (cursorPosition == new Vector2(5, 1))
-                    cursorAdd.Draw(spriteBatch, new Vector2(9 + 16 * cursorPosition.X, 105 + 24 * cursorPosition.Y));
-                else cursor.Draw(spriteBatch, new Vector2(9 + 16 * cursorPosition.X, 105 + 24 * cursorPosition.Y));
+                    cursorAdd.Draw(spriteBatch, new Vector2(9 + 16 * cursorPosition.X, 105 + 24 * cursorPosition.Y), resolution);
+                else cursor.Draw(spriteBatch, new Vector2(9 + 16 * cursorPosition.X, 105 + 24 * cursorPosition.Y), resolution);
             }
         }
 
         //This needs to be separated from the custom window
         //Particle effects are in from of this, but behind custom window
-        public void drawBars(SpriteBatch spriteBatch)
+        public void drawBars(SpriteBatch spriteBatch, float resolution)
         {
             //This updates before the custom bar, so we need this stament to prevent "jumping"
             int X = (int)position.X + screen.Width;
             if (X > screen.Width)
                 X = screen.Width;
 
-            spriteBatch.Draw(hpDisplay, new Vector2(X, position.Y), Color.White);
+            spriteBatch.Draw(hpDisplay, new Vector2(X, position.Y) * resolution, 
+                scale: new Vector2(1,1)*resolution, color: Color.White);
             HP = navi.HP;
 
             //Draw the actual HP
@@ -239,16 +248,23 @@ namespace Megaman
 
             Vector2 hpOffset = new Vector2(40, 3);
             int justify = (int)font.MeasureString(HP.ToString()).X;
-            spriteBatch.DrawString(font, HP.ToString(), new Vector2(X - justify, position.Y) + hpOffset, Color.White);
+            spriteBatch.DrawString(font, HP.ToString(), (new Vector2(X - justify, position.Y) + hpOffset) * resolution,
+                scale: resolution, color: Color.White, rotation: 0, origin: new Vector2(), effects: SpriteEffects.None,
+                layerDepth: 0);
 
             //Only draw if custom window is closed
             if (closed == true)
             {
-                spriteBatch.Draw(bar, new Vector2(X + hpDisplay.Width, position.Y), Color.White);
-                spriteBatch.Draw(color, new Rectangle((int)(X + hpDisplay.Width + barPosition.X),
-                    (int)barPosition.Y, (int)custom, color.Height), Color.White);
+                spriteBatch.Draw(bar, new Vector2(X + hpDisplay.Width, position.Y) * resolution, 
+                    color: Color.White, scale: new Vector2(1, 1) * resolution);
+                
+                //Draw the increasing custom bar
+                spriteBatch.Draw(color, new Rectangle((int)((X + hpDisplay.Width + barPosition.X) * resolution),
+                    (int)(barPosition.Y * resolution), (int)(custom * resolution), (int) (color.Height*resolution)),
+                    Color.White);
+
                 if (custom == customMax)
-                    full.Draw(spriteBatch, new Vector2(X + hpDisplay.Width, position.Y));
+                    full.Draw(spriteBatch, new Vector2(X + hpDisplay.Width, position.Y), resolution);
             }
         }
 

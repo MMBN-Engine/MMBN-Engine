@@ -187,16 +187,17 @@ namespace Megaman.Actors
 
         }
 
-        public override void Draw(SpriteBatch spriteBatch)
+        public override void Draw(SpriteBatch spriteBatch, float resolution)
         {
-            base.Draw(spriteBatch);
+            base.Draw(spriteBatch, resolution);
 
             //Draw the chips
             if (chips.Count() > 0)
             {
                 for (int i = chips.Count() - 1; i >= 0; i--)
                 {
-                    spriteBatch.Draw(chips[i].icon, location + new Vector2(16 - 2 * i, -58 - 2 * i), Color.White);
+                    spriteBatch.Draw(chips[i].icon, (location + new Vector2(16 - 2 * i, -58 - 2 * i)) * resolution,
+                        scale: new Vector2(1, 1) * resolution, color: Color.White);
                 }
             }
         }

@@ -105,14 +105,14 @@ namespace Megaman.Actors.Navis
             if (charged) chargeFull.Update(gameTime);
         }
 
-        public override void Draw(SpriteBatch spriteBatch)
+        public override void Draw(SpriteBatch spriteBatch, float resolution)
         {
-            base.Draw(spriteBatch);
+            base.Draw(spriteBatch, resolution);
 
-            if (isShooting) gunSprite.Draw(spriteBatch, location + armLocation);
+            if (isShooting) gunSprite.Draw(spriteBatch, location + armLocation, resolution);
 
-            if (isCharging) charge.Draw(spriteBatch, location);
-            if (charged) chargeFull.Draw(spriteBatch, location);
+            if (isCharging) charge.Draw(spriteBatch, location, resolution);
+            if (charged) chargeFull.Draw(spriteBatch, location, resolution);
         }
 
         public void Buster()
