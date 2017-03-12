@@ -41,6 +41,7 @@
     <Compile Include="AttackList.cs" />
     <Compile Include="Chips\Spreader.cs" />
     <Compile Include="Chips\Recov.cs" />
+    <Compile Include="Debug.cs" />
     <Compile Include="Object.cs" />
     <Compile Include="Actors\Actor.cs" />
     <Compile Include="Actors\Navis\HeelNavi.cs" />

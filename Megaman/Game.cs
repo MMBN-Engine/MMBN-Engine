@@ -20,7 +20,7 @@ namespace Megaman
     /// <summary>
     /// This is the main type for your game
     /// </summary>
-    public class Game : Microsoft.Xna.Framework.Game
+    public partial class Game : Microsoft.Xna.Framework.Game
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
@@ -30,10 +30,12 @@ namespace Megaman
         Stage stage;
         Custom custom;
 
-        SoundEffect charge, chargeComplete, redHPSound;
+        SoundEffect charge, chargeComplete;
         bool playedCharge, playedChargeComplete;
 
         Song song;
+
+        bool debug;
 
         public float screenSize;
 
@@ -51,6 +53,7 @@ namespace Megaman
             graphics.PreferredBackBufferHeight = (int) (160 * screenSize);
             Window.Title = "MegaMan Battle Network";
 
+            debug = true;
         }
 
         /// <summary>
@@ -137,29 +140,7 @@ namespace Megaman
             oldKeyboard = currentKeyboard;
             currentKeyboard = Keyboard.GetState();
 
-            // Development keys, will be removed
-            //if (JustPressed(Keys.N)) stage.setStage("Null");
-            //if (JustPressed(Keys.C)) stage.setStage("Cracked");
-            //if (JustPressed(Keys.B)) stage.setStage("Broken");
-            //if (JustPressed(Keys.G)) stage.setStage("Grass");
-            //if (JustPressed(Keys.S)) stage.setStage("Sand");
-            //if (JustPressed(Keys.M)) stage.setStage("Metal");
-            //if (JustPressed(Keys.I)) stage.setStage("Ice");
-            //if (JustPressed(Keys.P)) stage.setStage("Swamp");
-            //if (JustPressed(Keys.L)) stage.setStage("Lava");
-            //if (JustPressed(Keys.H)) stage.setStage("Holy");
-            //if (JustPressed(Keys.T)) stage.setStage("Hole");
-            //if (JustPressed(Keys.Q)) navi.AirShoe = true;
-            //if (JustPressed(Keys.W)) navi.AirShoe = false;
-            if (JustPressed(Keys.E)) navi.styleChange("Elec","Bug");
-            if (JustPressed(Keys.A)) navi.styleChange("Aqua","Bug");
-            if (JustPressed(Keys.H)) navi.styleChange("Heat","Bug");
-            if (JustPressed(Keys.W)) navi.styleChange("Wood","Bug");
-            if (JustPressed(Keys.N)) navi.styleChange("Null","Bug");            
-            
-            //if (JustPressed(Keys.U)) attack.doDamage(navi.position, 10, "Fire", stage);
-
-            if (JustPressed(Keys.C)) navi.attackTypes.Recover(navi, 10);
+            if (debug) debugCommands();
 
             //Custom screen commands
             if (custom.open)
@@ -324,7 +305,15 @@ namespace Megaman
         }
 
         public void newGame()
-        {            
+        {
+            if (debug) debugFolder();
+            else defaultFolder();
+
+            foreach (Chip chip in navi.chipFolder) chip.Initialize(Content);
+        }
+
+        public void defaultFolder()
+        {
             navi.chipFolder[0] = new Cannon("A");
             navi.chipFolder[1] = new Cannon("A");
             navi.chipFolder[2] = new Cannon("B");
@@ -355,8 +344,6 @@ namespace Megaman
             navi.chipFolder[27] = new Recover10("L");
             navi.chipFolder[28] = new Attack10("*");
             navi.chipFolder[29] = new Attack10("*");
-
-            foreach (Chip chip in navi.chipFolder) chip.Initialize(Content);
         }
 
         public void battleStart()
