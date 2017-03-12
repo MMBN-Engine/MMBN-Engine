@@ -24,7 +24,7 @@ namespace Megaman.Actors.Navis
                 new Vector2(0, 46), 34, 0, true);
 
             moveSprite.Initialize(content.Load<Texture2D>("sprites/navi/megaman/move"),
-                new Vector2(0, 46), 35, 20, false);
+                new Vector2(2, 46), 40, 20, false);
 
             attackSprites[0].Initialize(content.Load<Texture2D>("sprites/navi/megaman/shoot"),
                 new Vector2(0, 46), 35, 30, false);
