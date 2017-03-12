@@ -132,18 +132,59 @@ namespace Megaman
         //Find targets to apply damage to
         public void doDamage(Vector2 position, int damage, string damageType, List<string> effects)
         {
-            //Applies damage
-            int damReturn = damage;
-            string panel = stage.PanelType[(int)position.X, (int)position.Y];
-
             List<Actor> targetList = new List<Actor>();
 
-            targetList.Add(stage.actorArray[(int)position.X, (int)position.Y]);
+            if (effects.Contains("wide"))
+            {
+                for (int i = (int)position.Y- 1; i <= (int)position.Y + 1; i++)
+                    if (!(i < 0 | i > 2)) targetList.Add(stage.actorArray[(int)position.X, i]);
+            }
+            else if (effects.Contains("V"))
+            {
+                int x = (int)position.X;
+                if (color == "red") x += 1;
+                else x -= 1;
+
+                if (!(x < 0 | x > 5))
+                {
+                    int test = (int)position.X;
+                    int j = test - 1;
+                    for (int i = (int)position.Y - 1; i <= (int)position.Y + 1; i += 2)
+                    {
+                        if (!(i < 0 | i > 2))
+                        {
+                            targetList.Add(stage.actorArray[x, i]);
+                            stage.actorArray[(int)position.X, (int)position.Y].HP = x*10 + i;
+                        }
+                    }
+                }
+                targetList.Add(stage.actorArray[(int)position.X, (int)position.Y]);
+            }
+            else if (effects.Contains("long"))
+            {
+                int x = (int)position.X;
+                if (color == "red") x += 1;
+                else x -= 1;
+
+                if (!(x < 0 | x > 5)) targetList.Add(stage.actorArray[x, (int)position.Y]);
+                targetList.Add(stage.actorArray[(int)position.X, (int)position.Y]);
+            }
+            else if (effects.Contains("spread"))
+            {
+                for (int i = (int)position.X - 1; i <= (int)position.X + 1; i++)
+                {
+                    for (int j = (int)position.Y - 1; j <= (int)position.Y + 1; j++)
+                    {
+                        if (!(i < 0 | i > 5 | j < 0 | j > 2)) targetList.Add(stage.actorArray[i, j]);
+                    }
+                }
+            }
+            else targetList.Add(stage.actorArray[(int)position.X, (int)position.Y]);
 
             //No friendly fire
             foreach (Actor foo in targetList)
             {
-                if (foo != null | foo.color != color) applyDamage(foo, damage, damageType, effects);
+                if (foo != null) if (foo.color != color) applyDamage(foo, damage, damageType, effects);
             }
         }
 
