@@ -21,30 +21,20 @@ namespace Megaman
             public int damage;
             public string damageType;
             public double speed;
-            public Animation sprite;
+            public Animation sprite, effectSprite;
             public List<string> effects;
             public Vector2 position;
             public SoundEffect sound;
-            public attackSpecs(int damage, string damageType, double speed, Animation sprite)
+            public attackSpecs(int foo)
             {
-                this.damage = damage;
-                this.damageType = damageType;
-                this.speed = speed;
-                this.sprite = sprite;
-                this.position = new Vector2();
-                this.effects = new List<string>();
+                damage = 0;
+                damageType = "null";
+                speed = 0;
+                sprite = new Animation();
+                effects = new List<string>();
+                position = new Vector2();
                 sound = null;
-            }
-            public attackSpecs( int damage, string damageType, float speed, Animation sprite, 
-                List<string> effects)
-            {
-                this.damage = damage;
-                this.damageType = damageType;
-                this.speed = speed;
-                this.sprite = sprite;
-                this.effects = effects;
-                this.position = new Vector2();
-                sound = null;
+                effectSprite = new Animation();
             }
             public void Reset()
             {
@@ -55,6 +45,7 @@ namespace Megaman
                 effects = new List<string>();
                 position = new Vector2();
                 sound = null;
+                effectSprite = new Animation();
             }
         }
 
@@ -64,12 +55,14 @@ namespace Megaman
         internal Animation recoverSprite;
         internal SoundEffect recoverSound;
 
+        internal Animation spreaderSprite;
         internal SoundEffect spreaderSound;
 
         public AttackList()
         {
             waveSprite = new Animation();
             recoverSprite = new Animation();
+            spreaderSprite = new Animation();
         }
 
         public void Initialize(ContentManager content)
@@ -82,7 +75,10 @@ namespace Megaman
                 43, 20, false);
             recoverSound = content.Load<SoundEffect>("soundFX/battle/recover");
 
+            spreaderSprite.Initialize(content.Load<Texture2D>("sprites/effects/spreader"), new Vector2(4, 60),
+                42, 25, false);
             spreaderSound = content.Load<SoundEffect>("soundFX/battle/spreader");
+            recoverSprite = spreaderSprite;
         }
 
         public void MegaBuster(Actor actor, int damage)
