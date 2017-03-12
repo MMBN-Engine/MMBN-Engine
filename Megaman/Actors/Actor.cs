@@ -307,18 +307,12 @@ namespace Megaman.Actors
             
             if (color == "red")
             {
-                if (x < 5 && isBlue(x + 1, y))
-                {
-                    doDamage(new Vector2(x + 1, y), info.damage, info.damageType, info.effects);
-                }
+                doDamage(new Vector2(x + 1, y), info.damage, info.damageType, info.effects);
             }
 
             if (color == "blue")
             {
-                if (x > -1  && isRed(x - 1, y))
-                {
-                    doDamage(new Vector2(x - 1, y), info.damage, info.damageType, info.effects);
-                }
+                doDamage(new Vector2(x - 1, y), info.damage, info.damageType, info.effects);
             }
         }
 

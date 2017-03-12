@@ -129,12 +129,30 @@ namespace Megaman
             else return false;
         }
 
+        //Find targets to apply damage to
         public void doDamage(Vector2 position, int damage, string damageType, List<string> effects)
         {
             //Applies damage
             int damReturn = damage;
             string panel = stage.PanelType[(int)position.X, (int)position.Y];
-            Actor target = stage.actorArray[(int)position.X, (int)position.Y];
+
+            List<Actor> targetList = new List<Actor>();
+
+            targetList.Add(stage.actorArray[(int)position.X, (int)position.Y]);
+
+            //No friendly fire
+            foreach (Actor foo in targetList)
+            {
+                if (foo != null | foo.color != color) applyDamage(foo, damage, damageType, effects);
+            }
+        }
+
+        //Acutally apply the damage
+        public void applyDamage(Actor target, int damage, string damageType, List<string> effects)
+        {
+            //Applies damage
+            int damReturn = damage;
+            string panel = stage.PanelType[(int)target.position.X, (int)target.position.Y];
 
             //Checks body type
             if (target.AquaBody && damageType == "Elec") damReturn += damage;
@@ -156,7 +174,7 @@ namespace Megaman
             if ((panel == "Ice" | panel == "Metal") && damageType == "Elec") damReturn += damage;
             if (panel == "holy") damReturn = damReturn / 2;
 
-            if ((target.Guard) &! (effects.Contains("Break"))) damReturn = 0;
+            if ((target.Guard) & !(effects.Contains("Break"))) damReturn = 0;
 
             target.HP -= damReturn;
             if (target.HP < 1) target.Delete();
