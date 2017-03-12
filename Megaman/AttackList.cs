@@ -75,8 +75,8 @@ namespace Megaman
                 43, 20, false);
             recoverSound = content.Load<SoundEffect>("soundFX/battle/recover");
 
-            spreaderSprite.Initialize(content.Load<Texture2D>("sprites/effects/spreader"), new Vector2(4, 60),
-                42, 25, false);
+            spreaderSprite.Initialize(content.Load<Texture2D>("sprites/effects/spreader"), new Vector2(4, 30),
+                42, 35, false);
             spreaderSound = content.Load<SoundEffect>("soundFX/battle/spreader");
         }
 

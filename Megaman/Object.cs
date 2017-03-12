@@ -165,7 +165,7 @@ namespace Megaman
                         }
                     }
                 }
-                targetList.Add(stage.actorArray[(int)position.X, (int)position.Y]);
+                targetList.Add(getTarget(position));
             }
             else if (effects.Contains("long"))
             {
@@ -187,7 +187,18 @@ namespace Megaman
                     }
                 }
             }
-            else targetList.Add(stage.actorArray[(int)position.X, (int)position.Y]);
+            else if (effects.Contains("cross"))
+            {
+                for (int i = (int)position.X - 1; i <= (int)position.X + 1; i += 2)
+                {
+                    for (int j = (int)position.Y - 1; j <= (int)position.Y + 1; j += 2)
+                    {
+                        Vector2 targetLocation = new Vector2(i, j);
+                        if (!(i < 0 | i > 5 | j < 0 | j > 2)) targetList.Add(getTarget(targetLocation));
+                    }
+                }
+            }
+            else targetList.Add(getTarget(position));
 
             //No friendly fire
             foreach (Actor foo in targetList)
