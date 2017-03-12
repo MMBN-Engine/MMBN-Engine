@@ -21,6 +21,8 @@ namespace Megaman
         public Animation activeSprite;
 
         public Stage stage;
+
+        protected Animation effectSprite;
         
         protected List<Vector2> enemyPosition;
         protected List<Vector2> friendPosition;
@@ -39,6 +41,7 @@ namespace Megaman
             stageWidth = 40;
 
             activeSprite = new Animation(); //This is the actual sprite we draw
+            effectSprite = new Animation(); //Effects such as explosions etc.
 
             drawOffset = new Vector2(0, 0);
         }
@@ -64,20 +67,22 @@ namespace Megaman
 
         public virtual void Draw(SpriteBatch spriteBatch, float resolution)
         {
+            location = getLocation(position);
+
+            //Draw with shifted position for motion
+            activeSprite.Draw(spriteBatch, location + drawOffset, resolution);
+        }
+
+        //gets the draw location from position
+        public Vector2 getLocation(Vector2 position)
+        {
             int heightSum = 72;
             for (int i = 0; i < position.Y; i++)
                 heightSum += panelHeight[i];
-            Vector2 test = new Vector2(1, 2);
 
             //offsets due to the position of the stage
             Vector2 offSet = new Vector2(3, 16);
-
-            //finds the location to draw it in
-            location = new Vector2(offSet.X + position.X * stageWidth, offSet.Y + heightSum);
-            //shitf with the draw offset
-            location = Vector2.Add(location, drawOffset);
-
-            activeSprite.Draw(spriteBatch, location, resolution);
+            return new Vector2(offSet.X + position.X * stageWidth, offSet.Y + heightSum);
         }
 
         //Determine if an enemy occupies the grid at position
@@ -130,14 +135,18 @@ namespace Megaman
         }
 
         //Find targets to apply damage to
-        public void doDamage(Vector2 position, int damage, string damageType, List<string> effects)
+        public void doDamage(Vector2 position, int damage, string damageType, List<string> effects, Animation effectSprite)
         {
+            this.effectSprite = effectSprite;
             List<Actor> targetList = new List<Actor>();
 
             if (effects.Contains("wide"))
             {
-                for (int i = (int)position.Y- 1; i <= (int)position.Y + 1; i++)
-                    if (!(i < 0 | i > 2)) targetList.Add(stage.actorArray[(int)position.X, i]);
+                for (int i = (int)position.Y - 1; i <= (int)position.Y + 1; i++)
+                {
+                    Vector2 targetLocation = new Vector2((int)position.X, i);
+                    if (!(i < 0 | i > 2)) targetList.Add(getTarget(targetLocation));
+                }
             }
             else if (effects.Contains("V"))
             {
@@ -147,14 +156,12 @@ namespace Megaman
 
                 if (!(x < 0 | x > 5))
                 {
-                    int test = (int)position.X;
-                    int j = test - 1;
                     for (int i = (int)position.Y - 1; i <= (int)position.Y + 1; i += 2)
                     {
                         if (!(i < 0 | i > 2))
                         {
-                            targetList.Add(stage.actorArray[x, i]);
-                            stage.actorArray[(int)position.X, (int)position.Y].HP = x*10 + i;
+                            Vector2 targetLocation = new Vector2(x, i);
+                            targetList.Add(getTarget(targetLocation));
                         }
                     }
                 }
@@ -166,8 +173,8 @@ namespace Megaman
                 if (color == "red") x += 1;
                 else x -= 1;
 
-                if (!(x < 0 | x > 5)) targetList.Add(stage.actorArray[x, (int)position.Y]);
-                targetList.Add(stage.actorArray[(int)position.X, (int)position.Y]);
+                if (!(x < 0 | x > 5)) targetList.Add(getTarget(new Vector2(x, (int)position.Y)));
+                targetList.Add(getTarget(position));
             }
             else if (effects.Contains("spread"))
             {
@@ -175,7 +182,8 @@ namespace Megaman
                 {
                     for (int j = (int)position.Y - 1; j <= (int)position.Y + 1; j++)
                     {
-                        if (!(i < 0 | i > 5 | j < 0 | j > 2)) targetList.Add(stage.actorArray[i, j]);
+                        Vector2 targetLocation = new Vector2(i, j);
+                        if (!(i < 0 | i > 5 | j < 0 | j > 2)) targetList.Add(getTarget(targetLocation));
                     }
                 }
             }
@@ -186,6 +194,13 @@ namespace Megaman
             {
                 if (foo != null) if (foo.color != color) applyDamage(foo, damage, damageType, effects);
             }
+        }
+
+        //Get the target and apply sprites
+        public Actor getTarget(Vector2 position)
+        {
+            if (effectSprite != null) stage.addEffect(effectSprite, getLocation(position));
+            return stage.actorArray[(int)position.X, (int)position.Y];
         }
 
         //Acutally apply the damage

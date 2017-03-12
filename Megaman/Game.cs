@@ -159,7 +159,7 @@ namespace Megaman
             
             //if (JustPressed(Keys.U)) attack.doDamage(navi.position, 10, "Fire", stage);
 
-            if (JustPressed(Keys.A)) navi.Heal(navi, -1);
+            if (JustPressed(Keys.C)) navi.attackTypes.Recover(navi, 10);
 
             //Custom screen commands
             if (custom.open)

@@ -78,7 +78,6 @@ namespace Megaman
             spreaderSprite.Initialize(content.Load<Texture2D>("sprites/effects/spreader"), new Vector2(4, 60),
                 42, 25, false);
             spreaderSound = content.Load<SoundEffect>("soundFX/battle/spreader");
-            recoverSprite = spreaderSprite;
         }
 
         public void MegaBuster(Actor actor, int damage)
@@ -95,6 +94,7 @@ namespace Megaman
             actor.info.damage = damage;
             actor.info.damageType = damageType;
             actor.info.effects.Add(effect);
+            actor.info.effectSprite = spreaderSprite.Clone();
             actor.info.sound = spreaderSound;
 
             actor.Shoot(actor.busterSprite, actor.Gun);

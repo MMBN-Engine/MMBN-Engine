@@ -58,7 +58,7 @@ namespace Megaman.Projectiles
             {
                 if (checkEnemyLocation(position))
                 {
-                    doDamage(position, damage, damageType, effects);
+                    doDamage(position, damage, damageType, effects, effectSprite);
                     didAttack = true;
                 }
             }

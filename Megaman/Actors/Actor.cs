@@ -284,7 +284,7 @@ namespace Megaman.Actors
                 {
                     if (isBlue(i, y))
                     {
-                        doDamage(new Vector2(i, y), info.damage, info.damageType, info.effects);
+                        doDamage(new Vector2(i, y), info.damage, info.damageType, info.effects, info.effectSprite);
                         break;
                     }
                 }
@@ -296,7 +296,7 @@ namespace Megaman.Actors
                 {
                     if (isRed(i, y))
                     {
-                        doDamage(new Vector2(i, y), info.damage, info.damageType, info.effects);
+                        doDamage(new Vector2(i, y), info.damage, info.damageType, info.effects, info.effectSprite);
                         break;
                     }
                 }
@@ -310,12 +310,12 @@ namespace Megaman.Actors
             
             if (color == "red")
             {
-                doDamage(new Vector2(x + 1, y), info.damage, info.damageType, info.effects);
+                doDamage(new Vector2(x + 1, y), info.damage, info.damageType, info.effects, info.effectSprite);
             }
 
             if (color == "blue")
             {
-                doDamage(new Vector2(x - 1, y), info.damage, info.damageType, info.effects);
+                doDamage(new Vector2(x - 1, y), info.damage, info.damageType, info.effects, info.effectSprite);
             }
         }
 
