@@ -27,39 +27,6 @@ namespace Megaman.Chips
         }
     }
 
-    class Shotgun : standardChip
-    {
-        public Shotgun(string code) : base(code)
-        {
-            name = "ShotGun";
-            element = "null";
-            attack = 30;
-            MB = 8;
-        }
-    }
-
-    class Vgun : standardChip
-    {
-        public Vgun(string code) : base(code)
-        {
-            name = "V-Gun";
-            element = "null";
-            attack = 30;
-            MB = 8;
-        }
-    }
-
-    class Sidegun : standardChip
-    {
-        public Sidegun(string code) : base(code)
-        {
-            name = "SideGun";
-            element = "null";
-            attack = 30;
-            MB = 8;
-        }
-    }
-
     class Airshot1 : standardChip
     {
         public Airshot1(string code) : base(code)

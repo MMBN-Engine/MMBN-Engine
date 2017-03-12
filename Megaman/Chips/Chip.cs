@@ -16,7 +16,7 @@ namespace Megaman.Chips
         public string type;
         public string name;
         public string element;
-        public int attack;
+        public int attack, damageMod, damageMult;
         public int MB;
         public string description;
         public Texture2D image;
@@ -34,6 +34,7 @@ namespace Megaman.Chips
 
         public void Initialize(ContentManager content)
         {
+            damageMult = 1;
             image = content.Load<Texture2D>("sprites/chips/images/" + name);
             icon = content.Load<Texture2D>("sprites/chips/icons/" + name);
             //background = content.Load<Texture2D>("sprites/chips/" + type);

@@ -42,6 +42,15 @@ namespace Megaman
                 this.effects = effects;
                 this.position = new Vector2();
             }
+            public void Reset()
+            {
+                damage = 0;
+                damageType = "null";
+                speed = 0;
+                sprite = new Animation();
+                effects = new List<string>();
+                position = new Vector2();
+            }
         }
 
         internal Animation waveSprite;
@@ -63,9 +72,18 @@ namespace Megaman
 
         public void MegaBuster(Actor actor, int damage)
         {
+            actor.info.Reset();
             actor.info.damage = damage;
-            actor.info.damageType = "Null";
-            actor.info.effects = new List<string>();
+
+            actor.Shoot(actor.busterSprite, actor.Gun);
+        }
+
+        public void Spreader(Actor actor, int damage, string damageType, string effect)
+        {
+            actor.info.Reset();
+            actor.info.damage = damage;
+            actor.info.damageType = damageType;
+            actor.info.effects.Add(effect);
 
             actor.Shoot(actor.busterSprite, actor.Gun);
         }
@@ -76,12 +94,10 @@ namespace Megaman
             Animation temp = waveSprite.Clone();
             temp.frameTime = 1000 / (temp.frameCount * speed);
 
-
+            actor.info.Reset();
             actor.info.speed = speed;
             actor.info.sprite = temp;
             actor.info.damage = damage;
-            actor.info.damageType = "null";
-            actor.info.effects = new List<string>();
 
             projectileInitialization(actor);
 
