@@ -5,6 +5,7 @@ using Megaman.Actors;
 using Megaman.Actors.Viruses;
 using Megaman.Actors.Navis;
 using Megaman.Chips;
+using Megaman.Overworld;
 using Megaman.Projectiles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;

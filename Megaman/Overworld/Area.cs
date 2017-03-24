@@ -15,7 +15,7 @@ using Microsoft.Xna.Framework.Media;
 using CustomExtensions;
 using System.IO;
 
-namespace Megaman
+namespace Megaman.Overworld
 {
     /// <summary>
     /// This is the main type for your game
