@@ -30,6 +30,8 @@ namespace Megaman
         Stage stage;
         Custom custom;
 
+        Area ACDC1;
+
         SoundEffect charge, chargeComplete;
         bool playedCharge, playedChargeComplete;
 
@@ -78,6 +80,9 @@ namespace Megaman
             virus.Add(new Mettaur2(attackTypes));
             virus.Add(new MettaurΩ(attackTypes));
 
+            ACDC1 = new Area();
+            ACDC1.loadMap("ACDC1.txt");
+
             base.Initialize();
         }
 
@@ -106,6 +111,8 @@ namespace Megaman
 
             charge = Content.Load<SoundEffect>("soundFX/battle/charge");
             chargeComplete = Content.Load<SoundEffect>("soundFX/battle/chargeComplete");
+
+            ACDC1.loadTileset("ACDC", Content);
 
             newGame();
 
@@ -238,6 +245,8 @@ namespace Megaman
 
             //Draw this last, we want this to be on top of everything
             custom.Draw(spriteBatch, screenSize);
+
+            ACDC1.Draw(spriteBatch, screenSize);
 
             spriteBatch.End();
 
