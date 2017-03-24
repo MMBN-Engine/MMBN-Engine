@@ -57,45 +57,9 @@ namespace Megaman.Actors.Navis
 
         public override void styleChange(String Element, String Style)
         {
-            AquaBody = false;
-            ElecBody = false;
-            FireBody = false;
-            WoodBody = false;
+            palette2 = (List<Color>)typeof(MegaMan).GetField(Element).GetValue(this);
 
-            if (Element == "aqua")
-            {
-                AquaBody = true;
-                palette2 = Aqua;
-            }
-            
-            if (Element == "elec")
-            {
-                ElecBody = true;
-                palette2 = Elec;
-            }
-
-            if (Element == "wood")
-            {
-                WoodBody = true;
-                palette2 = Wood;
-            }
-
-            if (Element == "fire")
-            {
-                FireBody = true;
-                palette2 = Heat;
-            }
-
-            if (Element == "Null")
-            {
-                palette2 = Null;
-            }
-
-            staticSprite.map = staticSprite.map.changeColor(palette1, palette2);
-            moveSprite.map = moveSprite.map.changeColor(palette1, palette2);
-            busterSprite.map = busterSprite.map.changeColor(palette1, palette2);
-            foreach (Animation foo in attackSprites) foo.map = foo.map.changeColor(palette1, palette2);
-            palette1 = palette2;
+            base.styleChange(Element, Style);
 
         }
     }           

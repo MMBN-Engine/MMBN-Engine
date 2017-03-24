@@ -121,7 +121,25 @@ namespace Megaman.Actors.Navis
             attackTypes.MegaBuster(this, Attack);
         }
 
-        public virtual void styleChange(String Element, String Style) { }
+        public virtual void styleChange(String Element, String Style)
+        {
+            AquaBody = false;
+            ElecBody = false;
+            FireBody = false;
+            WoodBody = false;
+
+            if (Element == "Aqua") AquaBody = true;
+            if (Element == "Elec") ElecBody = true;
+            if (Element == "Wood") WoodBody = true;
+            if (Element == "Heat") FireBody = true;
+            
+            staticSprite.map = staticSprite.map.changeColor(palette1, palette2);
+            moveSprite.map = moveSprite.map.changeColor(palette1, palette2);
+            busterSprite.map = busterSprite.map.changeColor(palette1, palette2);
+            foreach (Animation foo in attackSprites) foo.map = foo.map.changeColor(palette1, palette2);
+            palette1 = palette2;
+        }
+
         public virtual void chargedAttack() { }
     }
 }
