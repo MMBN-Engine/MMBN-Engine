@@ -246,7 +246,7 @@ namespace Megaman
             //Draw this last, we want this to be on top of everything
             custom.Draw(spriteBatch, screenSize);
 
-            ACDC1.Draw(spriteBatch, screenSize);
+            if (debug) debugDraw();
 
             spriteBatch.End();
 
