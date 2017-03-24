@@ -151,55 +151,13 @@ namespace Megaman
             if (debug) debugCommands();
 
             //Custom screen commands
-            if (custom.open)
-            {
-                if (JustPressed(Keys.Space)) custom.Select();
-                if (JustPressed(Keys.Z) | JustPressed(Keys.X)) custom.unSelect();
-                if (moveKey() != new Vector2(0, 0)) custom.moveCursor(moveKey());
-            }
+            if (custom.open) customScreenCommands();
 
             //Only run these during battle
             if (custom.closed)
             {
-                if (JustPressed(Keys.Space) && custom.custom == custom.customMax)
-                    custom.Open();
 
-                if (moveKey() != new Vector2(0, 0)) navi.Move(moveKey());
-
-                if (JustPressed(Keys.Z)) navi.Buster(); 
-                if (JustPressed(Keys.X) && navi.chips.Count() > 0 && navi.canAttack())
-                {
-                    navi.chips[0].Use(navi);
-                    navi.chips.RemoveAt(0);
-                }
-
-                //Does a charged attack                
-                if (IsHeld(Keys.Z))
-                {
-                    if (!(navi.charged | navi.isAttacking))
-                    {
-                        navi.isCharging = true;
-                        if (!playedCharge)
-                        {
-                            charge.Play();
-                            playedCharge = true;
-                        }
-                    }
-                    if (!playedChargeComplete && navi.charged)
-                    {
-                        playedChargeComplete = true;
-                        chargeComplete.Play();
-                    }
-                }
-                
-                if (IsReleased(Keys.Z))
-                {
-                    if (navi.charged) navi.chargedAttack();
-                    playedCharge = false;
-                    playedChargeComplete = false;
-                    navi.isCharging = false;
-                    navi.charged = false;
-                }
+                battleCommands();
 
                 foreach (Actor foo in stage.actorArray)
                 {
@@ -365,6 +323,56 @@ namespace Megaman
 
             custom.Initialize(Content, navi);
             stage.Initialize(Content);
+        }
+
+        public void customScreenCommands()
+        {
+            if (JustPressed(Keys.Space)) custom.Select();
+            if (JustPressed(Keys.Z) | JustPressed(Keys.X)) custom.unSelect();
+            if (moveKey() != new Vector2(0, 0)) custom.moveCursor(moveKey());
+        }
+
+        public void battleCommands()
+        {
+            if (JustPressed(Keys.Space) && custom.custom == custom.customMax)
+                custom.Open();
+
+            if (moveKey() != new Vector2(0, 0)) navi.Move(moveKey());
+
+            if (JustPressed(Keys.Z)) navi.Buster();
+            if (JustPressed(Keys.X) && navi.chips.Count() > 0 && navi.canAttack())
+            {
+                navi.chips[0].Use(navi);
+                navi.chips.RemoveAt(0);
+            }
+
+            //Does a charged attack                
+            if (IsHeld(Keys.Z))
+            {
+                if (!(navi.charged | navi.isAttacking))
+                {
+                    navi.isCharging = true;
+                    if (!playedCharge)
+                    {
+                        charge.Play();
+                        playedCharge = true;
+                    }
+                }
+                if (!playedChargeComplete && navi.charged)
+                {
+                    playedChargeComplete = true;
+                    chargeComplete.Play();
+                }
+            }
+
+            if (IsReleased(Keys.Z))
+            {
+                if (navi.charged) navi.chargedAttack();
+                playedCharge = false;
+                playedChargeComplete = false;
+                navi.isCharging = false;
+                navi.charged = false;
+            }
         }
 
     }
