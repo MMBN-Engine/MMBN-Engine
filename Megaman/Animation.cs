@@ -78,12 +78,11 @@ namespace Megaman
                     active = false;
                 elapsedTime = 0;
             }
-
-            frame = new Rectangle(currentFrame * frameWidth, 0, frameWidth, frameHeight);
         }
        
         public void Draw(SpriteBatch spriteBatch, Vector2 position, float resolution)
         {
+            frame = new Rectangle(currentFrame * frameWidth, 0, frameWidth, frameHeight);
             if (flip)
                 spriteBatch.Draw(texture: map, position: (position - origin) * resolution, sourceRectangle: frame,
                     color: Color.White, scale: new Vector2(1, 1) * resolution,
