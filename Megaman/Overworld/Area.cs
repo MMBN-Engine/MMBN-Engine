@@ -133,7 +133,7 @@ namespace Megaman.Overworld
                 string[] csv = lines[j].Split(';');
                 for (int i = 0; i < mapArray.GetLength(0); i++)
                 {
-                    mapArray[i, j] = csv[i];
+                    mapArray[i, j] = csv[i].Replace(" ","");
                 }
             }
         }
