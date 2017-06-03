@@ -59,26 +59,23 @@ namespace Megaman.Overworld
             tileHeight = 16;
         }
 
-        public void loadTileset(string tileset, ContentManager content)
+        public void loadTileset(Tileset tileset)
         {
-            String path = "maps/tilesets/" + tileset;
-            int spriteWidth = 64;
+            square1 = tileset.square1;
+            square2 = tileset.square2;
+            square3 = tileset.square3;
+            square4 = tileset.square4;
 
-            square1.Initialize(content.Load<Texture2D>(path + "/square1"), new Vector2(0, 0), spriteWidth, 15, false);
-            square2.Initialize(content.Load<Texture2D>(path + "/square2"), new Vector2(0, 0), spriteWidth, 15, false);
-            square3.Initialize(content.Load<Texture2D>(path + "/square3"), new Vector2(0, 0), spriteWidth, 15, false);
-            square4.Initialize(content.Load<Texture2D>(path + "/square4"), new Vector2(0, 0), spriteWidth, 15, false);
+            corner1 = tileset.corner1;
+            corner2 = tileset.corner2;
 
-            corner1.Initialize(content.Load<Texture2D>(path + "/corner1"), new Vector2(0, 0), spriteWidth, 15, false);
-            corner2.Initialize(content.Load<Texture2D>(path + "/corner2"), new Vector2(0, 0), spriteWidth, 15, false);
+            walkse1 = tileset.walkse1;
+            walksw1 = tileset.walksw1;
+            walkne1 = tileset.walkne1;
+            walknw1 = tileset.walknw1;
 
-            walkse1.Initialize(content.Load<Texture2D>(path + "/walkse1"), new Vector2(0, 0), spriteWidth, 15, false);
-            walksw1.Initialize(content.Load<Texture2D>(path + "/walksw1"), new Vector2(0, 0), spriteWidth, 15, false);
-            walkne1.Initialize(content.Load<Texture2D>(path + "/walkne1"), new Vector2(0, 0), spriteWidth, 15, false);
-            walknw1.Initialize(content.Load<Texture2D>(path + "/walknw1"), new Vector2(0, 0), spriteWidth, 15, false);
-
-            walkup1.Initialize(content.Load<Texture2D>(path + "/walkup1"), new Vector2(0, 0), spriteWidth, 15, false);
-            walkdown1.Initialize(content.Load<Texture2D>(path + "/walkdown1"), new Vector2(0, 0), spriteWidth, 15, false);
+            walkup1 = tileset.walkup1;
+            walkdown1 = tileset.walkdown1;
         }
 
         //Inefficient, eventually will want to change so it only draws what we need
@@ -185,7 +182,7 @@ namespace Megaman.Overworld
 
         public void loadMap(string fileName)
         {
-            string[] lines = File.ReadAllLines("Content/maps/" + fileName);
+            string[] lines = File.ReadAllLines("Content/areas/maps/" + fileName);
             mapArray = new string[lines[0].Split(';').Count(), lines.Count()];
 
             for (int j = 0; j < mapArray.GetLength(1); j++)

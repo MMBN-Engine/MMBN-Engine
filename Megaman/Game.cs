@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using Megaman.Actors;
 using Megaman.Actors.Viruses;
 using Megaman.Actors.Navis;
 using Megaman.Chips;
 using Megaman.Overworld;
 using Megaman.Projectiles;
+using Microsoft.CodeAnalysis.CSharp.Scripting;
+using Microsoft.CodeAnalysis.Scripting;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
@@ -31,10 +34,15 @@ namespace Megaman
         Stage stage;
         Custom custom;
 
-        Area ACDC1;
+        Area currentArea, ACDC1;
+        List<Area> areaList;
+        Dictionary<string, int> areaKey;
+        List<Tileset> tilesetList;
+        Dictionary<string, int> tilesetKey;
 
         SoundEffect charge, chargeComplete;
         bool playedCharge, playedChargeComplete;
+        bool inBattle;
 
         Song song;
 
@@ -46,7 +54,9 @@ namespace Megaman
         
         Navi navi;
         List<Virus> virus;
-        
+
+        ScriptOptions scriptOptions;  //Options for scripting engine
+
         public Game()
         {
             screenSize = 2;
@@ -55,7 +65,7 @@ namespace Megaman
             graphics.PreferredBackBufferWidth = (int) (240 * screenSize);
             graphics.PreferredBackBufferHeight = (int) (160 * screenSize);
             Window.Title = "MegaMan Battle Network";
-
+            
             debug = true;
         }
 
@@ -74,8 +84,6 @@ namespace Megaman
             stage = new Stage();
             custom = new Custom();
             
-            navi = new MegaMan(attackTypes, 100);
-
             virus = new List<Virus>();
             virus.Add(new Mettaur(attackTypes));
             virus.Add(new Mettaur2(attackTypes));
@@ -83,6 +91,11 @@ namespace Megaman
 
             ACDC1 = new Area();
             ACDC1.loadMap("ACDC1.txt");
+            currentArea = ACDC1;
+
+            navi = new MegaMan(attackTypes, 100, ACDC1);
+
+            //inBattle = true;
 
             base.Initialize();
         }
@@ -110,10 +123,14 @@ namespace Megaman
             MediaPlayer.Play(song);
             MediaPlayer.IsRepeating = true;
 
+            tilesetList = new List<Tileset>();
+            tilesetKey = new Dictionary<string, int>();
+            loadTilesetsFromFile();
+
             charge = Content.Load<SoundEffect>("soundFX/battle/charge");
             chargeComplete = Content.Load<SoundEffect>("soundFX/battle/chargeComplete");
 
-            ACDC1.loadTileset("ACDC", Content);
+            ACDC1.loadTileset(getTileset("ACDC"));
 
             newGame();
 
@@ -150,24 +167,32 @@ namespace Megaman
 
             if (debug) debugCommands();
 
-            //Custom screen commands
-            if (custom.open) customScreenCommands();
-
-            //Only run these during battle
-            if (custom.closed)
+            if (inBattle)
             {
 
-                battleCommands();
+                //Custom screen commands
+                if (custom.open) customScreenCommands();
 
-                foreach (Actor foo in stage.actorArray)
+                //Only run these during battle
+                if (custom.closed)
                 {
-                    if (foo!=null) foo.Update(gameTime);
+
+                    battleCommands();
+
+                    foreach (Actor foo in stage.actorArray)
+                    {
+                        if (foo != null) foo.Update(gameTime);
+                    }
+
+                    stage.Update(gameTime);
                 }
 
-                stage.Update(gameTime);
+                custom.Update(gameTime);
             }
-
-            custom.Update(gameTime);
+            else
+            {
+                if (overworldMoveKey().Length() != 0) navi.overWorldMove(overworldMoveKey());
+            }
 
             base.Update(gameTime);
         }
@@ -182,28 +207,36 @@ namespace Megaman
 
             spriteBatch.Begin();
 
-            //Draws the custom bar and hp windom (maybe emotion window later)
-            //ONly the background should be drawed before this
-            custom.drawBars(spriteBatch, screenSize);
-            
-            stage.Draw(spriteBatch, screenSize);
-
-            foreach (Actor foo in stage.actorArray)
+            if (inBattle)
             {
-                if (foo != null) foo.Draw(spriteBatch, screenSize);
+                //Draws the custom bar and hp windom (maybe emotion window later)
+                //ONly the background should be drawed before this
+                custom.drawBars(spriteBatch, screenSize);
+
+                stage.Draw(spriteBatch, screenSize);
+
+                foreach (Actor foo in stage.actorArray)
+                {
+                    if (foo != null) foo.Draw(spriteBatch, screenSize);
+                }
+
+                foreach (Projectile foo in stage.projectileList)
+                    foo.Draw(spriteBatch, screenSize);
+
+                //Draw effects on top of actors
+                for (int i = 0; i < stage.stageEffects.effect.Count; i++)
+                {
+                    stage.stageEffects.effect[i].Draw(spriteBatch, stage.stageEffects.location[i], screenSize);
+                }
+
+                //Draw this last, we want this to be on top of everything
+                custom.Draw(spriteBatch, screenSize);
             }
-
-            foreach (Projectile foo in stage.projectileList)
-                foo.Draw(spriteBatch, screenSize);
-
-            //Draw effects on top of actors
-            for (int i = 0; i < stage.stageEffects.effect.Count; i++)
+            else
             {
-                stage.stageEffects.effect[i].Draw(spriteBatch, stage.stageEffects.location[i], screenSize);
+                currentArea.Draw(spriteBatch, screenSize);
+                navi.overWorldDraw(spriteBatch, screenSize);
             }
-
-            //Draw this last, we want this to be on top of everything
-            custom.Draw(spriteBatch, screenSize);
 
             if (debug) debugDraw();
 
@@ -270,6 +303,18 @@ namespace Megaman
             if (JustPressed(Keys.Up)) return new Vector2(0, -1);
             if (JustPressed(Keys.Down)) return new Vector2(0, 1);
             else return new Vector2(0, 0);
+        }
+
+        public Vector2 overworldMoveKey()
+        {
+            Vector2 moveVector = new Vector2();
+
+            if (IsHeld(Keys.Left)) moveVector.X = -1;
+            if (IsHeld(Keys.Right)) moveVector.X = 1;
+            if (IsHeld(Keys.Up)) moveVector.Y = -1;
+            if (IsHeld(Keys.Down)) moveVector.Y = 1;
+
+            return moveVector;
         }
 
         public void newGame()
@@ -373,6 +418,57 @@ namespace Megaman
                 navi.isCharging = false;
                 navi.charged = false;
             }
+        }
+
+        void loadTilesetsFromFile()
+        {
+            string name;
+            int originx, originy;
+            int spriteWidth, tileWidth, tileHeight;
+
+            string script = new StreamReader("Content/areas/tilesets.txt").ReadToEnd();
+            ScriptState state = parse(script);
+
+            for (int i = 0; i < state.Variables.Count(); i++)
+            {
+                ScriptVariable v = state.Variables[i];
+
+                name = (string) getScriptValue("name", v);
+
+                originx = (int) getScriptValue("originx", v);
+                originy = (int) getScriptValue("originy", v);
+
+                spriteWidth =(int) getScriptValue("spriteWidth", v);
+                tileWidth =  (int) getScriptValue("tileWidth", v);
+                tileHeight = (int) getScriptValue("tileHeight", v);
+
+                tilesetList.Add(new Tileset(name, new Vector2(originx, originy), spriteWidth,
+                    tileWidth, tileHeight, Content));
+                tilesetKey.Add(name, i);
+            }
+
+            string test = "";
+        }
+
+        Tileset getTileset(string key)
+        {
+            return tilesetList[tilesetKey[key]];
+        }
+
+        ScriptState parse(string script)
+        {
+            List<string> split = script.Split('{').ToList();
+            split.RemoveAll(String.IsNullOrWhiteSpace);
+
+            ScriptState state = null;
+
+            CSharpScript.RunAsync(@script).ContinueWith(s => state = s.Result).Wait();
+            return state;
+        }
+
+        object getScriptValue(string field, ScriptVariable v)
+        {
+            return v.Value.GetType().GetProperty(field).GetValue(v.Value);
         }
 
     }

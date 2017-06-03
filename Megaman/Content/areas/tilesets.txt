@@ -1,0 +1,8 @@
+var ACDC = new {
+	name = "ACDC",
+	originx = 0,
+	originy = 0,
+	spriteWidth = 64, 
+	tileWidth = 32,
+	tileHeight = 16
+};

@@ -1715,7 +1715,7 @@
 /processorParam:Quality=Best
 /build:soundFX/battle/heater.ogg
 
-#begin maps/tilesets/ACDC/square1.png
+#begin sprites\navi\megaman\overworld\standing
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1725,9 +1725,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:maps/tilesets/ACDC/square1.png
+/build:sprites\navi\megaman\overworld\standing
 
-#begin maps/tilesets/ACDC/square2.png
+#begin areas/tilesets/ACDC/ACDC1.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1737,9 +1737,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:maps/tilesets/ACDC/square2.png
+/build:areas/tilesets/ACDC/ACDC1.png
 
-#begin maps/tilesets/ACDC/square3.png
+#begin areas/tilesets/ACDC/corner1.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1749,9 +1749,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:maps/tilesets/ACDC/square3.png
+/build:areas/tilesets/ACDC/corner1.png
 
-#begin maps/tilesets/ACDC/corner1.png
+#begin areas/tilesets/ACDC/corner2.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1761,9 +1761,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:maps/tilesets/ACDC/corner1.png
+/build:areas/tilesets/ACDC/corner2.png
 
-#begin maps/tilesets/ACDC/corner2.png
+#begin areas/tilesets/ACDC/square1.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1773,9 +1773,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:maps/tilesets/ACDC/corner2.png
+/build:areas/tilesets/ACDC/square1.png
 
-#begin maps/tilesets/ACDC/square4.png
+#begin areas/tilesets/ACDC/square2.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1785,9 +1785,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:maps/tilesets/ACDC/square4.png
+/build:areas/tilesets/ACDC/square2.png
 
-#begin maps/tilesets/ACDC/walkse1.png
+#begin areas/tilesets/ACDC/square3.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1797,9 +1797,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:maps/tilesets/ACDC/walkse1.png
+/build:areas/tilesets/ACDC/square3.png
 
-#begin maps/tilesets/ACDC/walkne1.png
+#begin areas/tilesets/ACDC/square4.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1809,9 +1809,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:maps/tilesets/ACDC/walkne1.png
+/build:areas/tilesets/ACDC/square4.png
 
-#begin maps/tilesets/ACDC/walknw1.png
+#begin areas/tilesets/ACDC/template.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1821,9 +1821,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:maps/tilesets/ACDC/walknw1.png
+/build:areas/tilesets/ACDC/template.png
 
-#begin maps/tilesets/ACDC/walksw1.png
+#begin areas/tilesets/ACDC/walkdown1.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1833,9 +1833,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:maps/tilesets/ACDC/walksw1.png
+/build:areas/tilesets/ACDC/walkdown1.png
 
-#begin maps/tilesets/ACDC/walkdown1.png
+#begin areas/tilesets/ACDC/walkne1.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1845,9 +1845,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:maps/tilesets/ACDC/walkdown1.png
+/build:areas/tilesets/ACDC/walkne1.png
 
-#begin maps/tilesets/ACDC/walkup1.png
+#begin areas/tilesets/ACDC/walknw1.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1857,5 +1857,41 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:maps/tilesets/ACDC/walkup1.png
+/build:areas/tilesets/ACDC/walknw1.png
+
+#begin areas/tilesets/ACDC/walkse1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:areas/tilesets/ACDC/walkse1.png
+
+#begin areas/tilesets/ACDC/walksw1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:areas/tilesets/ACDC/walksw1.png
+
+#begin areas/tilesets/ACDC/walkup1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:areas/tilesets/ACDC/walkup1.png
 
