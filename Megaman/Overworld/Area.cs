@@ -31,7 +31,8 @@ namespace Megaman.Overworld
         int tileHeight;
         string[,] mapArray;  //For procedural generation of maps
 
-        Vector2 drawLocation;
+        public Vector2 drawLocation;
+        public Vector2 currentTile;
 
         public Area()
         {
@@ -51,30 +52,33 @@ namespace Megaman.Overworld
             walkup1 = new Animation();
             walkdown1 = new Animation();
 
-            drawLocation = new Vector2();
+            drawLocation = new Vector2(120, 80); //Puts us in the center of the first tile
+            currentTile = new Vector2();
 
-            tileWidth = 64;
+            tileWidth = 32;
             tileHeight = 16;
         }
 
         public void loadTileset(string tileset, ContentManager content)
         {
             String path = "maps/tilesets/" + tileset;
-            square1.Initialize(content.Load<Texture2D>(path + "/square1"), new Vector2(0, 0), tileWidth, 15, false);
-            square2.Initialize(content.Load<Texture2D>(path + "/square2"), new Vector2(0, 0), tileWidth, 15, false);
-            square3.Initialize(content.Load<Texture2D>(path + "/square3"), new Vector2(0, 0), tileWidth, 15, false);
-            square4.Initialize(content.Load<Texture2D>(path + "/square4"), new Vector2(0, 0), tileWidth, 15, false);
+            int spriteWidth = 64;
 
-            corner1.Initialize(content.Load<Texture2D>(path + "/corner1"), new Vector2(0, 0), tileWidth, 15, false);
-            corner2.Initialize(content.Load<Texture2D>(path + "/corner2"), new Vector2(0, 0), tileWidth, 15, false);
+            square1.Initialize(content.Load<Texture2D>(path + "/square1"), new Vector2(0, 0), spriteWidth, 15, false);
+            square2.Initialize(content.Load<Texture2D>(path + "/square2"), new Vector2(0, 0), spriteWidth, 15, false);
+            square3.Initialize(content.Load<Texture2D>(path + "/square3"), new Vector2(0, 0), spriteWidth, 15, false);
+            square4.Initialize(content.Load<Texture2D>(path + "/square4"), new Vector2(0, 0), spriteWidth, 15, false);
 
-            walkse1.Initialize(content.Load<Texture2D>(path + "/walkse1"), new Vector2(0, 0), tileWidth, 15, false);
-            walksw1.Initialize(content.Load<Texture2D>(path + "/walksw1"), new Vector2(0, 0), tileWidth, 15, false);
-            walkne1.Initialize(content.Load<Texture2D>(path + "/walkne1"), new Vector2(0, 0), tileWidth, 15, false);
-            walknw1.Initialize(content.Load<Texture2D>(path + "/walknw1"), new Vector2(0, 0), tileWidth, 15, false);
+            corner1.Initialize(content.Load<Texture2D>(path + "/corner1"), new Vector2(0, 0), spriteWidth, 15, false);
+            corner2.Initialize(content.Load<Texture2D>(path + "/corner2"), new Vector2(0, 0), spriteWidth, 15, false);
 
-            walkup1.Initialize(content.Load<Texture2D>(path + "/walkup1"), new Vector2(0, 0), tileWidth, 15, false);
-            walkdown1.Initialize(content.Load<Texture2D>(path + "/walkdown1"), new Vector2(0, 0), tileWidth, 15, false);
+            walkse1.Initialize(content.Load<Texture2D>(path + "/walkse1"), new Vector2(0, 0), spriteWidth, 15, false);
+            walksw1.Initialize(content.Load<Texture2D>(path + "/walksw1"), new Vector2(0, 0), spriteWidth, 15, false);
+            walkne1.Initialize(content.Load<Texture2D>(path + "/walkne1"), new Vector2(0, 0), spriteWidth, 15, false);
+            walknw1.Initialize(content.Load<Texture2D>(path + "/walknw1"), new Vector2(0, 0), spriteWidth, 15, false);
+
+            walkup1.Initialize(content.Load<Texture2D>(path + "/walkup1"), new Vector2(0, 0), spriteWidth, 15, false);
+            walkdown1.Initialize(content.Load<Texture2D>(path + "/walkdown1"), new Vector2(0, 0), spriteWidth, 15, false);
         }
 
         //Inefficient, eventually will want to change so it only draws what we need
@@ -113,12 +117,68 @@ namespace Megaman.Overworld
             else return null;
         }
 
+        //Looks at tiles and seeds if we can move where we want to
+        public void areaMove(Vector2 move)
+        {
+            Vector2 step = new Vector2(tileWidth / tileHeight * move.X, move.Y);
+            step.Normalize();
+            step = 2 * step;
+            step = drawLocation - step;
+
+            // Check if we will move outside bounding box
+            if (onTile(currentTile, step))  
+            {
+                drawLocation = step;
+            }
+            else if (onTile(currentTile + new Vector2(1,0), step))
+            {
+                drawLocation = step;
+                currentTile.X += 1;
+            }
+            else if (onTile(currentTile - new Vector2(1, 0), step))
+            {
+                drawLocation = step;
+                currentTile.X -= 1;
+            }
+            else if (onTile(currentTile + new Vector2(0, 1), step))
+            {
+                drawLocation = step;
+                currentTile.Y += 1;
+            }
+            else if (onTile(currentTile - new Vector2(0, 1), step))
+            {
+                drawLocation = step;
+                currentTile.Y -= 1;
+            }
+        }
+
+        //Checks to see if there is a tile at (i,j)
+        public bool tileExists(int i, int j)
+        {
+            if (i < 0 || j < 0 || i > mapArray.GetLength(0) || j > mapArray.GetLength(1))
+                return false;
+            string tileType = mapArray[i, j];
+            if (tileType == "") return false;
+            else return true;
+        }
+
+        //Checks to see if we are on a tile
+        public bool onTile(Vector2 tile, Vector2 position)
+        {
+            Vector2 delta = position + tileLocation((int)tile.X + 1, (int)tile.Y) 
+                - new Vector2(120, 80);
+            bool isTile = tileExists((int)tile.X, (int)tile.Y);
+            bool inTile = (Math.Abs(delta.X) / tileWidth + Math.Abs(delta.Y) / tileHeight <= 1);
+            if (isTile && inTile) return true;
+            else return false;
+        }
+
         //Finds the position to draw the tile in
         public Vector2 tileLocation(int i, int j)
         {
             Vector2 position = new Vector2();
-            position.X = (i - j) * tileWidth / 2;
-            position.Y = (i + j) * tileHeight;
+            position.X = (i - j - 1) * tileWidth;
+            position.Y = (i + j - 1) * tileHeight;
 
             return position;
         }

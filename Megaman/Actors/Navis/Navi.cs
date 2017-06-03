@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Megaman.Chips;
+using Megaman.Overworld;
 
 namespace Megaman.Actors.Navis
 {
@@ -16,6 +17,16 @@ namespace Megaman.Actors.Navis
         Animation chargeFull;
         public Chip[] chipFolder;
         public List<Chip> customFolder;
+
+        Area area;
+
+        public Animation standingSprite;
+        // 0 - back
+        // 1 - back right
+        // 2 - right
+        // 3 - front right
+        // 4 - front
+        public Vector2 facing; //Direction the navi is facing
 
         public int Custom;
 
@@ -29,7 +40,7 @@ namespace Megaman.Actors.Navis
         public Animation swordSprite;
         internal Vector2 swordLocation;
 
-        public Navi(AttackList attackTypes, int HP) : base(attackTypes)
+        public Navi(AttackList attackTypes, int HP, Area area) : base(attackTypes)
         {
             color = "red";
             this.HP = HP;
@@ -44,6 +55,8 @@ namespace Megaman.Actors.Navis
 
             Custom = 5;
 
+            this.area = area;
+
             chipFolder = new Chip[30];
             customFolder = new List<Chip>();
 
@@ -53,6 +66,11 @@ namespace Megaman.Actors.Navis
             busterSprite = new Animation();
             gunSprite = new Animation();
             swordSprite = new Animation();
+
+            standingSprite = new Animation();
+            standingSprite.active = false;  //This is not an animation, we can just use the frame commands to grab frames easier
+
+            facing = new Vector2(0, 1);
 
             attackFrame = new List<int>() { 0, 4, 0, 0 };
         }
@@ -137,7 +155,40 @@ namespace Megaman.Actors.Navis
             moveSprite.map = moveSprite.map.changeColor(palette1, palette2);
             busterSprite.map = busterSprite.map.changeColor(palette1, palette2);
             foreach (Animation foo in attackSprites) foo.map = foo.map.changeColor(palette1, palette2);
+
+            standingSprite.map = standingSprite.map.changeColor(palette1, palette2);
+
             palette1 = palette2;
+        }
+
+        public virtual void overWorldDraw(SpriteBatch spriteBatch, float resolution)
+        {
+            standingSprite.currentFrame = getStandingFrame();
+            standingSprite.Draw(spriteBatch, new Vector2(120, 80), resolution);
+        }
+
+        public virtual void overWorldMove(Vector2 move)
+        {
+            facing = move;
+            area.areaMove(move);
+        }
+
+        //Select appropriate frame for drawing
+        public int getStandingFrame()
+        {
+            if (facing.X == 0)
+            {
+                if (facing.Y == -1) return 0;
+                else return 4;
+            }
+            else
+            {
+                if (facing.X == -1) standingSprite.flip = true;
+                if (facing.X == 1) standingSprite.flip = false;
+                if (facing.Y == -1) return 1;
+                if (facing.Y == 1) return 3;
+                else return 2;
+            }
         }
 
         public virtual void chargedAttack() { }

@@ -6,13 +6,14 @@ using CustomExtensions;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Megaman.Overworld;
 
 namespace Megaman.Actors.Navis
 {    
     
     class NormalNavi : Navi
     {
-        public NormalNavi(AttackList attackTypes, int HP) : base(attackTypes, HP)
+        public NormalNavi(AttackList attackTypes, int HP, Area area) : base(attackTypes, HP, area)
         {
             armLocation = new Vector2(30, -32);
         }

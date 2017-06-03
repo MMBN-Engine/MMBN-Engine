@@ -6,6 +6,7 @@ using CustomExtensions;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Megaman.Overworld;
 
 namespace Megaman.Actors.Navis
 {
@@ -13,7 +14,7 @@ namespace Megaman.Actors.Navis
     {
         public List<Color> Aqua, Elec, Heat, Wood, Null;
 
-        public MegaMan(AttackList attackTypes, int HP) : base(attackTypes, HP)
+        public MegaMan(AttackList attackTypes, int HP, Area area) : base(attackTypes, HP, area)
         {
             armLocation = new Vector2(30, -32);
         }
@@ -35,6 +36,9 @@ namespace Megaman.Actors.Navis
                 new Vector2(-1, 3), 40, 30, false);
             busterSprite.Initialize(content.Load<Texture2D>("sprites/navi/megaman/busterShield"),
                 new Vector2(0, 3), 41, 30, false);
+
+            standingSprite.Initialize(content.Load<Texture2D>("sprites/navi/megaman/overworld/standing"),
+                new Vector2(11, 36), 22, 0, false);
 
             Null = content.Load<Texture2D>("sprites/navi/megaman/palettes/null").getPalette();
             Aqua = content.Load<Texture2D>("sprites/navi/megaman/palettes/aqua").getPalette();
