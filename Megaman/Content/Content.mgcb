@@ -1901,3 +1901,11 @@
 /processorParam:Quality=Best
 /build:music/network.ogg
 
+#begin font-yellow.png
+/importer:TextureImporter
+/processor:FontTextureProcessor
+/processorParam:FirstCharacter=@
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Color
+/build:font-yellow.png
+

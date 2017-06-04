@@ -31,7 +31,7 @@ namespace Megaman
 
         internal bool playedMaxSound;
 
-        SpriteFont font, fontBase, fontRed, fontGreen, fontGray;
+        SpriteFont font, fontBase, fontRed, fontGreen, fontGray, fontYellow;
 
         private Texture2D screen, hpDisplay, bar, color;
         public Texture2D nullElem, fireElem, elecElem, aquaElem, woodElem; 
@@ -82,11 +82,8 @@ namespace Megaman
             fireElem = content.Load<Texture2D>("sprites/custom/fireElem");
             woodElem = content.Load<Texture2D>("sprites/custom/woodElem");
 
-            fontBase = content.Load<SpriteFont>("navi-hp");
-            fontRed = content.Load<SpriteFont>("navi-hp-red");
-            fontGreen = content.Load<SpriteFont>("navi-hp-green");
-            fontGray = content.Load<SpriteFont>("font-gray");
-
+            loadFonts(content);
+            
             chipCancel = content.Load<SoundEffect>("soundFX/custom/chipCancel");
             chipChoose = content.Load<SoundEffect>("soundFX/custom/chipChoose");
             chipConfirm = content.Load<SoundEffect>("soundFX/custom/chipConfirm");
@@ -111,6 +108,15 @@ namespace Megaman
             this.navi = navi;
 
             resetChipArray();
+        }
+
+        public void loadFonts(ContentManager content)
+        {
+            fontBase = content.Load<SpriteFont>("navi-hp");
+            fontRed = content.Load<SpriteFont>("navi-hp-red");
+            fontGreen = content.Load<SpriteFont>("navi-hp-green");
+            fontGray = content.Load<SpriteFont>("font-gray");
+            fontYellow = content.Load<SpriteFont>("font-yellow");
         }
 
         public void Update(GameTime gameTime)
@@ -204,6 +210,10 @@ namespace Megaman
                     spriteBatch.Draw(element, new Vector2(25, 81) * resolution, 
                         scale: new Vector2(1, 1) * resolution, color: Color.White);
 
+                    spriteBatch.DrawString(fontYellow, chip.code, new Vector2(10, 83) * resolution,
+                            scale: resolution, color: Color.White, rotation: 0, origin: new Vector2(), effects: SpriteEffects.None,
+                            layerDepth: 0);
+
                     if (chip.attack != 0)
                     {
                         int length = (int)fontGray.MeasureString(chip.attack.ToString()).X;
@@ -217,27 +227,43 @@ namespace Megaman
                 //Draw chip icons and codes
                 for (int i = 0; i < Math.Min(navi.Custom, navi.customFolder.Count()); i++)
                 {
+                    Color chipColor;
+
                     if (i < 5)
                     {
+                        spriteBatch.DrawString(fontYellow, chipArray[i, 0].code, new Vector2(14 + 16 * i, 121) * resolution,
+                                scale: resolution / 2, color: Color.White, rotation: 0, origin: new Vector2(), effects: SpriteEffects.None,
+                                layerDepth: 0);
+
+                        if (canSelect(chipArray[i, 0])) chipColor = Color.White;
+                        else chipColor = Color.Gray;
+
                         if (!chipArray[i, 0].selected)
-                        {
+                        {                            
                             spriteBatch.Draw(chipArray[i, 0].icon,  new Vector2(9 + 16 * i, 105) * resolution,
-                                scale: new Vector2(1,1)* resolution, color: Color.White);
+                                scale: new Vector2(1,1)* resolution, color: chipColor);
                         }
                     }
                     else
                     {
+                        spriteBatch.DrawString(fontYellow, chipArray[i - 5, 1].code, new Vector2(14 + 16 * (i - 5), 145) * resolution,
+                                scale: resolution / 2, color: Color.White, rotation: 0, origin: new Vector2(), effects: SpriteEffects.None,
+                                layerDepth: 0);
+
+                        if (canSelect(chipArray[i, 0])) chipColor = Color.White;
+                        else chipColor = Color.Gray;
+
                         if (!chipArray[i - 5, 1].selected)
                         {
-                            spriteBatch.Draw(chipArray[i - 5, 1].icon, new Vector2(9 + 16 * i, 129) * resolution,
-                                scale: new Vector2(1,1) * resolution, color: Color.White);
+                            spriteBatch.Draw(chipArray[i - 5, 1].icon, new Vector2(9 + 16 * (i - 5), 129) * resolution,
+                                scale: new Vector2(1,1) * resolution, color: chipColor);
                         }
                     }
                 }
 
                 //Draw selected chips
                 for (int i = 0; i < navi.chips.Count(); i++)
-                    spriteBatch.Draw(navi.chips[i].icon, new Vector2(98, 26 + 16 * i) * resolution, 
+                    spriteBatch.Draw(navi.chips[i].icon, new Vector2(97, 25 + 16 * i) * resolution, 
                         scale: new Vector2(1, 1) * resolution, color: Color.White);
 
                 //Draw cursor
@@ -301,7 +327,7 @@ namespace Megaman
 
             if (chip != null)
             {
-                if (cursorPosition.X < 5 && !chip.selected)
+                if (cursorPosition.X < 5 && !chip.selected && canSelect(chip))
                 {
                     navi.chips.Add(chip);
                     chip.selected = true;
@@ -325,6 +351,34 @@ namespace Megaman
                 chipCancel.Play();
             }
         }
+
+        //Check to see if we can use the chip
+        //@ is equal to *, the wildcard code
+        public bool canSelect(Chip chip)
+        {
+            int num = navi.chips.Count();
+
+            if (num == 0) return true;
+
+            List<string> codeList = new List<string>();
+            List<string> nameList = new List<string>();
+
+            foreach (Chip c in navi.chips)
+            {
+                codeList.Add(c.code);
+                nameList.Add(c.name);
+            }
+
+            List<string> code = codeList.Where(o => o != "@").ToList();
+            if (code.Count() == 0) return true; //All codes are *
+
+            bool test = codeList.Any(o => o != code[0] || o != "@");
+
+            if (!nameList.Any(o => o != nameList[0]) && chip.name == nameList[0]) return true;
+            if (!code.Any(o => o != code[0]) && (chip.code == code[0] || chip.code == "@")) return true;
+            else return false;
+        }
+
 
         //Draws the top chips off the deck
         internal void resetChipArray()

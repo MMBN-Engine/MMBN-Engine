@@ -37,9 +37,6 @@ namespace Megaman.Actors.Navis
             //This needs to be last, textures have to be initialized first so they are assigned correctly
             base.Initialize(content, position, stage);
 
-            attackSprites[1].Initialize(content.Load<Texture2D>("sprites/navi/megaman/sword"),
-                new Vector2(3, 53), 66, 30, false);
-
             busterSprite.Initialize(content.Load<Texture2D>("sprites/navi/megaman/busterGuts"),
                 new Vector2(-1, 3), 40, 30, false);
             busterSprite.Initialize(content.Load<Texture2D>("sprites/navi/megaman/busterShield"),
