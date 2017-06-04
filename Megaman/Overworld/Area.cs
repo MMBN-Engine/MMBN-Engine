@@ -122,7 +122,23 @@ namespace Megaman.Overworld
             step = 2 * step;
             step = drawLocation - step;
 
+            bool didMove = false;
+
             // Check if we will move outside bounding box
+            for (int i = -1; i <= 1; i++)
+            {
+                for (int j = -1; j <= 1; j++)
+                {
+                    Vector2 nextTile = new Vector2(i, j);
+                    if (onTile(currentTile + nextTile, step) && !didMove)
+                    {
+                        drawLocation = step;
+                        didMove = true;
+                        currentTile += nextTile;
+                    }
+                }
+            }
+
             if (onTile(currentTile, step))  
             {
                 drawLocation = step;
@@ -152,7 +168,7 @@ namespace Megaman.Overworld
         //Checks to see if there is a tile at (i,j)
         public bool tileExists(int i, int j)
         {
-            if (i < 0 || j < 0 || i > mapArray.GetLength(0) || j > mapArray.GetLength(1))
+            if (i < 0 || j < 0 || i >= mapArray.GetLength(0) || j >= mapArray.GetLength(1))
                 return false;
             string tileType = mapArray[i, j];
             if (tileType == "") return false;
