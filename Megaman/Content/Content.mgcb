@@ -1895,3 +1895,9 @@
 /processorParam:TextureFormat=Color
 /build:areas/tilesets/ACDC/walkup1.png
 
+#begin music/network.ogg
+/importer:OggImporter
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:music/network.ogg
+

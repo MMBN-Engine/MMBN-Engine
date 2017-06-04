@@ -44,7 +44,8 @@ namespace Megaman
         bool playedCharge, playedChargeComplete;
         bool inBattle;
 
-        Song song;
+        List<Song> songList;
+        Dictionary<string, int> songKey;
 
         bool debug;
 
@@ -118,13 +119,12 @@ namespace Megaman
             
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            song = Content.Load<Song>("music/battle");
+            loadSongsFromFile();
+            
             MediaPlayer.Volume = 0.2f;
-            MediaPlayer.Play(song);
+            MediaPlayer.Play(getSong("network"));
             MediaPlayer.IsRepeating = true;
 
-            tilesetList = new List<Tileset>();
-            tilesetKey = new Dictionary<string, int>();
             loadTilesetsFromFile();
 
             charge = Content.Load<SoundEffect>("soundFX/battle/charge");
@@ -420,8 +420,35 @@ namespace Megaman
             }
         }
 
+        void loadSongsFromFile()
+        {
+            songList = new List<Song>();
+            songKey = new Dictionary<string, int>();
+
+            string script = new StreamReader("Content/music/songs.txt").ReadToEnd();
+            ScriptState state = parse(script);
+
+            ScriptVariable v = state.Variables[0];
+            PropertyInfo[] p = v.Value.GetType().GetProperties();
+
+            for (int i = 0; i < p.GetLength(0); i++)
+            {
+                string s = (string)getScriptValue(p[i].Name, v);
+                songList.Add(Content.Load<Song>(s));
+                songKey.Add(p[i].Name, i);
+            }
+        }
+
+        Song getSong(string key)
+        {
+            return songList[songKey[key]];
+        }
+
         void loadTilesetsFromFile()
         {
+            tilesetList = new List<Tileset>();
+            tilesetKey = new Dictionary<string, int>();
+
             string name;
             int originx, originy;
             int spriteWidth, tileWidth, tileHeight;
@@ -446,8 +473,6 @@ namespace Megaman
                     tileWidth, tileHeight, Content));
                 tilesetKey.Add(name, i);
             }
-
-            string test = "";
         }
 
         Tileset getTileset(string key)

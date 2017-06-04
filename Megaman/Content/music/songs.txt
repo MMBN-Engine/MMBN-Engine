@@ -1,0 +1,4 @@
+var songs = new {
+	battle = "music/battle",
+	network = "music/network"
+};
