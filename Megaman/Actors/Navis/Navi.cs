@@ -28,6 +28,11 @@ namespace Megaman.Actors.Navis
         // 4 - front
         public Vector2 facing; //Direction the navi is facing
 
+        //Definitions for the loading the sprites
+        internal Vector2 origin;
+        internal int spriteWidth;
+        internal string folder;
+
         public int Custom;
 
         public int Attack, Rapid, Charge;
@@ -83,6 +88,23 @@ namespace Megaman.Actors.Navis
 
             //fix this sprite later, seems to be a little bit jerky, not a priority now
             chargeFull.Initialize(content.Load<Texture2D>("sprites/navi/charge-full"), new Vector2(10, 55), 64, 25, true);
+
+            loadBattleSprites(content);
+
+            }
+
+        private void loadBattleSprites(ContentManager content)
+        {
+            staticSprite.Initialize(content.Load<Texture2D>(folder + "navi"),
+                origin, spriteWidth, 0, true);
+
+            moveSprite.Initialize(content.Load<Texture2D>(folder + "move"),
+                origin, spriteWidth, 30, false);
+
+            attackSprites[0].Initialize(content.Load<Texture2D>(folder + "shoot"),
+                origin, spriteWidth, 30, false);
+            attackSprites[1].Initialize(content.Load<Texture2D>(folder + "sword"),
+                origin, spriteWidth, 30, false);
         }
 
         public override void Update(GameTime gameTime)

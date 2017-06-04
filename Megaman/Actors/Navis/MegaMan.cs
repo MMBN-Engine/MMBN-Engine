@@ -17,28 +17,14 @@ namespace Megaman.Actors.Navis
         public MegaMan(AttackList attackTypes, int HP, Area area) : base(attackTypes, HP, area)
         {
             armLocation = new Vector2(30, -32);
+
+            origin = new Vector2(3, 53);
+            spriteWidth = 66;
+            folder = "sprites/navi/megaman/";
         }
 
         public override void Initialize(ContentManager content, Vector2 position, Stage stage)
         {
-            staticSprite.Initialize(content.Load<Texture2D>("sprites/navi/megaman/navi"),
-                new Vector2(0, 46), 34, 0, true);
-
-            moveSprite.Initialize(content.Load<Texture2D>("sprites/navi/megaman/move"),
-                new Vector2(2, 46), 40, 20, false);
-
-            attackSprites[0].Initialize(content.Load<Texture2D>("sprites/navi/megaman/shoot"),
-                new Vector2(0, 46), 35, 30, false);
-            attackSprites[1].Initialize(content.Load<Texture2D>("sprites/navi/megaman/sword"),
-                new Vector2(3, 53), 66, 30, false);
-
-            busterSprite.Initialize(content.Load<Texture2D>("sprites/navi/megaman/busterGuts"),
-                new Vector2(-1, 3), 40, 30, false);
-            busterSprite.Initialize(content.Load<Texture2D>("sprites/navi/megaman/busterShield"),
-                new Vector2(0, 3), 41, 30, false);
-
-            standingSprite.Initialize(content.Load<Texture2D>("sprites/navi/megaman/overworld/standing"),
-                new Vector2(11, 36), 22, 0, false);
 
             Null = content.Load<Texture2D>("sprites/navi/megaman/palettes/null").getPalette();
             Aqua = content.Load<Texture2D>("sprites/navi/megaman/palettes/aqua").getPalette();
@@ -50,6 +36,17 @@ namespace Megaman.Actors.Navis
 
             //This needs to be last, textures have to be initialized first so they are assigned correctly
             base.Initialize(content, position, stage);
+
+            attackSprites[1].Initialize(content.Load<Texture2D>("sprites/navi/megaman/sword"),
+                new Vector2(3, 53), 66, 30, false);
+
+            busterSprite.Initialize(content.Load<Texture2D>("sprites/navi/megaman/busterGuts"),
+                new Vector2(-1, 3), 40, 30, false);
+            busterSprite.Initialize(content.Load<Texture2D>("sprites/navi/megaman/busterShield"),
+                new Vector2(0, 3), 41, 30, false);
+
+            standingSprite.Initialize(content.Load<Texture2D>("sprites/navi/megaman/overworld/standing"),
+                new Vector2(11, 36), 22, 0, false);
 
             //Need to redo attack sprites!, wrong palette!!!!       
         }
