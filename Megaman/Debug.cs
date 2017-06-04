@@ -22,7 +22,7 @@ namespace Megaman
     {
         public void debugDraw()
         {
-            ACDC1.Draw(spriteBatch, screenSize);
+            //ACDC1.Draw(spriteBatch, screenSize);
         }
 
         public void debugCommands()
@@ -41,11 +41,13 @@ namespace Megaman
             //if (JustPressed(Keys.T)) stage.setStage("Hole");
             //if (JustPressed(Keys.Q)) navi.AirShoe = true;
             //if (JustPressed(Keys.W)) navi.AirShoe = false;
-            if (JustPressed(Keys.E)) navi.styleChange("elec", "Bug");
-            if (JustPressed(Keys.A)) navi.styleChange("aqua", "Bug");
-            if (JustPressed(Keys.H)) navi.styleChange("fire", "Bug");
-            if (JustPressed(Keys.W)) navi.styleChange("wood", "Bug");
+            if (JustPressed(Keys.E)) navi.styleChange("Elec", "Bug");
+            if (JustPressed(Keys.A)) navi.styleChange("Aqua", "Bug");
+            if (JustPressed(Keys.H)) navi.styleChange("Heat", "Bug");
+            if (JustPressed(Keys.W)) navi.styleChange("Wood", "Bug");
             if (JustPressed(Keys.N)) navi.styleChange("Null", "Bug");
+
+            if (JustPressed(Keys.B)) battleStart();
 
             //if (JustPressed(Keys.U)) attack.doDamage(navi.position, 10, "fire", stage);
 
@@ -65,9 +67,9 @@ namespace Megaman
             navi.chipFolder[8] = new Heatcross("D");
             navi.chipFolder[9] = new Heatcross("D");
             navi.chipFolder[10] = new Bubblecross("S");
-            navi.chipFolder[11] = new Bubblecross("*");
-            navi.chipFolder[12] = new Bubbler("*");
-            navi.chipFolder[13] = new Bubbler("*");
+            navi.chipFolder[11] = new Bubblecross("@");
+            navi.chipFolder[12] = new Bubbler("@");
+            navi.chipFolder[13] = new Bubbler("@");
             navi.chipFolder[14] = new Bubbler("B");
             navi.chipFolder[15] = new Bubbler("B");
             navi.chipFolder[16] = new Bubbler("S");
@@ -82,8 +84,8 @@ namespace Megaman
             navi.chipFolder[25] = new Recover10("A");
             navi.chipFolder[26] = new Recover10("L");
             navi.chipFolder[27] = new Recover10("L");
-            navi.chipFolder[28] = new Attack10("*");
-            navi.chipFolder[29] = new Attack10("*");
+            navi.chipFolder[28] = new Attack10("@");
+            navi.chipFolder[29] = new Attack10("@");
         }
     }
 }

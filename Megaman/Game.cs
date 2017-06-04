@@ -96,8 +96,6 @@ namespace Megaman
 
             navi = new MegaMan(attackTypes, 100, ACDC1);
 
-            //inBattle = true;
-
             base.Initialize();
         }
 
@@ -133,8 +131,6 @@ namespace Megaman
             ACDC1.loadTileset(getTileset("ACDC"));
 
             newGame();
-
-            battleStart();
 
             //Content.Load<Texture2D>("sprites/navi/megaman/aqua").saveTexture("aqua2");
             //List<Color> Null = Content.Load<Texture2D>("sprites/navi/megaman/null").getPalette();
@@ -338,9 +334,9 @@ namespace Megaman
             navi.chipFolder[8] = new Vgun("D");
             navi.chipFolder[9] = new Vgun("D");
             navi.chipFolder[10] = new Sidegun("S");
-            navi.chipFolder[11] = new Airshot1("*");
-            navi.chipFolder[12] = new Airshot1("*");
-            navi.chipFolder[13] = new Airshot1("*");
+            navi.chipFolder[11] = new Airshot1("@");
+            navi.chipFolder[12] = new Airshot1("@");
+            navi.chipFolder[13] = new Airshot1("@");
             navi.chipFolder[14] = new Minibomb("B");
             navi.chipFolder[15] = new Minibomb("B");
             navi.chipFolder[16] = new Minibomb("S");
@@ -355,12 +351,16 @@ namespace Megaman
             navi.chipFolder[25] = new Recover10("A");
             navi.chipFolder[26] = new Recover10("L");
             navi.chipFolder[27] = new Recover10("L");
-            navi.chipFolder[28] = new Attack10("*");
-            navi.chipFolder[29] = new Attack10("*");
+            navi.chipFolder[28] = new Attack10("@");
+            navi.chipFolder[29] = new Attack10("@");
         }
 
         public void battleStart()
         {
+            inBattle = true;
+
+            MediaPlayer.Play(getSong("battle"));
+
             foreach (Chip foo in navi.chipFolder) foo.selected = false;
 
             navi.customFolder = navi.chipFolder.ToList();
