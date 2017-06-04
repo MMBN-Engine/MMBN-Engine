@@ -35,17 +35,14 @@ namespace Megaman
         Custom custom;
 
         Area currentArea, ACDC1;
-        List<Area> areaList;
-        Dictionary<string, int> areaKey;
-        List<Tileset> tilesetList;
-        Dictionary<string, int> tilesetKey;
+        Dictionary<string, Area> areaList;
+        Dictionary<string, Tileset> tilesetList;
 
         SoundEffect charge, chargeComplete;
         bool playedCharge, playedChargeComplete;
         bool inBattle;
-
-        List<Song> songList;
-        Dictionary<string, int> songKey;
+        
+        Dictionary<string, Song> songList;
 
         bool debug;
 
@@ -120,7 +117,7 @@ namespace Megaman
             loadSongsFromFile();
             
             MediaPlayer.Volume = 0.2f;
-            MediaPlayer.Play(getSong("network"));
+            MediaPlayer.Play(songList["network"]);
             MediaPlayer.IsRepeating = true;
 
             loadTilesetsFromFile();
@@ -128,7 +125,7 @@ namespace Megaman
             charge = Content.Load<SoundEffect>("soundFX/battle/charge");
             chargeComplete = Content.Load<SoundEffect>("soundFX/battle/chargeComplete");
 
-            ACDC1.loadTileset(getTileset("ACDC"));
+            ACDC1.loadTileset(tilesetList["ACDC"]);
 
             newGame();
 
@@ -359,7 +356,7 @@ namespace Megaman
         {
             inBattle = true;
 
-            MediaPlayer.Play(getSong("battle"));
+            MediaPlayer.Play(songList["battle"]);
 
             foreach (Chip foo in navi.chipFolder) foo.selected = false;
 
@@ -422,8 +419,7 @@ namespace Megaman
 
         void loadSongsFromFile()
         {
-            songList = new List<Song>();
-            songKey = new Dictionary<string, int>();
+            songList = new Dictionary<string, Song>();
 
             string script = new StreamReader("Content/music/songs.txt").ReadToEnd();
             ScriptState state = parse(script);
@@ -434,20 +430,13 @@ namespace Megaman
             for (int i = 0; i < p.GetLength(0); i++)
             {
                 string s = (string)getScriptValue(p[i].Name, v);
-                songList.Add(Content.Load<Song>(s));
-                songKey.Add(p[i].Name, i);
+                songList.Add(p[i].Name, Content.Load<Song>(s));
             }
-        }
-
-        Song getSong(string key)
-        {
-            return songList[songKey[key]];
         }
 
         void loadTilesetsFromFile()
         {
-            tilesetList = new List<Tileset>();
-            tilesetKey = new Dictionary<string, int>();
+            tilesetList = new Dictionary<string, Tileset>();
 
             string name;
             int originx, originy;
@@ -469,15 +458,9 @@ namespace Megaman
                 tileWidth =  (int) getScriptValue("tileWidth", v);
                 tileHeight = (int) getScriptValue("tileHeight", v);
 
-                tilesetList.Add(new Tileset(name, new Vector2(originx, originy), spriteWidth,
+                tilesetList.Add(name, new Tileset(name, new Vector2(originx, originy), spriteWidth,
                     tileWidth, tileHeight, Content));
-                tilesetKey.Add(name, i);
             }
-        }
-
-        Tileset getTileset(string key)
-        {
-            return tilesetList[tilesetKey[key]];
         }
 
         ScriptState parse(string script)
