@@ -14,7 +14,7 @@ namespace Megaman.Actors.Navis
     {
         public List<Color> Aqua, Elec, Heat, Wood, Null;
 
-        public MegaMan(AttackList attackTypes, int HP, Area area) : base(attackTypes, HP, area)
+        public MegaMan(int HP, Area area) : base(HP, area)
         {
             armLocation = new Vector2(30, -32);
 

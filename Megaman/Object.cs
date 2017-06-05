@@ -11,7 +11,7 @@ using Megaman.Actors;
 
 namespace Megaman
 {
-    class Object
+    public class Object
     {
         public Vector2 position;
         public string color;
@@ -135,10 +135,12 @@ namespace Megaman
         }
 
         //Find targets to apply damage to
-        public void doDamage(Vector2 position, int damage, string damageType, List<string> effects, Animation effectSprite)
+        public void doDamage(Vector2 position, int damage, List<string> damageType, List<string> effects, Animation effectSprite)
         {
             this.effectSprite = effectSprite;
             List<Vector2> targetList = new List<Vector2>();
+
+            if (effects == null) effects = new List<string>();
 
             if (effects.Contains("wide"))
             {
@@ -233,7 +235,7 @@ namespace Megaman
         }
 
         //Acutally apply the damage
-        public void applyDamage(Vector2 position, int damage, string damageType, List<string> effects)
+        public void applyDamage(Vector2 position, int damage, List<string> damageType, List<string> effects)
         {
             //Applies damage
             int damReturn = damage;
@@ -243,37 +245,44 @@ namespace Megaman
             //Checks body type
             if (target != null)
             {
-                if (target.AquaBody && damageType == "elec") damReturn += damage;
-                if (target.ElecBody && damageType == "wood") damReturn += damage;
-                if (target.FireBody && damageType == "aqua") damReturn += damage;
-                if (target.WoodBody && damageType == "fire") damReturn += damage;
+                foreach (string d in damageType)
+                {
+                    damReturn += (int)damageMod(target, d) * damage;
+                }
             }
 
-            //Checks stage type
-            if (panel == "Grass" && damageType == "fire")
+            //Gets damage modifier and effects from damage type
+            foreach (string d in damageType)
             {
-                damReturn += damage;
-                stage.setPanel(position, "null");
+                damReturn += (int)stage.damageMod(position, d) * damage;
+                Game.damageTypes[d].onHit(stage, position, panel);
             }
-            if (panel == "Lava" && damageType == "aqua")
-            {
-                damReturn += damage;
-                stage.setPanel(position, "null");
-            }
-            if ((panel == "Ice" | panel == "Metal") && damageType == "elec") damReturn += damage;
-            if (panel == "holy") damReturn = damReturn / 2;
+
+            if (panel == "Holy") damReturn = damReturn / 2;
 
             if (target != null) if ((target.Guard) & !(effects.Contains("Break"))) damReturn = 0;
 
-            //no friendly fire
+            //no friendly fire, but panel can do damage
             if (target != null)
             {
-                if (target.color != color)
+                if (target.color != color || effects.Contains("Panel"))
                 {
                     target.HP -= damReturn;
                     if (target.HP < 1) target.Delete();
                 }
             }
+        }
+
+        public float damageMod(Actor target, string damageType)
+        {
+            float mod = 0;
+
+            if (Game.damageTypes[damageType].damageMod == null) return mod;
+
+            foreach (KeyValuePair<String, float> entry in Game.damageTypes[damageType].damageMod)
+                if (target.Body[entry.Key]) mod += entry.Value;
+
+            return mod;
         }
     }
 }

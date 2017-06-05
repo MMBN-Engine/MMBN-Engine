@@ -13,7 +13,7 @@ namespace Megaman.Actors.Navis
     
     class HeelNavi : Navi
     {
-        public HeelNavi(AttackList attackTypes, int HP, Area area) : base(attackTypes, HP, area)
+        public HeelNavi(int HP, Area area) : base(HP, area)
         {
             armLocation = new Vector2(30, -32);
         }

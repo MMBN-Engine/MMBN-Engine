@@ -17,7 +17,7 @@ namespace Megaman.Actors.Viruses
         public bool didAttack;  //Lets us know if we did attack already, useful for virus ai
         SpriteFont HpDisplay;
 
-        public Virus(AttackList attackTypes) : base(attackTypes)
+        public Virus() : base()
         {
             color = "blue";
 

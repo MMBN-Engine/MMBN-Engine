@@ -11,8 +11,10 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Megaman
 {
-    class Stage
+    public class Stage
     {
+        public Dictionary<string, PanelType> panelDef;
+
         public string[,] PanelType;
         public string[,] Area;
         public int spriteWidth;
@@ -40,6 +42,8 @@ namespace Megaman
 
         public Stage() 
         {
+            panelDef = Game.panelTypes;
+
             stageEffects = new effectsList(new List<Animation>(), new List<Vector2>());
             projectileList = new List<Projectile>();
 
@@ -58,7 +62,7 @@ namespace Megaman
 
             for (int i = 0;i < width;++i)
                 for(int j = 0; j <height;j++)
-                    PanelType[i,j] = "null";
+                    PanelType[i,j] = "Null";
             
             for (int i = 0;i < width;++i)
                 for(int j = 0; j <height;j++)
@@ -90,30 +94,10 @@ namespace Megaman
                     else
                         numCode[i, j, 0] = 1;
 
+            //The first two indices are the red and blue panels
             for (int i = 0; i < width; ++i)
                 for (int j = 0; j < height; j++)
-                    if (PanelType[i, j] == "null")
-                        numCode[i, j, 1] = 2;
-                    else if (PanelType[i, j] == "Cracked")
-                        numCode[i, j, 1] = 3;
-                    else if (PanelType[i, j] == "Broken")
-                        numCode[i, j, 1] = 4;
-                    else if (PanelType[i, j] == "Grass")
-                        numCode[i, j, 1] = 5;
-                    else if (PanelType[i, j] == "Sand")
-                        numCode[i, j, 1] = 6;
-                    else if (PanelType[i, j] == "Metal")
-                        numCode[i, j, 1] = 7;
-                    else if (PanelType[i, j] == "Ice")
-                        numCode[i, j, 1] = 8;
-                    else if (PanelType[i, j] == "Swamp")
-                        numCode[i, j, 1] = 9;
-                    else if (PanelType[i, j] == "Lava")
-                        numCode[i, j, 1] = 10;
-                    else if (PanelType[i, j] == "Holy")
-                        numCode[i, j, 1] = 11;
-                    else if (PanelType[i, j] == "Hole")
-                        numCode[i, j, 1] = 12;
+                    numCode[i, j, 1] = panelDef[PanelType[i, j]].index + 2;
 
             return numCode;
         }
@@ -144,11 +128,20 @@ namespace Megaman
             for (int i = 0; i < projectileList.Count; i++) projectileList[i].Update(gameTime);
         }
 
-        public void setStage(string value)
+        public void setStage(string panelType)
         {
             for (int i = 0; i < width; ++i)
                 for (int j = 0; j < height; j++)
-                    PanelType[i, j] = value;
+                    setPanel(new Vector2(i, j), panelType);
+        }
+
+        public float damageMod(Vector2 position, string damageType)
+        {
+            string panel = getPanelType(position);
+
+            if (panelDef[panel].damageMod.ContainsKey(damageType))
+                return panelDef[panel].damageMod[damageType];
+            else return 0;
         }
 
         public void Draw(SpriteBatch spriteBatch, float resolution)
@@ -199,6 +192,8 @@ namespace Megaman
         public void setPanel(Vector2 position, string panelType)
         {
             PanelType[(int)position.X, (int)position.Y] = panelType;
+            if (getActor(position) != null)
+                getActor(position).onStep(getActor(position), panelType);
         }
 
         public virtual void addProjectile(Projectile projectile)

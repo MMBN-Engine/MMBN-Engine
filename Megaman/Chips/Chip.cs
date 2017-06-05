@@ -10,7 +10,7 @@ using Megaman.Actors.Navis;
 
 namespace Megaman.Chips
 {
-    class Chip
+    public class Chip
     {
         public string code;
         public string type;

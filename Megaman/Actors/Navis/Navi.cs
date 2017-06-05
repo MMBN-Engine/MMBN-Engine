@@ -11,7 +11,7 @@ using Megaman.Overworld;
 
 namespace Megaman.Actors.Navis
 {
-    class Navi : Actor
+    public class Navi : Actor
     {
         Animation charge;
         Animation chargeFull;
@@ -45,7 +45,7 @@ namespace Megaman.Actors.Navis
         public Animation swordSprite;
         internal Vector2 swordLocation;
 
-        public Navi(AttackList attackTypes, int HP, Area area) : base(attackTypes)
+        public Navi(int HP, Area area) : base()
         {
             color = "red";
             this.HP = HP;
@@ -163,16 +163,13 @@ namespace Megaman.Actors.Navis
 
         public virtual void styleChange(String Element, String Style)
         {
-            AquaBody = false;
-            ElecBody = false;
-            FireBody = false;
-            WoodBody = false;
+            foreach (KeyValuePair<string, DamageType> entry in Game.damageTypes)
+            {
+                if (!entry.Value.defaultDef) Body[entry.Key] = false;
+            }
 
-            if (Element == "Aqua") AquaBody = true;
-            if (Element == "Elec") ElecBody = true;
-            if (Element == "Wood") WoodBody = true;
-            if (Element == "Heat") FireBody = true;
-            
+            Body[Element] = true;
+
             staticSprite.map = staticSprite.map.changeColor(palette1, palette2);
             moveSprite.map = moveSprite.map.changeColor(palette1, palette2);
             busterSprite.map = busterSprite.map.changeColor(palette1, palette2);

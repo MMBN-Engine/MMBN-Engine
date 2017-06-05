@@ -40,9 +40,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AttackList.cs" />
+    <Compile Include="BattleInterface\Custom.cs" />
+    <Compile Include="BattleInterface\DamageType.cs" />
+    <Compile Include="BattleInterface\PanelType.cs" />
     <Compile Include="Chips\Spreader.cs" />
     <Compile Include="Chips\Recov.cs" />
     <Compile Include="Debug.cs" />
+    <Compile Include="BattleInterface\Stage.cs" />
     <Compile Include="Overworld\Tileset.cs" />
     <Compile Include="Overworld\Area.cs" />
     <Compile Include="Object.cs" />
@@ -57,7 +61,6 @@
     <Compile Include="Animation.cs" />
     <Compile Include="Chips\Chip.cs" />
     <Compile Include="Chips\Standard.cs" />
-    <Compile Include="Custom.cs" />
     <Compile Include="CustomExtentions.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Actors\Obstacle.cs" />
@@ -66,7 +69,6 @@
     <Compile Include="Projectiles\Shot.cs" />
     <Compile Include="Projectiles\Projectile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Stage.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Esent.Interop, Version=1.9.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -95,14 +97,6 @@
     </Reference>
     <Reference Include="Microsoft.CodeAnalysis.Scripting, Version=2.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeAnalysis.Scripting.Common.2.2.0\lib\netstandard1.3\Microsoft.CodeAnalysis.Scripting.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Microsoft.CodeAnalysis.VisualBasic, Version=2.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.CodeAnalysis.VisualBasic.2.2.0\lib\netstandard1.3\Microsoft.CodeAnalysis.VisualBasic.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Microsoft.CodeAnalysis.VisualBasic.Workspaces, Version=2.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.CodeAnalysis.VisualBasic.Workspaces.2.2.0\lib\netstandard1.3\Microsoft.CodeAnalysis.VisualBasic.Workspaces.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CodeAnalysis.Workspaces, Version=2.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -230,6 +224,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\music\songs.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\damageTypes.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\panelTypes.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Icon.ico" />

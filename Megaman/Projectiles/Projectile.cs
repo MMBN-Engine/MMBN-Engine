@@ -12,7 +12,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Megaman.Projectiles
 {
-    class Projectile : Object
+    public class Projectile : Object
     {
         public bool isActive;
   

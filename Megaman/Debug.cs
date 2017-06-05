@@ -28,24 +28,24 @@ namespace Megaman
         public void debugCommands()
         {
             // Development keys, will be removed
-            //if (JustPressed(Keys.N)) stage.setStage("Null");
-            //if (JustPressed(Keys.C)) stage.setStage("Cracked");
-            //if (JustPressed(Keys.B)) stage.setStage("Broken");
+            if (JustPressed(Keys.N)) stage.setStage("Null");
+            if (JustPressed(Keys.C)) stage.setStage("Cracked");
+            if (JustPressed(Keys.E)) stage.setStage("Broken");
             if (JustPressed(Keys.G)) stage.setStage("Grass");
-            //if (JustPressed(Keys.S)) stage.setStage("Sand");
-            //if (JustPressed(Keys.M)) stage.setStage("Metal");
-            //if (JustPressed(Keys.I)) stage.setStage("Ice");
-            //if (JustPressed(Keys.P)) stage.setStage("Swamp");
+            if (JustPressed(Keys.S)) stage.setStage("Sand");
+            if (JustPressed(Keys.M)) stage.setStage("Metal");
+            if (JustPressed(Keys.I)) stage.setStage("Ice");
+            if (JustPressed(Keys.P)) stage.setStage("Swamp");
             if (JustPressed(Keys.L)) stage.setStage("Lava");
-            //if (JustPressed(Keys.H)) stage.setStage("Holy");
-            //if (JustPressed(Keys.T)) stage.setStage("Hole");
+            if (JustPressed(Keys.H)) stage.setStage("Holy");
+            if (JustPressed(Keys.T)) stage.setStage("Hole");
             //if (JustPressed(Keys.Q)) navi.AirShoe = true;
             //if (JustPressed(Keys.W)) navi.AirShoe = false;
-            if (JustPressed(Keys.E)) navi.styleChange("Elec", "Bug");
-            if (JustPressed(Keys.A)) navi.styleChange("Aqua", "Bug");
-            if (JustPressed(Keys.H)) navi.styleChange("Heat", "Bug");
-            if (JustPressed(Keys.W)) navi.styleChange("Wood", "Bug");
-            if (JustPressed(Keys.N)) navi.styleChange("Null", "Bug");
+            //if (JustPressed(Keys.E)) navi.styleChange("Elec", "Bug");
+            //if (JustPressed(Keys.A)) navi.styleChange("Aqua", "Bug");
+            //if (JustPressed(Keys.H)) navi.styleChange("Heat", "Bug");
+            //if (JustPressed(Keys.W)) navi.styleChange("Wood", "Bug");
+            //if (JustPressed(Keys.N)) navi.styleChange("Null", "Bug");
 
             if (JustPressed(Keys.B)) battleStart();
 

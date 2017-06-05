@@ -17,7 +17,7 @@ namespace Megaman.Projectiles
         public Vector2 speed;
         public int damage;
         public bool didAttack;  //Tracks whether or not we attacted on a given panel
-        public string damageType;
+        public List<string> damageType;
         public List<String> effects;
 
         public Shot(Actor actor) : base(actor)           

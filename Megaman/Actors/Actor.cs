@@ -14,7 +14,7 @@ using Microsoft.Xna.Framework.Audio;
 
 namespace Megaman.Actors
 {
-    class Actor : Object
+    public class Actor : Object
     {
         public int HP, MaxHP;
         public Animation staticSprite, moveSprite, guardSprite;
@@ -36,7 +36,7 @@ namespace Megaman.Actors
 
         public Animation deathSprite;  //Sprite to play when we die
 
-        public bool AquaBody, ElecBody, FireBody, WoodBody;
+        public Dictionary<string, bool> Body;
 
         protected int attackNum;
         public bool isAttacking;
@@ -51,8 +51,9 @@ namespace Megaman.Actors
 
         public bool noGuarding;  //If true, we can't guard
 
-        protected bool moveStart, moveFin, isSliding;
-        protected Vector2 move;
+        protected bool moveStart, moveFin;
+        public bool isSliding;
+        public Vector2 move;
 
         public delegate void attackMethod(attackSpecs info);
         public attackMethod attackHandle;
@@ -66,9 +67,9 @@ namespace Megaman.Actors
 
         public bool isDead;
   
-        public Actor(AttackList attacks)
+        public Actor()
         {
-            attackTypes = attacks;
+            attackTypes = Game.attackTypes;
 
             staticSprite = new Animation();
             moveSprite = new Animation();
@@ -84,12 +85,19 @@ namespace Megaman.Actors
             info = new attackSpecs();
 
             chips = new List<Chip>();
+
+            Body = new Dictionary<string, bool>();
         }
 
         public override void Initialize(ContentManager content,  Vector2 position, Stage stage)
         {
             base.Initialize(content, position, stage);
 
+            foreach(KeyValuePair<string, DamageType> entry in Game.damageTypes)
+            {
+                if (entry.Value.defaultDef) Body.Add(entry.Key, true);
+                else Body.Add(entry.Key, false);
+            }
             
             stage.actorArray[(int)position.X, (int)position.Y] = this;
             activeSprite = staticSprite;
@@ -116,18 +124,12 @@ namespace Megaman.Actors
             {
                 if (!moveSprite.active)
                 {
+                    isSliding = false;
                     moveFin = false;
                     activeSprite = staticSprite;
-                    
-                    //Slide on ice panels, need to do it here to make sure he finishes his move
-                    if (canMove(move) && !FlotShoe && !AquaBody &&
-                        stage.PanelType[(int)(position.X + move.X),
-                        (int)(position.Y + move.Y)].Equals("Ice"))
-                    {
-                        isSliding = true;
-                        Move(move);
-                    }
-                    else isSliding = false;
+
+                    string panel = stage.getPanelType(position);
+                    onStep(this, panel);
                 }
             }
 
@@ -188,6 +190,11 @@ namespace Megaman.Actors
                 activeSprite = moveSprite;
             }
 
+        }
+
+        public void onStep(Actor actor, string panel)
+        {
+            Game.panelTypes[panel].onStep(this, panel);
         }
 
         public override void Draw(SpriteBatch spriteBatch, float resolution)

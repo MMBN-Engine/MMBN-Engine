@@ -14,12 +14,12 @@ using Megaman.Projectiles;
 //This will store all of the attacks in the game, so they only need to be initialized once
 namespace Megaman
 {
-    class AttackList
+    public class AttackList
     {
         public struct attackSpecs
         {
             public int damage;
-            public string damageType;
+            public List<string> damageType;
             public double speed;
             public Animation sprite, effectSprite;
             public List<string> effects;
@@ -28,7 +28,7 @@ namespace Megaman
             public attackSpecs(int foo)
             {
                 damage = 0;
-                damageType = "null";
+                damageType = new List<string> { "Null" };
                 speed = 0;
                 sprite = new Animation();
                 effects = new List<string>();
@@ -39,7 +39,7 @@ namespace Megaman
             public void Reset()
             {
                 damage = 0;
-                damageType = "null";
+                damageType = new List<string> { "Null" };
                 speed = 0;
                 sprite = new Animation();
                 effects = new List<string>();
@@ -107,7 +107,7 @@ namespace Megaman
         {
             actor.info.Reset();
             actor.info.damage = damage;
-            actor.info.damageType = "null";
+            actor.info.damageType = new List<string> { "Null" };
             actor.info.effects.Add(effect);
             actor.info.effectSprite = spreaderSprite.Clone();
             actor.info.sound = spreaderSound;
@@ -119,7 +119,7 @@ namespace Megaman
         {
             actor.info.Reset();
             actor.info.damage = damage;
-            actor.info.damageType = "fire";
+            actor.info.damageType = new List<string> { "Fire" };
             actor.info.effects.Add(effect);
             actor.info.effectSprite = heaterSprite.Clone();
             actor.info.sound = heaterSound;
@@ -131,7 +131,7 @@ namespace Megaman
         {
             actor.info.Reset();
             actor.info.damage = damage;
-            actor.info.damageType = "aqua";
+            actor.info.damageType = new List<string> { "Aqua" };
             actor.info.effects.Add(effect);
             actor.info.effectSprite = bubblerSprite.Clone();
             actor.info.sound = bubblerSound;

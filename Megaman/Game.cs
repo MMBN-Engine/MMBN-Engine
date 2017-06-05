@@ -34,6 +34,9 @@ namespace Megaman
         Stage stage;
         Custom custom;
 
+        public static Dictionary<string, PanelType> panelTypes;
+        public static Dictionary<string, DamageType> damageTypes;
+
         Area currentArea, ACDC1;
         Dictionary<string, Area> areaList;
         Dictionary<string, Tileset> tilesetList;
@@ -48,7 +51,7 @@ namespace Megaman
 
         public float screenSize;
 
-        AttackList attackTypes;
+        public static AttackList attackTypes;
         
         Navi navi;
         List<Virus> virus;
@@ -63,7 +66,9 @@ namespace Megaman
             graphics.PreferredBackBufferWidth = (int) (240 * screenSize);
             graphics.PreferredBackBufferHeight = (int) (160 * screenSize);
             Window.Title = "MegaMan Battle Network";
-            
+
+            scriptOptions = ScriptOptions.Default.WithReferences(typeof(MegaMan).Assembly);
+
             debug = true;
         }
 
@@ -75,6 +80,9 @@ namespace Megaman
         /// </summary>
         protected override void Initialize()
         {
+            loadPanelTypesFromFile();
+            loadDamageTypesFromFile();
+
             attackTypes = new AttackList();
 
             currentKeyboard = new KeyboardState();
@@ -83,15 +91,15 @@ namespace Megaman
             custom = new Custom();
             
             virus = new List<Virus>();
-            virus.Add(new Mettaur(attackTypes));
-            virus.Add(new Mettaur2(attackTypes));
-            virus.Add(new MettaurΩ(attackTypes));
+            virus.Add(new Mettaur());
+            virus.Add(new Mettaur2());
+            virus.Add(new MettaurΩ());
 
             ACDC1 = new Area();
             ACDC1.loadMap("ACDC1.txt");
             currentArea = ACDC1;
 
-            navi = new MegaMan(attackTypes, 100, ACDC1);
+            navi = new MegaMan(100, ACDC1);
 
             base.Initialize();
         }
@@ -101,7 +109,7 @@ namespace Megaman
         /// all of your content.
         /// </summary>
         protected override void LoadContent()
-        {            
+        {
             navi.Initialize(Content, new Vector2(1,1), stage);
 
             attackTypes.Initialize(Content);     
@@ -417,12 +425,44 @@ namespace Megaman
             }
         }
 
+        void loadPanelTypesFromFile()
+        {
+            panelTypes = new Dictionary<string, PanelType>();
+            ScriptState state = parse("Content/panelTypes.txt");
+
+            List<ScriptVariable> v = state.Variables.ToList();
+            
+            for (int i = 0; i < v.Count(); i++)
+            {
+                PanelType panel = new PanelType();
+                equateFields(panel, v[i]);
+                panel.index = i;
+
+                panelTypes.Add(panel.name, panel);
+            }
+        }
+
+        void loadDamageTypesFromFile()
+        {
+            damageTypes = new Dictionary<string, DamageType>();
+            ScriptState state = parse("Content/damageTypes.txt");
+
+            List<ScriptVariable> v = state.Variables.ToList();
+
+            for (int i = 0; i < v.Count(); i++)
+            {
+                DamageType damage = new DamageType();
+                equateFields(damage, v[i]);
+
+                damageTypes.Add(damage.name, damage);
+            }
+        }
+
         void loadSongsFromFile()
         {
             songList = new Dictionary<string, Song>();
 
-            string script = new StreamReader("Content/music/songs.txt").ReadToEnd();
-            ScriptState state = parse(script);
+            ScriptState state = parse("Content/music/songs.txt");
 
             ScriptVariable v = state.Variables[0];
             PropertyInfo[] p = v.Value.GetType().GetProperties();
@@ -442,8 +482,7 @@ namespace Megaman
             int originx, originy;
             int spriteWidth, tileWidth, tileHeight;
 
-            string script = new StreamReader("Content/areas/tilesets.txt").ReadToEnd();
-            ScriptState state = parse(script);
+            ScriptState state = parse("Content/areas/tilesets.txt");
 
             for (int i = 0; i < state.Variables.Count(); i++)
             {
@@ -465,18 +504,25 @@ namespace Megaman
 
         ScriptState parse(string script)
         {
-            List<string> split = script.Split('{').ToList();
-            split.RemoveAll(String.IsNullOrWhiteSpace);
+            script = new StreamReader(script).ReadToEnd();
 
             ScriptState state = null;
 
-            CSharpScript.RunAsync(@script).ContinueWith(s => state = s.Result).Wait();
+            CSharpScript.RunAsync(@script, scriptOptions).ContinueWith(s => state = s.Result).Wait();
             return state;
         }
 
         object getScriptValue(string field, ScriptVariable v)
         {
             return v.Value.GetType().GetProperty(field).GetValue(v.Value);
+        }
+
+        void equateFields(object o, ScriptVariable v)
+        {
+            foreach (PropertyInfo p in v.Value.GetType().GetProperties())
+            {
+                o.GetType().GetField(p.Name).SetValue(o, getScriptValue(p.Name, v));
+            }
         }
 
     }

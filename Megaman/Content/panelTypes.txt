@@ -1,0 +1,80 @@
+/*
+Parameters:
+Required:
+	name - damageType name
+Optional:
+	damageMod = new Dictionary<string, float>() { { "Type", mod } }
+		how much damageType "Type" will increase the damage done
+	damagePanelChange = new Dictionary<string, string>() { { "Type", "Panel" } }
+		damageType "Type" turns panel into panelType "Panel"
+	stepPanelChange = new Dictionary<string, int>() { { "Body", "Panel" } }
+		actor without bodyType "Body" turns panel into panelType "Panel"
+	stepPanelChange = new Dictionary<string, int>() { { "Body", damage } }
+		actor without bodyType "Body" will take damage damge
+	slide = new List<string>() { "Body" }
+		actior without bodyType "Body" will slide of slide is not empty
+*/
+using System;
+using System.Collections.Generic;
+using Megaman.Actors;
+
+var Null = new {
+	name = "Null",
+};
+
+var Cracked = new {
+	name = "Cracked",
+};
+
+var Broken = new {
+	name = "Broken",
+};
+
+var Grass = new {
+	name = "Grass",
+	damageMod = new Dictionary<string, float>() { { "Fire", 1f } },
+};
+
+var Sand = new {
+	name = "Sand",
+};
+
+var Metal = new {
+	name = "Metal",
+	damageMod = new Dictionary<string, float>() { { "Elec", 1f } },
+};
+
+var Ice = new {
+	name = "Ice",
+	onStep = (Action <Actor, string>) delegate (Actor actor, string panel) 
+	{
+		if (actor.canMove(actor.move) && !actor.FlotShoe && !actor.Body["Aqua"] &&
+			actor.stage.getPanelType(actor.position + actor.move).Equals("Ice"))
+			{
+				actor.isSliding = true;
+				actor.Move(actor.move);
+		}
+	},
+};
+
+var Swamp = new {
+	name = "Swamp",
+};
+
+var Lava = new {
+	name = "Lava",
+	damageMod = new Dictionary<string, float>() { { "Aqua", 1f } },
+	onStep = (Action <Actor, string>) delegate (Actor actor, string panel) 
+	{ 
+		actor.doDamage(actor.position, 50, new List<string> { "Fire" }, new List<string> { "Panel" }, null);
+		actor.stage.setPanel(actor.position, "Null"); 
+	},
+};
+
+var Holy = new {
+	name = "Holy",
+};
+
+var Hole = new {
+	name = "Hole",
+};

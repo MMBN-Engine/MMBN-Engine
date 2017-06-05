@@ -1,0 +1,50 @@
+/*
+Parameters:
+Required:
+	name - damageType name
+Optional:
+	damageMod = new Dictionary<string, float>() { { "Type", mod } }
+		how much damageType "Type" will increase the damage done
+	defaultDef - if actors have this bodytype by default
+*/
+using System;
+using System.Collections.Generic;
+using Megaman;
+using Microsoft.Xna.Framework;
+
+var Null = new {
+	name = "Null",
+	defaultDef = true,
+};
+
+var Aqua = new {
+	name = "Aqua",
+	damageMod = new Dictionary<string, float>() { { "Fire", 1f } },
+	onHit = (Action <Stage, Vector2, string>) delegate (Stage stage, Vector2 position, string panel) 
+	{
+		if (panel == "Lava") stage.setPanel(position, "Null");
+	},
+};
+
+var Elec = new {
+	name = "Elec",
+	damageMod = new Dictionary<string, float>() { { "Aqua", 1f } },
+};
+
+var Fire = new {
+	name = "Fire",
+	damageMod = new Dictionary<string, float>() { { "Wood", 1f } },
+	onHit = (Action <Stage, Vector2, string>) delegate (Stage stage, Vector2 position, string panel) 
+	{
+		if (panel == "Grass") stage.setPanel(position, "Null");
+	},
+};
+
+var Wood = new {
+	name = "Wood",
+	damageMod = new Dictionary<string, float>() { { "Elec", 1f } },
+};
+
+var Break = new {
+	name = "Break",
+};
