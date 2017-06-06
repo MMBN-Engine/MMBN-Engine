@@ -198,7 +198,7 @@ namespace Megaman.Overworld
 
         public void loadMap(string fileName)
         {
-            string[] lines = File.ReadAllLines("Content/areas/maps/" + fileName);
+            string[] lines = File.ReadAllLines(Game.modulePath + "areas/maps/" + fileName);
             mapArray = new string[lines[0].Split(';').Count(), lines.Count()];
 
             for (int j = 0; j < mapArray.GetLength(1); j++)

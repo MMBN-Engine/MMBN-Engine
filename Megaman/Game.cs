@@ -34,6 +34,8 @@ namespace Megaman
         Stage stage;
         Custom custom;
 
+        public static string modulePath;
+
         public static Dictionary<string, PanelType> panelTypes;
         public static Dictionary<string, DamageType> damageTypes;
 
@@ -66,6 +68,8 @@ namespace Megaman
             graphics.PreferredBackBufferWidth = (int) (240 * screenSize);
             graphics.PreferredBackBufferHeight = (int) (160 * screenSize);
             Window.Title = "MegaMan Battle Network";
+
+            modulePath = "modules/undernet/";
 
             scriptOptions = ScriptOptions.Default.WithReferences(typeof(MegaMan).Assembly);
 
@@ -428,7 +432,7 @@ namespace Megaman
         void loadPanelTypesFromFile()
         {
             panelTypes = new Dictionary<string, PanelType>();
-            ScriptState state = parse("Content/panelTypes.txt");
+            ScriptState state = parse(modulePath + "panelTypes.txt");
 
             List<ScriptVariable> v = state.Variables.ToList();
             
@@ -445,7 +449,7 @@ namespace Megaman
         void loadDamageTypesFromFile()
         {
             damageTypes = new Dictionary<string, DamageType>();
-            ScriptState state = parse("Content/damageTypes.txt");
+            ScriptState state = parse(modulePath + "damageTypes.txt");
 
             List<ScriptVariable> v = state.Variables.ToList();
 
@@ -482,7 +486,7 @@ namespace Megaman
             int originx, originy;
             int spriteWidth, tileWidth, tileHeight;
 
-            ScriptState state = parse("Content/areas/tilesets.txt");
+            ScriptState state = parse(modulePath + "/areas/tilesets.txt");
 
             for (int i = 0; i < state.Variables.Count(); i++)
             {
