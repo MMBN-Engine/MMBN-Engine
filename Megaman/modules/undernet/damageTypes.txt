@@ -6,6 +6,8 @@ Optional:
 	damageMod = new Dictionary<string, float>() { { "Type", mod } }
 		how much damageType "Type" will increase the damage done
 	defaultDef - if actors have this bodytype by default
+	onHit = (Action <Stage, Vector2, string>) delegate (Stage stage, Vector2 position, string panel) 
+		function called when damage is done to panel at position
 */
 using System;
 using System.Collections.Generic;

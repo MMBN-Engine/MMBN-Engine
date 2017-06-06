@@ -5,14 +5,8 @@ Required:
 Optional:
 	damageMod = new Dictionary<string, float>() { { "Type", mod } }
 		how much damageType "Type" will increase the damage done
-	damagePanelChange = new Dictionary<string, string>() { { "Type", "Panel" } }
-		damageType "Type" turns panel into panelType "Panel"
-	stepPanelChange = new Dictionary<string, int>() { { "Body", "Panel" } }
-		actor without bodyType "Body" turns panel into panelType "Panel"
-	stepPanelChange = new Dictionary<string, int>() { { "Body", damage } }
-		actor without bodyType "Body" will take damage damge
-	slide = new List<string>() { "Body" }
-		actior without bodyType "Body" will slide of slide is not empty
+	onstep = (Action <Actor, string>) delegate (Actor actor, string panel) { };
+		function called when actor steps on panel
 */
 using System;
 using System.Collections.Generic;
