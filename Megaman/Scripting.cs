@@ -63,5 +63,10 @@ namespace Megaman
             fileStream.Close();
             return image;
         }
+
+        public static List<string> getFilesFromFolder(string path)
+        {
+            return Directory.GetFiles(path).Select(Path.GetFileNameWithoutExtension).ToList();
+        }
     }
 }

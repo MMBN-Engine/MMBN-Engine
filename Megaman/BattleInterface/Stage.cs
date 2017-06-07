@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using Megaman.Actors;
@@ -14,6 +15,7 @@ namespace Megaman
     public class Stage
     {
         public Dictionary<string, PanelType> panelDef;
+        public Dictionary<string, Texture2D> textures;
 
         public string[,] PanelType;
         public string[,] Area;
@@ -80,26 +82,14 @@ namespace Megaman
 
         public void Initialize(ContentManager content)
         {
-            texture = content.Load<Texture2D>("sprites/tiles");
-        }
+            textures = new Dictionary<string, Texture2D>();
 
-        public int[, ,] stageDraw()
-        {            //sets up numeric values for every panel types
-            int[,,] numCode = new int[width, height, 2];
-            
-            for (int i = 0; i < width; ++i)
-                for (int j = 0; j < height; j++)
-                    if (Area[i, j] == "red")
-                        numCode[i, j, 0] = 0;
-                    else
-                        numCode[i, j, 0] = 1;
+            string path = Game.modulePath + "gfx/panels/";
 
-            //The first two indices are the red and blue panels
-            for (int i = 0; i < width; ++i)
-                for (int j = 0; j < height; j++)
-                    numCode[i, j, 1] = panelDef[PanelType[i, j]].index + 2;
+            List<String> fileArray = Scripting.getFilesFromFolder(path);
 
-            return numCode;
+            foreach (string t in fileArray)
+                textures.Add(t, Scripting.loadImage(path + t + ".png"));
         }
 
         public void Update(GameTime gameTime)
@@ -146,29 +136,27 @@ namespace Megaman
 
         public void Draw(SpriteBatch spriteBatch, float resolution)
         {
-            int[, ,] tileDraw = stageDraw();
             int stagePositionX = 0;
             int stagePositionY = 72;
             int stageY;
 
-            for (int k = 0; k < tileDraw.GetLength(2); k++)
+            for (int i = 0; i < Area.GetLength(0); i++)
             {
-                for (int i = 0; i < tileDraw.GetLength(0); i++)
+                stageY = 0;
+                for (int j = 0; j < Area.GetLength(1); j++)
                 {
-                    stageY = 0;
-                    for (int j = 0; j < tileDraw.GetLength(1); j++)
-                    {
-                        Rectangle panel = new Rectangle(
-                            tileDraw[i, j, k] * spriteWidth,
-                            stageY,
-                            spriteWidth, spriteHeight[j]);
+                    //Finds the panel from the texture file
+                    Rectangle panel = new Rectangle(
+                        0, stageY, spriteWidth, spriteHeight[j]);
 
-                        spriteBatch.Draw(texture,
-                            new Vector2(stagePositionX + i * spriteWidth, stagePositionY + stageY) * resolution,
-                            sourceRectangle: panel, scale: new Vector2(1, 1) * resolution, color: Color.White);
+                    spriteBatch.Draw(textures[Area[i,j]],
+                        new Vector2(stagePositionX + i * spriteWidth, stagePositionY + stageY) * resolution,
+                        sourceRectangle: panel, scale: new Vector2(1, 1) * resolution, color: Color.White);
+                    spriteBatch.Draw(textures[PanelType[i, j]],
+                        new Vector2(stagePositionX + i * spriteWidth, stagePositionY + stageY) * resolution,
+                        sourceRectangle: panel, scale: new Vector2(1, 1) * resolution, color: Color.White);
 
-                        stageY += spriteHeight[j];
-                    }
+                    stageY += spriteHeight[j];
                 }
             }
         }
