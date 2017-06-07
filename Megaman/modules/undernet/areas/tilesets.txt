@@ -1,8 +1,28 @@
+using System.Collections.Generic;
+using Microsoft.Xna.Framework;
+
 var ACDC = new {
 	name = "ACDC",
-	originx = 0,
-	originy = 0,
+	origin = new Vector2(0, 0),
 	spriteWidth = 64, 
 	tileWidth = 32,
-	tileHeight = 16
+	tileHeight = 16,
+	tilesKey = new Dictionary<string, string>()
+	{
+		{ "square1", "s1" },
+        { "square2", "s2" },
+        { "square3", "s3" },
+        { "square4", "s4" },
+        
+		{ "corner1", "c1" },
+        { "corner2", "c2" },
+        
+		{ "walkse1", "se1" },
+        { "walksw1", "sw1" },
+        { "walkne1", "ne1" },
+        { "walknw1", "nw1" },
+        
+		{ "walkup1", "u1" },
+        { "walkdown1", "d1" },
+	},
 };

@@ -47,6 +47,7 @@
     <Compile Include="Chips\Recov.cs" />
     <Compile Include="Debug.cs" />
     <Compile Include="BattleInterface\Stage.cs" />
+    <Compile Include="Scripting.cs" />
     <Compile Include="Overworld\Tileset.cs" />
     <Compile Include="Overworld\Area.cs" />
     <Compile Include="Object.cs" />
@@ -228,6 +229,42 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="modules\undernet\damageTypes.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="modules\undernet\gfx\tilesets\ACDC\corner1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="modules\undernet\gfx\tilesets\ACDC\corner2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="modules\undernet\gfx\tilesets\ACDC\square1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="modules\undernet\gfx\tilesets\ACDC\square2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="modules\undernet\gfx\tilesets\ACDC\square3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="modules\undernet\gfx\tilesets\ACDC\square4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="modules\undernet\gfx\tilesets\ACDC\walkdown1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="modules\undernet\gfx\tilesets\ACDC\walkne1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="modules\undernet\gfx\tilesets\ACDC\walknw1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="modules\undernet\gfx\tilesets\ACDC\walkse1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="modules\undernet\gfx\tilesets\ACDC\walksw1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="modules\undernet\gfx\tilesets\ACDC\walkup1.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="modules\undernet\panelTypes.txt">

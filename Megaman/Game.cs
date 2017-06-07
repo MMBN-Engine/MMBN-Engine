@@ -479,8 +479,9 @@ namespace Megaman
             tilesetList = new Dictionary<string, Tileset>();
 
             string name;
-            int originx, originy;
+            Vector2 origin;
             int spriteWidth, tileWidth, tileHeight;
+            Dictionary<string, string> tilesKey;
 
             ScriptState state = Scripting.parse(modulePath + "/areas/tilesets.txt");
 
@@ -489,16 +490,16 @@ namespace Megaman
                 ScriptVariable v = state.Variables[i];
 
                 name = (string) Scripting.getScriptValue("name", v);
-
-                originx = (int) Scripting.getScriptValue("originx", v);
-                originy = (int) Scripting.getScriptValue("originy", v);
+                origin = (Vector2) Scripting.getScriptValue("origin", v);
 
                 spriteWidth =(int) Scripting.getScriptValue("spriteWidth", v);
                 tileWidth =  (int) Scripting.getScriptValue("tileWidth", v);
                 tileHeight = (int) Scripting.getScriptValue("tileHeight", v);
 
-                tilesetList.Add(name, new Tileset(name, new Vector2(originx, originy), spriteWidth,
-                    tileWidth, tileHeight, Content));
+                tilesKey = (Dictionary<string,string>)Scripting.getScriptValue("tilesKey", v);
+
+                tilesetList.Add(name, new Tileset(name, origin, spriteWidth,
+                    tileWidth, tileHeight, tilesKey));
             }
         }       
 
