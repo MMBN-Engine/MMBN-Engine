@@ -26,7 +26,7 @@ namespace Megaman
     /// </summary>
     public partial class Game : Microsoft.Xna.Framework.Game
     {
-        GraphicsDeviceManager graphics;
+        public static GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Texture2D stageTiles;
         KeyboardState currentKeyboard;
@@ -58,8 +58,6 @@ namespace Megaman
         Navi navi;
         List<Virus> virus;
 
-        ScriptOptions scriptOptions;  //Options for scripting engine
-
         public Game()
         {
             screenSize = 2;
@@ -70,8 +68,6 @@ namespace Megaman
             Window.Title = "MegaMan Battle Network";
 
             modulePath = "modules/undernet/";
-
-            scriptOptions = ScriptOptions.Default.WithReferences(typeof(MegaMan).Assembly);
 
             debug = true;
         }
@@ -432,14 +428,14 @@ namespace Megaman
         void loadPanelTypesFromFile()
         {
             panelTypes = new Dictionary<string, PanelType>();
-            ScriptState state = parse(modulePath + "panelTypes.txt");
+            ScriptState state = Scripting.parse(modulePath + "panelTypes.txt");
 
             List<ScriptVariable> v = state.Variables.ToList();
             
             for (int i = 0; i < v.Count(); i++)
             {
                 PanelType panel = new PanelType();
-                equateFields(panel, v[i]);
+                Scripting.equateFields(panel, v[i]);
                 panel.index = i;
 
                 panelTypes.Add(panel.name, panel);
@@ -449,14 +445,14 @@ namespace Megaman
         void loadDamageTypesFromFile()
         {
             damageTypes = new Dictionary<string, DamageType>();
-            ScriptState state = parse(modulePath + "damageTypes.txt");
+            ScriptState state = Scripting.parse(modulePath + "damageTypes.txt");
 
             List<ScriptVariable> v = state.Variables.ToList();
 
             for (int i = 0; i < v.Count(); i++)
             {
                 DamageType damage = new DamageType();
-                equateFields(damage, v[i]);
+                Scripting.equateFields(damage, v[i]);
 
                 damageTypes.Add(damage.name, damage);
             }
@@ -466,14 +462,14 @@ namespace Megaman
         {
             songList = new Dictionary<string, Song>();
 
-            ScriptState state = parse("Content/music/songs.txt");
+            ScriptState state = Scripting.parse("Content/music/songs.txt");
 
             ScriptVariable v = state.Variables[0];
             PropertyInfo[] p = v.Value.GetType().GetProperties();
 
             for (int i = 0; i < p.GetLength(0); i++)
             {
-                string s = (string)getScriptValue(p[i].Name, v);
+                string s = (string) Scripting.getScriptValue(p[i].Name, v);
                 songList.Add(p[i].Name, Content.Load<Song>(s));
             }
         }
@@ -486,48 +482,25 @@ namespace Megaman
             int originx, originy;
             int spriteWidth, tileWidth, tileHeight;
 
-            ScriptState state = parse(modulePath + "/areas/tilesets.txt");
+            ScriptState state = Scripting.parse(modulePath + "/areas/tilesets.txt");
 
             for (int i = 0; i < state.Variables.Count(); i++)
             {
                 ScriptVariable v = state.Variables[i];
 
-                name = (string) getScriptValue("name", v);
+                name = (string) Scripting.getScriptValue("name", v);
 
-                originx = (int) getScriptValue("originx", v);
-                originy = (int) getScriptValue("originy", v);
+                originx = (int) Scripting.getScriptValue("originx", v);
+                originy = (int) Scripting.getScriptValue("originy", v);
 
-                spriteWidth =(int) getScriptValue("spriteWidth", v);
-                tileWidth =  (int) getScriptValue("tileWidth", v);
-                tileHeight = (int) getScriptValue("tileHeight", v);
+                spriteWidth =(int) Scripting.getScriptValue("spriteWidth", v);
+                tileWidth =  (int) Scripting.getScriptValue("tileWidth", v);
+                tileHeight = (int) Scripting.getScriptValue("tileHeight", v);
 
                 tilesetList.Add(name, new Tileset(name, new Vector2(originx, originy), spriteWidth,
                     tileWidth, tileHeight, Content));
             }
-        }
-
-        ScriptState parse(string script)
-        {
-            script = new StreamReader(script).ReadToEnd();
-
-            ScriptState state = null;
-
-            CSharpScript.RunAsync(@script, scriptOptions).ContinueWith(s => state = s.Result).Wait();
-            return state;
-        }
-
-        object getScriptValue(string field, ScriptVariable v)
-        {
-            return v.Value.GetType().GetProperty(field).GetValue(v.Value);
-        }
-
-        void equateFields(object o, ScriptVariable v)
-        {
-            foreach (PropertyInfo p in v.Value.GetType().GetProperties())
-            {
-                o.GetType().GetField(p.Name).SetValue(o, getScriptValue(p.Name, v));
-            }
-        }
+        }       
 
     }
 }
