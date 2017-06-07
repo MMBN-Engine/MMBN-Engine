@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using Megaman.Actors;
 using Megaman.Actors.Viruses;
 using Megaman.Actors.Navis;
@@ -34,12 +35,26 @@ namespace Megaman
         {
             ScriptOptions scriptOptions = ScriptOptions.Default.WithReferences(typeof(MegaMan).Assembly);
 
-            script = new StreamReader(script).ReadToEnd();
+            string s = new StreamReader(script).ReadToEnd();
 
-            ScriptState state = null;
+            Task<ScriptState<object>> results = null;
 
-            CSharpScript.RunAsync(@script, scriptOptions).ContinueWith(s => state = s.Result).Wait();
-            return state;
+            try
+            {
+                results = CSharpScript.RunAsync(@s, scriptOptions);
+            }
+            catch (Microsoft.CodeAnalysis.Scripting.CompilationErrorException e)
+            {
+                Log("Error loading " + script + " :" + e);
+            }
+
+            return results.Result;
+
+        }
+
+        public static void Log(string message)
+        {
+            System.IO.File.WriteAllText("log.txt", message + "\n");
         }
 
         public static object getScriptValue(string field, ScriptVariable v)
