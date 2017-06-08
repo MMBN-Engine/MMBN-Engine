@@ -96,7 +96,6 @@ namespace Megaman
             virus.Add(new MettaurΩ());
 
             ACDC1 = new Area();
-            ACDC1.loadMap("ACDC1.txt");
             currentArea = ACDC1;
 
             navi = new MegaMan(100, ACDC1);
@@ -134,6 +133,7 @@ namespace Megaman
             chargeComplete = Content.Load<SoundEffect>("soundFX/battle/chargeComplete");
 
             ACDC1.loadTileset(tilesetList["ACDC"]);
+            ACDC1.loadMap("ACDC1.txt");
 
             newGame();
 
@@ -481,7 +481,7 @@ namespace Megaman
             string name;
             Vector2 origin;
             int spriteWidth, tileWidth, tileHeight;
-            Dictionary<string, string> tilesKey;
+            Func<String[,], Vector2, string> mapParse;
 
             ScriptState state = Scripting.parse(modulePath + "/areas/tilesets.txt");
 
@@ -496,10 +496,10 @@ namespace Megaman
                 tileWidth =  (int) Scripting.getScriptValue("tileWidth", v);
                 tileHeight = (int) Scripting.getScriptValue("tileHeight", v);
 
-                tilesKey = (Dictionary<string,string>)Scripting.getScriptValue("tilesKey", v);
+                mapParse = (Func<String[,], Vector2, string>)Scripting.getScriptValue("mapParse", v);
 
                 tilesetList.Add(name, new Tileset(name, origin, spriteWidth,
-                    tileWidth, tileHeight, tilesKey));
+                    tileWidth, tileHeight, mapParse));
             }
         }       
 

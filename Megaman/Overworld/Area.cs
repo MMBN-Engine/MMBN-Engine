@@ -26,10 +26,13 @@ namespace Megaman.Overworld
 
         int tileWidth;
         int tileHeight;
+
         string[,] mapArray;  //For procedural generation of maps
 
         public Vector2 drawLocation;
         public Vector2 currentTile;
+
+        public Tileset tileset;
 
         public Area()
         {
@@ -42,6 +45,7 @@ namespace Megaman.Overworld
 
         public void loadTileset(Tileset tileset)
         {
+            this.tileset = tileset;
             tiles = tileset.tiles;
         }
 
@@ -152,6 +156,7 @@ namespace Megaman.Overworld
             string[] lines = File.ReadAllLines(Game.modulePath + "areas/maps/" + fileName);
             mapArray = new string[lines[0].Split(';').Count(), lines.Count()];
 
+            // Load the file to an array
             for (int j = 0; j < mapArray.GetLength(1); j++)
             {
                 string[] csv = lines[j].Split(';');
@@ -160,6 +165,21 @@ namespace Megaman.Overworld
                     mapArray[i, j] = csv[i].Replace(" ","");
                 }
             }
+
+            string[,] areaTemp = new string[mapArray.GetLength(0), mapArray.GetLength(1)];
+
+            // Replace array entries with tiletypes
+            for (int j = 0; j < mapArray.GetLength(1); j++)
+            {
+                string[] csv = lines[j].Split(';');
+                for (int i = 0; i < mapArray.GetLength(0); i++)
+                {
+                    Vector2 position = new Vector2(i, j);
+                    areaTemp[i, j] = tileset.mapParse(mapArray, position);
+                }
+            }
+
+            mapArray = areaTemp;
         }
     }
 }

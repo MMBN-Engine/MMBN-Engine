@@ -24,13 +24,18 @@ namespace Megaman.Overworld
     {
         public Dictionary<string, Animation> tiles;
 
+        public Func<string[,], Vector2, string> mapParse;
+
         int tileWidth;
         int tileHeight;
 
-        public Tileset(string tileset, Vector2 origin, int spriteWidth, int tileWidth, int tileHeight, Dictionary<string, string> tilesKey)
+        public Tileset(string tileset, Vector2 origin, int spriteWidth, int tileWidth, 
+            int tileHeight, Func<string[,], Vector2, string> mapParse)
         {
             this.tileWidth = tileWidth;
             this.tileHeight = tileHeight;
+
+            this.mapParse = mapParse;
 
             tiles = new Dictionary<string, Animation>();
 
@@ -45,9 +50,6 @@ namespace Megaman.Overworld
 
                 tiles.Add(t, tile);
             }
-
-            foreach (KeyValuePair<string, string> entry in tilesKey)
-                tiles.RenameKey(entry.Key, entry.Value);
         }
     }
 }

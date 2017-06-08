@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 
@@ -6,23 +7,28 @@ var ACDC = new {
 	origin = new Vector2(0, 0),
 	spriteWidth = 64, 
 	tileWidth = 32,
-	tileHeight = 16,
-	tilesKey = new Dictionary<string, string>()
-	{
-		{ "square1", "s1" },
-        { "square2", "s2" },
-        { "square3", "s3" },
-        { "square4", "s4" },
-        
-		{ "corner1", "c1" },
-        { "corner2", "c2" },
-        
-		{ "walkse1", "se1" },
-        { "walksw1", "sw1" },
-        { "walkne1", "ne1" },
-        { "walknw1", "nw1" },
-        
-		{ "walkup1", "u1" },
-        { "walkdown1", "d1" },
-	},
+	tileHeight = 16,	
+    mapParse = (Func<string[,], Vector2, string>)
+        delegate (string[,] map, Vector2 position)
+    {
+        int i = (int)position.X;
+        int j = (int)position.Y;
+
+        string tile = map[i, j];
+
+        if (tile == "#") return "square1";
+
+		if (tile == "p")
+		{
+			if (map[i + 1, j] == "p" && map[i - 1, j] == "p") return "walkdown1";
+			else if (map[i + 1, j] == "p") return "walknw1";
+			else if (map[i - 1, j] == "p") return "walkse1";
+			
+			if (map[i, j + 1] == "p" && map[i, j - 1] == "p") return "walkup1";
+			else if (map[i, j + 1] == "p") return "walkne1";
+			else return "walksw1";
+		}
+
+        else return "";
+    },
 };
