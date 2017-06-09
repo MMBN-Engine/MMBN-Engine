@@ -1,18 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Megaman.Actors;
-using Megaman.Actors.Viruses;
-using Megaman.Actors.Navis;
-using Megaman.Chips;
-using Megaman.Projectiles;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Media;
-using CustomExtensions;
 using System.IO;
 
 namespace Megaman.Overworld
@@ -29,6 +19,8 @@ namespace Megaman.Overworld
 
         string[,] mapArray;  //For procedural generation of maps
 
+        public string name, generator, tilesetName;
+
         public Vector2 drawLocation;
         public Vector2 currentTile;
 
@@ -36,7 +28,6 @@ namespace Megaman.Overworld
 
         public Area()
         {
-            drawLocation = new Vector2(120, 80); //Puts us in the center of the first tile
             currentTile = new Vector2();
 
             tileWidth = 32;
@@ -47,6 +38,16 @@ namespace Megaman.Overworld
         {
             this.tileset = tileset;
             tiles = tileset.tiles;
+
+            setDrawLocation();
+        }
+
+        public void setDrawLocation()
+        {
+            //Puts us in the center of the first tile
+            drawLocation = new Vector2(120, 80);
+            //Shift to specified tile
+            drawLocation -= tileLocation((int)currentTile.X + 1, (int)currentTile.Y);
         }
 
         //Inefficient, eventually will want to change so it only draws what we need
@@ -149,6 +150,11 @@ namespace Megaman.Overworld
             position.Y = (i + j - 1) * tileHeight;
 
             return position;
+        }
+
+        public void generateMap()
+        {
+            if (generator == "map") loadMap(name + ".txt");
         }
 
         public void loadMap(string fileName)

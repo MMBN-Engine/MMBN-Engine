@@ -9,6 +9,7 @@ using Megaman.Actors.Navis;
 using Megaman.Chips;
 using Megaman.Overworld;
 using Megaman.Projectiles;
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Scripting;
 using Microsoft.CodeAnalysis.Scripting;
 using Microsoft.Xna.Framework;
@@ -34,6 +35,8 @@ namespace Megaman
         public static ScriptState parse(string script)
         {
             ScriptOptions scriptOptions = ScriptOptions.Default.WithReferences(typeof(MegaMan).Assembly);
+
+            scriptOptions = scriptOptions.WithSourceResolver(new SourceFileResolver(new List<string>(), AppContext.BaseDirectory));
 
             string s = new StreamReader(script).ReadToEnd();
 

@@ -83,6 +83,8 @@ namespace Megaman
             loadPanelTypesFromFile();
             loadDamageTypesFromFile();
 
+            loadAreasFromFile();
+
             attackTypes = new AttackList();
 
             currentKeyboard = new KeyboardState();
@@ -95,10 +97,9 @@ namespace Megaman
             virus.Add(new Mettaur2());
             virus.Add(new MettaurΩ());
 
-            ACDC1 = new Area();
-            currentArea = ACDC1;
+            currentArea = areaList["ACDC1"];
 
-            navi = new MegaMan(100, ACDC1);
+            navi = new MegaMan(100, currentArea);
 
             base.Initialize();
         }
@@ -132,9 +133,11 @@ namespace Megaman
             charge = Content.Load<SoundEffect>("soundFX/battle/charge");
             chargeComplete = Content.Load<SoundEffect>("soundFX/battle/chargeComplete");
 
-            ACDC1.loadTileset(tilesetList["ACDC"]);
-            ACDC1.loadMap("ACDC1.txt");
-
+            foreach (KeyValuePair<string, Area> entry in areaList)
+            {
+                entry.Value.loadTileset(tilesetList[entry.Value.tilesetName]);
+                entry.Value.generateMap();
+            }
             newGame();
 
             //Content.Load<Texture2D>("sprites/navi/megaman/aqua").saveTexture("aqua2");
@@ -501,7 +504,22 @@ namespace Megaman
                 tilesetList.Add(name, new Tileset(name, origin, spriteWidth,
                     tileWidth, tileHeight, mapParse));
             }
-        }       
+        }
 
+        void loadAreasFromFile()
+        {
+            areaList = new Dictionary<string, Area>();
+
+            ScriptState state = Scripting.parse(modulePath + "areas/areas.txt");
+
+            List<ScriptVariable> v = state.Variables.ToList();
+
+            foreach (ScriptVariable foo in v)
+            {
+                Area a = new Area();
+                Scripting.equateFields(a, foo);
+                areaList.Add(a.name, a);
+            }
+        }
     }
 }
