@@ -39,9 +39,9 @@ namespace Megaman.Overworld
 
             tiles = new Dictionary<string, Animation>();
 
-            String path = Game.modulePath + "gfx/tilesets/" + tileset + "/";
+            String path = "gfx/tilesets/" + tileset + "/";
 
-            List<String> fileArray = Directory.GetFiles(path).Select(Path.GetFileNameWithoutExtension).ToList();
+            List<String> fileArray = Scripting.getFilesFromFolder(path);
 
             foreach (string t in fileArray)
             {

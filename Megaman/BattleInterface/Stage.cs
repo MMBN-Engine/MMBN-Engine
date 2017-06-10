@@ -84,7 +84,7 @@ namespace Megaman
         {
             textures = new Dictionary<string, Texture2D>();
 
-            string path = Game.modulePath + "gfx/panels/";
+            string path = "gfx/panels/";
 
             List<String> fileArray = Scripting.getFilesFromFolder(path);
 

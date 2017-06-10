@@ -75,6 +75,8 @@ namespace Megaman
 
         public static Texture2D loadImage(string filepath)
         {
+            filepath = Game.modulePath + filepath;
+
             FileStream fileStream = new FileStream(filepath, FileMode.Open);
             Texture2D image = Texture2D.FromStream(Game.graphics.GraphicsDevice, fileStream);
 
@@ -84,6 +86,8 @@ namespace Megaman
 
         public static List<string> getFilesFromFolder(string path)
         {
+            path = Game.modulePath + path;
+
             return Directory.GetFiles(path).Select(Path.GetFileNameWithoutExtension).ToList();
         }
     }
