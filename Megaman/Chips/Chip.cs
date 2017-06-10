@@ -39,8 +39,8 @@ namespace Megaman.Chips
         public void Initialize(ContentManager content)
         {
             damageMult = 1;
-            image = content.Load<Texture2D>("sprites/chips/images/" + name);
-            icon = content.Load<Texture2D>("sprites/chips/icons/" + name);
+            image = Scripting.loadImage("gfx/chips/images/" + name + ".png");
+            icon = Scripting.loadImage("gfx/chips/icons/" + name + ".png");
             //background = content.Load<Texture2D>("sprites/chips/" + type);
         }
 
