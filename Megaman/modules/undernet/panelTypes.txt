@@ -10,35 +10,36 @@ Optional:
 */
 using System;
 using System.Collections.Generic;
+using Megaman;
 using Megaman.Actors;
 
-var Null = new {
+var Null = new PanelType {
 	name = "Null",
 };
 
-var Cracked = new {
+var Cracked = new PanelType {
 	name = "Cracked",
 };
 
-var Broken = new {
+var Broken = new PanelType {
 	name = "Broken",
 };
 
-var Grass = new {
+var Grass = new PanelType {
 	name = "Grass",
 	damageMod = new Dictionary<string, float>() { { "Fire", 1f } },
 };
 
-var Sand = new {
+var Sand = new PanelType {
 	name = "Sand",
 };
 
-var Metal = new {
+var Metal = new PanelType {
 	name = "Metal",
 	damageMod = new Dictionary<string, float>() { { "Elec", 1f } },
 };
 
-var Ice = new {
+var Ice = new PanelType {
 	name = "Ice",
 	onStep = (Action <Actor, string>) delegate (Actor actor, string panel) 
 	{
@@ -51,11 +52,11 @@ var Ice = new {
 	},
 };
 
-var Swamp = new {
+var Swamp = new PanelType {
 	name = "Swamp",
 };
 
-var Lava = new {
+var Lava = new PanelType {
 	name = "Lava",
 	damageMod = new Dictionary<string, float>() { { "Aqua", 1f } },
 	onStep = (Action <Actor, string>) delegate (Actor actor, string panel) 
@@ -65,10 +66,10 @@ var Lava = new {
 	},
 };
 
-var Holy = new {
+var Holy = new PanelType {
 	name = "Holy",
 };
 
-var Hole = new {
+var Hole = new PanelType {
 	name = "Hole",
 };

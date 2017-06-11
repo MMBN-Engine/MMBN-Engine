@@ -433,13 +433,11 @@ namespace Megaman
             panelTypes = new Dictionary<string, PanelType>();
             ScriptState state = Scripting.parse(modulePath + "panelTypes.txt");
 
-            List<ScriptVariable> v = state.Variables.ToList();
+            List<ScriptVariable> vlist = state.Variables.ToList();
             
-            for (int i = 0; i < v.Count(); i++)
+            foreach (ScriptVariable v in vlist)
             {
-                PanelType panel = new PanelType();
-                Scripting.equateFields(panel, v[i]);
-                panel.index = i;
+                PanelType panel = (PanelType) v.Value;
 
                 panelTypes.Add(panel.name, panel);
             }
