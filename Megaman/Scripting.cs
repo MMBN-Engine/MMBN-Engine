@@ -48,7 +48,7 @@ namespace Megaman
             }
             catch (Microsoft.CodeAnalysis.Scripting.CompilationErrorException e)
             {
-                Log("Error loading " + script + " :" + e);
+                Log("Error loading " + script + " :\n" + e);
             }
 
             return results.Result;
