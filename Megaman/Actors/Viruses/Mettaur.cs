@@ -24,6 +24,7 @@ namespace Megaman.Actors.Viruses
 
         protected MettaurBase() : base()
         {
+            family = "Mettaur";
         }
 
         public override void Initialize(ContentManager content, Vector2 position, Stage stage)
@@ -36,8 +37,6 @@ namespace Megaman.Actors.Viruses
 
             attackSprites[3].Initialize(content.Load<Texture2D>("sprites/virus/mettaur/attack"),
                 new Vector2(14, 44), 67, 100, false);
-
-            palette1 = content.Load<Texture2D>("sprites/virus/mettaur/mettaur").getPalette();
 
             attackFrame = new List<int> { 0, 0, 0, 6 };
 
@@ -168,6 +167,8 @@ namespace Megaman.Actors.Viruses
             damage = 10;
             noGuarding = true;
             speed = 1;
+
+            name = "Mettaur";
         }
     }
 
@@ -180,14 +181,8 @@ namespace Megaman.Actors.Viruses
             timer = 1000;
             damage = 40;
             speed = 1.3;
-        }
 
-        public override void Initialize(ContentManager content, Vector2 position, Stage stage)
-        {
-            base.Initialize(content, position, stage);
-            
-            palette2 = content.Load<Texture2D>("sprites/virus/mettaur/mettaur2").getPalette();
-            paletteSwap();
+            name = "Mettaur2";
         }
     }
 
@@ -200,14 +195,8 @@ namespace Megaman.Actors.Viruses
             timer = 500;
             damage = 80;
             speed = 1.6;
-        }
 
-        public override void Initialize(ContentManager content, Vector2 position, Stage stage)
-        {
-            base.Initialize(content, position, stage);
-
-            palette2 = content.Load<Texture2D>("sprites/virus/mettaur/mettaur3").getPalette();
-            paletteSwap();
+            name = "Mettaur3";
         }
     }
 
@@ -220,14 +209,8 @@ namespace Megaman.Actors.Viruses
             timer = 250;
             damage = 150;
             speed = 2.5;
-        }
 
-        public override void Initialize(ContentManager content, Vector2 position, Stage stage)
-        {
-            base.Initialize(content, position, stage);
-
-            palette2 = content.Load<Texture2D>("sprites/virus/mettaur/mettaurΩ").getPalette();
-            paletteSwap();
+            name = "MettaurΩ";
         }
     }
 }

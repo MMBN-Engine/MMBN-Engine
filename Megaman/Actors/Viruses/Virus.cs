@@ -17,6 +17,8 @@ namespace Megaman.Actors.Viruses
         public bool didAttack;  //Lets us know if we did attack already, useful for virus ai
         SpriteFont HpDisplay;
 
+        public string family;
+
         public Virus() : base()
         {
             color = "blue";
@@ -26,13 +28,17 @@ namespace Megaman.Actors.Viruses
 
         public override void Initialize(ContentManager content, Vector2 position, Stage stage)
         {
+            gfxFolder = "gfx/virus/" + family + "/";
+
             base.Initialize(content, position, stage);
 
             genericMove.Initialize(content.Load<Texture2D>("sprites/move"),new Vector2(-2, 42), 30, 15, false);
             deathSprite.Initialize(content.Load<Texture2D>("sprites/effects/explosion"), new Vector2(7, 34), 50, 30, false);
             deathSound = content.Load<SoundEffect>("soundFX/battle/explodeShort");
 
-            HpDisplay = content.Load<SpriteFont>("virus-hp");  
+            HpDisplay = content.Load<SpriteFont>("virus-hp");
+
+            paletteSwap(family, name);
         }
         
         public override void Update(GameTime gameTime)
@@ -77,16 +83,6 @@ namespace Megaman.Actors.Viruses
         {
             base.doAttack(attackNum);
             didAttack = true;
-        }
-
-        public void paletteSwap()
-        {
-            staticSprite.map = staticSprite.map.changeColor(palette1, palette2);
-            guardSprite.map = guardSprite.map.changeColor(palette1, palette2);
-            foreach (Animation foo in attackSprites)
-            {
-                foo.map = foo.map.changeColor(palette1, palette2);
-            }
         }
 
     }

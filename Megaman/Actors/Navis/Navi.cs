@@ -82,6 +82,8 @@ namespace Megaman.Actors.Navis
 
         public override void Initialize(ContentManager content, Vector2 position, Stage stage)
         {
+            gfxFolder = "gfx/navi/" + name + "/";
+
             base.Initialize(content, position, stage);
 
             charge.Initialize(content.Load<Texture2D>("sprites/navi/charge"), new Vector2(10, 55), 64, 25, true);
@@ -170,14 +172,14 @@ namespace Megaman.Actors.Navis
 
             Body[Element] = true;
 
-            staticSprite.map = staticSprite.map.changeColor(palette1, palette2);
-            moveSprite.map = moveSprite.map.changeColor(palette1, palette2);
-            busterSprite.map = busterSprite.map.changeColor(palette1, palette2);
-            foreach (Animation foo in attackSprites) foo.map = foo.map.changeColor(palette1, palette2);
+            //staticSprite.map = staticSprite.map.changeColor(palette1, palette2);
+            //moveSprite.map = moveSprite.map.changeColor(palette1, palette2);
+            //busterSprite.map = busterSprite.map.changeColor(palette1, palette2);
+            //foreach (Animation foo in attackSprites) foo.map = foo.map.changeColor(palette1, palette2);
 
-            standingSprite.map = standingSprite.map.changeColor(palette1, palette2);
+            //standingSprite.map = standingSprite.map.changeColor(palette1, palette2);
 
-            palette1 = palette2;
+            //palette1 = palette2;
         }
 
         public virtual void overWorldDraw(SpriteBatch spriteBatch, float resolution)

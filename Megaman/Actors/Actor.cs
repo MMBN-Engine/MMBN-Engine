@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using static Megaman.AttackList;
 using Megaman.Chips;
+using CustomExtensions;
 using Megaman.Projectiles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -29,7 +30,9 @@ namespace Megaman.Actors
         // 3 - hammer
         public List<int> attackFrame;  //Animation frame for which attack is done, 0 is last frame
 
-        public List<Color> palette1, palette2;
+        public Dictionary<string, List<Color>> palettes;
+
+        public string name;
 
         public Animation gunSprite;
         public bool isShooting;
@@ -61,6 +64,7 @@ namespace Megaman.Actors
 
         public List<Chip> chips;  //Battle chips that can be used
 
+        public string gfxFolder;  //Folder where sprites are stored
 
         //Atributes
         public bool FlotShoe, AirShoe;
@@ -101,6 +105,20 @@ namespace Megaman.Actors
             
             stage.actorArray[(int)position.X, (int)position.Y] = this;
             activeSprite = staticSprite;
+
+            loadPalettes();
+        }
+
+        public void loadPalettes()
+        {
+            palettes = new Dictionary<string, List<Color>>();
+
+            List<String> fileArray = Scripting.getFilesFromFolder(gfxFolder + "palettes");
+
+            foreach (string t in fileArray)
+            {
+                palettes.Add(t, Scripting.loadImage(gfxFolder + "palettes/" + t + ".png").getPalette());
+            }
         }
 
         public override void Update(GameTime gameTime)
@@ -394,6 +412,16 @@ namespace Megaman.Actors
         {
             if (moveStart | moveFin | isAttacking | isGuarding | noGuarding) return false;
             else return true;
+        }
+
+        public void paletteSwap(string palette1, string palette2)
+        {
+            staticSprite.map = staticSprite.map.changeColor(palettes[palette1], palettes[palette2]);
+            guardSprite.map = guardSprite.map.changeColor(palettes[palette1], palettes[palette2]);
+            foreach (Animation foo in attackSprites)
+            {
+                foo.map = foo.map.changeColor(palettes[palette1], palettes[palette2]);
+            }
         }
     }
 }
