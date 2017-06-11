@@ -7,8 +7,10 @@ using Microsoft.Xna.Framework.Graphics;
 using System.IO;
 namespace CustomExtensions
 {
-    public static class CustomExtentions
+    public static class CustomExtensions
     {
+        public delegate void ParamsAction(params object[] arguments);
+
         public static List<Color> getPalette(this Texture2D texture)
         {
             Color[] colorMap = new Color[texture.Width * texture.Height];
