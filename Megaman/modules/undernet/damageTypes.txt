@@ -14,12 +14,12 @@ using System.Collections.Generic;
 using Megaman;
 using Microsoft.Xna.Framework;
 
-var Null = new {
+var Null = new DamageType {
 	name = "Null",
 	defaultDef = true,
 };
 
-var Aqua = new {
+var Aqua = new DamageType {
 	name = "Aqua",
 	damageMod = new Dictionary<string, float>() { { "Fire", 1f } },
 	onHit = (Action <Stage, Vector2, string>) delegate (Stage stage, Vector2 position, string panel) 
@@ -28,12 +28,12 @@ var Aqua = new {
 	},
 };
 
-var Elec = new {
+var Elec = new DamageType {
 	name = "Elec",
 	damageMod = new Dictionary<string, float>() { { "Aqua", 1f } },
 };
 
-var Fire = new {
+var Fire = new DamageType {
 	name = "Fire",
 	damageMod = new Dictionary<string, float>() { { "Wood", 1f } },
 	onHit = (Action <Stage, Vector2, string>) delegate (Stage stage, Vector2 position, string panel) 
@@ -42,11 +42,11 @@ var Fire = new {
 	},
 };
 
-var Wood = new {
+var Wood = new DamageType {
 	name = "Wood",
 	damageMod = new Dictionary<string, float>() { { "Elec", 1f } },
 };
 
-var Break = new {
+var Break = new DamageType {
 	name = "Break",
 };

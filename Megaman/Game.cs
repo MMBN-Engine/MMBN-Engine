@@ -448,13 +448,11 @@ namespace Megaman
             damageTypes = new Dictionary<string, DamageType>();
             ScriptState state = Scripting.parse(modulePath + "damageTypes.txt");
 
-            List<ScriptVariable> v = state.Variables.ToList();
+            List<ScriptVariable> vlist = state.Variables.ToList();
 
-            for (int i = 0; i < v.Count(); i++)
+            foreach (ScriptVariable v in vlist)
             {
-                DamageType damage = new DamageType();
-                Scripting.equateFields(damage, v[i]);
-
+                DamageType damage = (DamageType)v.Value;
                 damageTypes.Add(damage.name, damage);
             }
         }
