@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static CustomExtensions.CustomExtensions;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -16,6 +17,9 @@ namespace Megaman
 {
     public class AttackList
     {
+        public ParamsAction onAction;
+        public string name;
+
         public struct attackSpecs
         {
             public int damage;
@@ -71,6 +75,8 @@ namespace Megaman
             spreaderSprite = new Animation();
             heaterSprite = new Animation();
             bubblerSprite = new Animation();
+
+            onAction = (ParamsAction) delegate (object[] args) { };
         }
 
         public void Initialize(ContentManager content)

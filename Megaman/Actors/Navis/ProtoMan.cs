@@ -27,13 +27,6 @@ namespace Megaman.Actors.Navis
             moveSprite.Initialize(content.Load<Texture2D>("sprites/navi/megaman/move"),
                 new Vector2(0, 46), 35, 20, false);
 
-            attackSprites.Add(new Animation());
-            attackSprites.Add(new Animation());
-            attackSprites[0].Initialize(content.Load<Texture2D>("sprites/navi/megaman/shoot"),
-                new Vector2(0, 46), 35, 30, false);
-            attackSprites[1].Initialize(content.Load<Texture2D>("sprites/navi/megaman/sword"),
-                new Vector2(3, 53), 66, 30, false);
-
             busterSprite.Initialize(content.Load<Texture2D>("sprites/navi/megaman/buster"),
                 new Vector2(0, 3), 41, 30, false);         
         }

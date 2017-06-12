@@ -23,12 +23,18 @@ namespace Megaman.Actors
 
         public SoundEffect deathSound;
 
-        public List<Animation> attackSprites;
+        public Dictionary<string, Animation> attackSprites;
         // 0 - shoot
         // 1 - sword
         // 2 - bomb
         // 3 - hammer
-        public List<int> attackFrame;  //Animation frame for which attack is done, 0 is last frame
+        public Dictionary<string, int> attackFrame;  //Animation frame for which attack is done, 0 is last frame
+        protected string attackName;
+
+        //Definitions for the loading the attack sprites
+        internal Vector2 origin;
+        internal int spriteWidth;
+        internal int attackSpeed;
 
         public Dictionary<string, List<Color>> palettes;
 
@@ -41,7 +47,6 @@ namespace Megaman.Actors
 
         public Dictionary<string, bool> Body;
 
-        protected int attackNum;
         public bool isAttacking;
         public bool isSlashing;
 
@@ -77,14 +82,8 @@ namespace Megaman.Actors
 
             staticSprite = new Animation();
             moveSprite = new Animation();
-            attackSprites = new List<Animation>();
             guardSprite = new Animation();
             deathSprite = new Megaman.Animation();
-
-            attackSprites.Add(new Animation());
-            attackSprites.Add(new Animation());
-            attackSprites.Add(new Animation());
-            attackSprites.Add(new Animation());
 
             info = new attackSpecs();
 
@@ -107,6 +106,7 @@ namespace Megaman.Actors
             activeSprite = staticSprite;
 
             loadPalettes();
+            loadAttackSprites();
         }
 
         public void loadPalettes()
@@ -118,6 +118,22 @@ namespace Megaman.Actors
             foreach (string t in fileArray)
             {
                 palettes.Add(t, Scripting.loadImage(gfxFolder + "palettes/" + t + ".png").getPalette());
+            }
+        }
+
+        public void loadAttackSprites()
+        {
+            attackSprites = new Dictionary<string, Animation>();
+
+            List<String> fileArray = Scripting.getFilesFromFolder(gfxFolder + "attacks");
+
+            foreach (string t in fileArray)
+            {
+                Animation sprite = new Animation();
+                sprite.Initialize(Scripting.loadImage(gfxFolder + "attacks/" + t + ".png"), 
+                    origin, spriteWidth, attackSpeed, false);
+
+                attackSprites.Add(t, sprite);
             }
         }
 
@@ -154,7 +170,7 @@ namespace Megaman.Actors
             if (isAttacking)
             {
                 int Frame = activeSprite.currentFrame;
-                int Target = attackFrame[attackNum];
+                int Target = attackFrame[attackName];
 
                 if ((Frame >= Target) && (Target > 0) && (attackHandle != null))
                 {
@@ -282,14 +298,14 @@ namespace Megaman.Actors
             else return true;
         }
 
-        public virtual void doAttack(int attackNum)
+        public virtual void doAttack(string attackName)
         {
             if (canAttack())
             {
-                attackSprites[attackNum].Reset();
-                activeSprite = attackSprites[attackNum];
+                attackSprites[attackName].Reset();
+                activeSprite = attackSprites[attackName];
                 isAttacking = true;
-                this.attackNum = attackNum;
+                this.attackName = attackName;
             }
         }
         
@@ -352,7 +368,7 @@ namespace Megaman.Actors
             if (!canAttack()) return;
             //swordSprite.active = true;
             //swordSprite = animation;
-            doAttack(1);
+            doAttack("sword");
             isSlashing = true;
         }
 
@@ -361,7 +377,7 @@ namespace Megaman.Actors
             if (!canAttack()) return;
             //gunSprite = animation;
             //gunSprite.Reset();
-            doAttack(3);
+            doAttack("bomb");
 
             this.attackHandle = attackHandle;
         }
@@ -398,7 +414,7 @@ namespace Megaman.Actors
             if (!canGuard()) return;
             gunSprite = animation;
             gunSprite.Reset();
-            doAttack(0);
+            doAttack("shoot");
             isShooting = true;
 
             this.attackHandle = attackHandle;
@@ -418,9 +434,9 @@ namespace Megaman.Actors
         {
             staticSprite.map = staticSprite.map.changeColor(palettes[palette1], palettes[palette2]);
             guardSprite.map = guardSprite.map.changeColor(palettes[palette1], palettes[palette2]);
-            foreach (Animation foo in attackSprites)
+            foreach (KeyValuePair<string, Animation> foo in attackSprites)
             {
-                foo.map = foo.map.changeColor(palettes[palette1], palettes[palette2]);
+                foo.Value.map = foo.Value.map.changeColor(palettes[palette1], palettes[palette2]);
             }
         }
     }

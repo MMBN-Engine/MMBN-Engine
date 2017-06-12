@@ -29,8 +29,6 @@ namespace Megaman.Actors.Navis
         public Vector2 facing; //Direction the navi is facing
 
         //Definitions for the loading the sprites
-        internal Vector2 origin;
-        internal int spriteWidth;
         internal string folder;
 
         public int Custom;
@@ -53,6 +51,8 @@ namespace Megaman.Actors.Navis
 
             chargeTime = 4000;
             chargeElapsed = 0;
+
+            attackSpeed = 30;
 
             Attack = 1;
             Rapid = 1;
@@ -77,7 +77,8 @@ namespace Megaman.Actors.Navis
 
             facing = new Vector2(0, 1);
 
-            attackFrame = new List<int>() { 0, 4, 0, 0 };
+            attackFrame = new Dictionary<string, int>
+                { { "shoot", 0 }, { "sword", 4 }, { "bomb", 0 },};
         }
 
         public override void Initialize(ContentManager content, Vector2 position, Stage stage)
@@ -101,11 +102,6 @@ namespace Megaman.Actors.Navis
                 origin, spriteWidth, 0, true);
 
             moveSprite.Initialize(content.Load<Texture2D>(folder + "move"),
-                origin, spriteWidth, 30, false);
-
-            attackSprites[0].Initialize(content.Load<Texture2D>(folder + "shoot"),
-                origin, spriteWidth, 30, false);
-            attackSprites[1].Initialize(content.Load<Texture2D>(folder + "sword"),
                 origin, spriteWidth, 30, false);
         }
 

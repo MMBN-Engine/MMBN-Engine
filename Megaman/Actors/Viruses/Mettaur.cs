@@ -25,6 +25,9 @@ namespace Megaman.Actors.Viruses
         protected MettaurBase() : base()
         {
             family = "Mettaur";
+            origin = new Vector2(14, 44);
+            spriteWidth = 67;
+            attackSpeed = 100;
         }
 
         public override void Initialize(ContentManager content, Vector2 position, Stage stage)
@@ -35,15 +38,12 @@ namespace Megaman.Actors.Viruses
             guardSprite.Initialize(content.Load<Texture2D>("sprites/virus/mettaur/guard"),
                 new Vector2(-7, 26), 23, 100, false);
 
-            attackSprites[3].Initialize(content.Load<Texture2D>("sprites/virus/mettaur/attack"),
-                new Vector2(14, 44), 67, 100, false);
-
-            attackFrame = new List<int> { 0, 0, 0, 6 };
-
-            setSpeed();
-            
+            attackFrame = new Dictionary<string, int>() { { "bomb", 6 } };
+        
             //This needs to be last, textures have to be initialized first so they are assigned correctly
             base.Initialize(content, position, stage);
+
+            setSpeed();
         }
 
         public override void AiInitialize()
@@ -126,7 +126,7 @@ namespace Megaman.Actors.Viruses
         {
             timer = 1500/(int) speed;
             guardSprite.frameTime = guardSprite.frameTime / speed;
-            attackSprites[3].frameTime = attackSprites[3].frameTime / speed;
+            attackSprites["bomb"].frameTime = attackSprites["bomb"].frameTime / speed;
         }
 
         //Sets the next mettaur to active

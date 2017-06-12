@@ -79,9 +79,9 @@ namespace Megaman.Actors.Viruses
             deathSound.Play();
         }
 
-        public override void doAttack(int attackNum)
+        public override void doAttack(string attackName)
         {
-            base.doAttack(attackNum);
+            base.doAttack(attackName);
             didAttack = true;
         }
 
