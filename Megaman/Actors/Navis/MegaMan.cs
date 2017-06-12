@@ -12,7 +12,7 @@ namespace Megaman.Actors.Navis
 {
     class MegaMan : Navi
     {
-        public MegaMan(int HP, Area area) : base(HP, area)
+        public MegaMan() : base()
         {
             armLocation = new Vector2(30, -32);
 
@@ -28,20 +28,7 @@ namespace Megaman.Actors.Navis
             //This needs to be last, textures have to be initialized first so they are assigned correctly
             base.Initialize(content, position, stage);
 
-            busterSprite.Initialize(content.Load<Texture2D>("sprites/navi/megaman/busterGuts"),
-                new Vector2(-1, 3), 40, 30, false);
-            busterSprite.Initialize(content.Load<Texture2D>("sprites/navi/megaman/busterShield"),
-                new Vector2(0, 3), 41, 30, false);
-
-            standingSprite.Initialize(content.Load<Texture2D>("sprites/navi/megaman/overworld/standing"),
-                new Vector2(11, 36), 22, 0, false);
-
             //Need to redo attack sprites!, wrong palette!!!!       
-        }
-
-        public override void chargedAttack()
-        {
-            attackTypes.MegaBuster(this, Attack * 10);
         }
 
         public override void styleChange(String Element, String Style)

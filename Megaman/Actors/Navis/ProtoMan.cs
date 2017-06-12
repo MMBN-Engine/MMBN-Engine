@@ -12,7 +12,7 @@ namespace Megaman.Actors.Navis
 {
     class ProtoMan : Navi
     {
-        public ProtoMan(int HP, Area area) : base(HP, area)
+        public ProtoMan() : base()
         {
             armLocation = new Vector2(30, -32);
         }
@@ -31,10 +31,10 @@ namespace Megaman.Actors.Navis
                 new Vector2(0, 3), 41, 30, false);         
         }
 
-        public override void chargedAttack()
-        {
+        //public override void chargedAttack()
+       // {
             //WideSword(Attack * 20?)
             //Slash(busterSprite, Attack * 10, "Null", new List<string>(), Sword, null);
-        }        
+        //}        
     }           
 }

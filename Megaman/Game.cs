@@ -28,7 +28,6 @@ namespace Megaman
     {
         public static GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        Texture2D stageTiles;
         KeyboardState currentKeyboard;
         KeyboardState oldKeyboard;
         Stage stage;
@@ -55,6 +54,7 @@ namespace Megaman
 
         public static AttackList attackTypes;
         
+        Dictionary<string, Navi> naviList;
         Navi navi;
         List<Virus> virus;
 
@@ -87,6 +87,10 @@ namespace Megaman
 
             attackTypes = new AttackList();
 
+
+            loadNavisFromFile();
+            navi = naviList["MegaMan"];
+
             currentKeyboard = new KeyboardState();
             oldKeyboard = new KeyboardState();
             stage = new Stage();
@@ -98,8 +102,7 @@ namespace Megaman
             virus.Add(new MettaurΩ());
 
             currentArea = areaList["ACDC1"];
-
-            navi = new MegaMan(100, currentArea);
+            navi.area = currentArea;
 
             base.Initialize();
         }
@@ -420,7 +423,7 @@ namespace Megaman
 
             if (IsReleased(Keys.Z))
             {
-                if (navi.charged) navi.chargedAttack();
+                if (navi.charged) navi.chargedAttack(navi);
                 playedCharge = false;
                 playedChargeComplete = false;
                 navi.isCharging = false;
@@ -457,6 +460,19 @@ namespace Megaman
             }
         }
 
+        void loadNavisFromFile()
+        {
+            naviList = new Dictionary<string, Navi>();
+            ScriptState state = Scripting.parse(modulePath + "navis.txt");
+
+            List<ScriptVariable> vlist = state.Variables.ToList();
+
+            foreach (ScriptVariable v in vlist)
+            {
+                Navi navi = (Navi)v.Value;
+                naviList.Add(navi.name, navi);
+            }
+        }
         void loadSongsFromFile()
         {
             songList = new Dictionary<string, Song>();

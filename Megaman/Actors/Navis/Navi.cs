@@ -18,7 +18,7 @@ namespace Megaman.Actors.Navis
         public Chip[] chipFolder;
         public List<Chip> customFolder;
 
-        Area area;
+        public Area area;
 
         public Animation standingSprite;
         // 0 - back
@@ -29,7 +29,7 @@ namespace Megaman.Actors.Navis
         public Vector2 facing; //Direction the navi is facing
 
         //Definitions for the loading the sprites
-        internal string folder;
+        public string folder;
 
         public int Custom;
 
@@ -38,16 +38,18 @@ namespace Megaman.Actors.Navis
         public bool isCharging, charged;
         public int chargeTime, chargeElapsed;
 
-        internal Vector2 armLocation;
+        public Vector2 armLocation;
 
         public Animation swordSprite;
         internal Vector2 swordLocation;
 
-        public Navi(int HP, Area area) : base()
+        //This is not pretty, it would be better if we did not have to have self as a parameter
+        public Action<Navi> chargedAttack;
+
+        public Navi() : base()
         {
             color = "red";
-            this.HP = HP;
-            this.MaxHP = HP;
+            MaxHP = HP;
 
             chargeTime = 4000;
             chargeElapsed = 0;
@@ -59,8 +61,6 @@ namespace Megaman.Actors.Navis
             Charge = 1;
 
             Custom = 5;
-
-            this.area = area;
 
             chipFolder = new Chip[30];
             customFolder = new List<Chip>();
@@ -85,6 +85,8 @@ namespace Megaman.Actors.Navis
         {
             gfxFolder = "gfx/navi/" + name + "/";
 
+            HP = MaxHP;
+
             base.Initialize(content, position, stage);
 
             charge.Initialize(content.Load<Texture2D>("sprites/navi/charge"), new Vector2(10, 55), 64, 25, true);
@@ -93,8 +95,7 @@ namespace Megaman.Actors.Navis
             chargeFull.Initialize(content.Load<Texture2D>("sprites/navi/charge-full"), new Vector2(10, 55), 64, 25, true);
 
             loadBattleSprites(content);
-
-            }
+        }
 
         private void loadBattleSprites(ContentManager content)
         {
@@ -103,6 +104,14 @@ namespace Megaman.Actors.Navis
 
             moveSprite.Initialize(content.Load<Texture2D>(folder + "move"),
                 origin, spriteWidth, 30, false);
+
+            busterSprite.Initialize(content.Load<Texture2D>("sprites/navi/megaman/busterGuts"),
+                new Vector2(-1, 3), 40, 30, false);
+            busterSprite.Initialize(content.Load<Texture2D>("sprites/navi/megaman/busterShield"),
+                new Vector2(0, 3), 41, 30, false);
+
+            standingSprite.Initialize(content.Load<Texture2D>("sprites/navi/megaman/overworld/standing"),
+                new Vector2(11, 36), 22, 0, false);
         }
 
         public override void Update(GameTime gameTime)
@@ -207,7 +216,5 @@ namespace Megaman.Actors.Navis
                 else return 2;
             }
         }
-
-        public virtual void chargedAttack() { }
     }
 }

@@ -32,8 +32,8 @@ namespace Megaman.Actors
         protected string attackName;
 
         //Definitions for the loading the attack sprites
-        internal Vector2 origin;
-        internal int spriteWidth;
+        public Vector2 origin;
+        public int spriteWidth;
         internal int attackSpeed;
 
         public Dictionary<string, List<Color>> palettes;
@@ -50,7 +50,7 @@ namespace Megaman.Actors
         public bool isAttacking;
         public bool isSlashing;
 
-        internal AttackList attackTypes;
+        public AttackList attackTypes;
 
         protected bool isGuarding;    //Check if we are in the process of doing the guard animation
         public bool Guard;         //True - guard effect is active
