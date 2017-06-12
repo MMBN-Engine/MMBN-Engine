@@ -1,0 +1,21 @@
+using System;
+using System.Collections.Generic;
+using Microsoft.Xna.Framework;
+using Megaman;
+using Megaman.Actors.Navis;
+
+var MegaMan = new Navi {
+	name = "MegaMan",
+	MaxHP = 100,
+	
+	armLocation = new Vector2(30, -32),
+	origin = new Vector2(3, 53),
+    spriteWidth = 66,
+    
+	folder = "sprites/navi/megaman/",
+
+	chargedAttack = (Action<Navi>)delegate (Navi navi)
+    {
+        navi.attackTypes["MegaBuster"].Action(navi, navi.Attack * 10);
+    },
+};

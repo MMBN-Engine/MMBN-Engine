@@ -1,0 +1,137 @@
+/*
+Parameters:
+Required:
+	name - damageType name
+On action:
+	damageMod = new Dictionary<string, float>() { { "Type", mod } }
+		how much damageType "Type" will increase the damage done
+	onstep = (Action <Actor, string>) delegate (Actor actor, string panel) { };
+		function called when actor steps on panel
+*/
+using System.Collections.Generic;
+using Megaman;
+using Megaman.Actors;
+using static CustomExtensions.CustomExtensions;
+
+//MegaBuster(Actor actor, int damage)
+var MegaBuster = new AttackType {
+	name = "MegaBuster",
+	onAction = (ParamsAction) delegate (object[] args)
+	{
+		AttackType self = (AttackType)args[0];
+		Actor actor = (Actor)args[1];
+		int damage = (int)args[2];
+		
+        actor.info.Reset();
+        actor.info.damage = damage;
+
+        actor.Shoot(actor.busterSprite, actor.Gun);
+	},
+};
+
+//Spreader(Actor actor, int damage, string effect)
+var Spreader = new AttackType {
+	name = "Spreader",
+	spreaderSprite = new Animation(),            
+	onAction = (ParamsAction) delegate (object[] args)
+	{
+		AttackType self = (AttackType)args[0];
+		Actor actor = (Actor)args[1];
+		int damage = (int)args[2];
+		string effect = (string)args[3];
+
+		actor.info.Reset();
+        actor.info.damage = damage;
+        actor.info.effects.Add(effect);
+        actor.info.effectSprite = self.spreaderSprite.Clone();
+        actor.info.sound = self.spreaderSound;
+		
+		actor.Shoot(actor.busterSprite, actor.Gun);        
+	},
+};   
+
+//Heater(Actor actor, int damage, string effect)
+var Heater = new AttackType {
+	name = "Heater",
+	onAction = (ParamsAction) delegate (object[] args)
+	{
+		AttackType self = (AttackType)args[0];
+		Actor actor = (Actor)args[1];
+		int damage = (int)args[2];
+		string effect = (string)args[3];
+
+		actor.info.Reset();
+        actor.info.damage = damage;
+        actor.info.effects.Add(effect);
+		actor.info.damageType = new List<string> { "Fire" };
+
+        actor.info.effectSprite = self.heaterSprite.Clone();
+        actor.info.sound = self.heaterSound;
+
+        actor.Shoot(actor.busterSprite, actor.Gun);        
+	},
+};
+
+//Bubbler(Actor actor, int damage, string effect)
+var Bubbler = new AttackType {
+	name = "Bubbler",
+	onAction = (ParamsAction) delegate (object[] args)
+	{
+		AttackType self = (AttackType)args[0];
+		Actor actor = (Actor)args[1];
+		int damage = (int)args[2];
+		string effect = (string)args[3];
+
+		actor.info.Reset();
+        actor.info.damage = damage;
+        actor.info.effects.Add(effect);
+		actor.info.damageType = new List<string> { "Aqua" };
+
+        actor.info.effectSprite = self.bubblerSprite.Clone();
+        actor.info.sound = self.bubblerSound;
+
+        actor.Shoot(actor.busterSprite, actor.Gun);        
+	},
+};
+
+
+// a speed of 1 will cover one tile per second
+//Wave(Actor actor, int damage, double speed)
+var Wave = new AttackType {
+	name = "Wave", 
+	onAction = (ParamsAction) delegate (object[] args) 
+	{	
+		AttackType self = (AttackType)args[0];
+		Actor actor = (Actor)args[1];
+		int damage = (int)args[2];
+		double speed = (double)args[3];
+		
+		Animation temp = self.waveSprite.Clone();
+        temp.frameTime = 1000 / (temp.frameCount * speed);
+
+        actor.info.Reset();
+        actor.info.speed = speed;
+        actor.info.sprite = temp;
+        actor.info.damage = damage;
+        actor.info.sound = self.waveSound;
+
+        self.projectileInitialization(actor);
+
+        actor.Hammer(null, actor.createWave);
+	},
+};
+
+//Recover(Actor actor, int recov)
+var Recover = new AttackType {
+	name = "Recover",
+	onAction = (ParamsAction) delegate (object[] args) 
+	{
+		AttackType self = (AttackType)args[0];
+		Actor actor = (Actor)args[1];
+		int recov = (int)args[2];
+	
+	    self.recoverSound.Play();
+        actor.Heal(actor, recov);
+        actor.stage.addEffect(self.recoverSprite.Clone(), actor.location);
+    },
+};
