@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using static Megaman.AttackList;
+using static Megaman.AttackType;
 using Megaman.Chips;
 using CustomExtensions;
 using Megaman.Projectiles;
@@ -50,7 +50,7 @@ namespace Megaman.Actors
         public bool isAttacking;
         public bool isSlashing;
 
-        public AttackList attackTypes;
+        public Dictionary<string, AttackType> attackTypes;
 
         protected bool isGuarding;    //Check if we are in the process of doing the guard animation
         public bool Guard;         //True - guard effect is active

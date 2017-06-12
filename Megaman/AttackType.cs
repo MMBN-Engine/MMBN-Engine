@@ -15,7 +15,7 @@ using Megaman.Projectiles;
 //This will store all of the attacks in the game, so they only need to be initialized once
 namespace Megaman
 {
-    public class AttackList
+    public class AttackType
     {
         public ParamsAction onAction;
         public string name;
@@ -53,22 +53,22 @@ namespace Megaman
             }
         }
 
-        internal Animation waveSprite;
-        internal SoundEffect waveSound;
+        public Animation waveSprite;
+        public SoundEffect waveSound;
 
-        internal Animation recoverSprite;
-        internal SoundEffect recoverSound;
+        public Animation recoverSprite;
+        public SoundEffect recoverSound;
 
-        internal Animation spreaderSprite;
-        internal SoundEffect spreaderSound;
+        public Animation spreaderSprite;
+        public SoundEffect spreaderSound;
 
-        internal Animation bubblerSprite;
-        internal SoundEffect bubblerSound;
+        public Animation bubblerSprite;
+        public SoundEffect bubblerSound;
 
-        internal Animation heaterSprite;
-        internal SoundEffect heaterSound;
+        public Animation heaterSprite;
+        public SoundEffect heaterSound;
 
-        public AttackList()
+        public AttackType()
         {
             waveSprite = new Animation();
             recoverSprite = new Animation();
@@ -101,75 +101,16 @@ namespace Megaman
             heaterSound = content.Load<SoundEffect>("soundFX/battle/heater");
         }
 
-        public void MegaBuster(Actor actor, int damage)
+        public void Action(params object[] args)
         {
-            actor.info.Reset();
-            actor.info.damage = damage;
+            object[] args2 = new object[args.Count() + 1];
+            args2[0] = this;
+            args.CopyTo(args2, 1);
 
-            actor.Shoot(actor.busterSprite, actor.Gun);
+            onAction(args2);
         }
 
-        public void Spreader(Actor actor, int damage, string effect)
-        {
-            actor.info.Reset();
-            actor.info.damage = damage;
-            actor.info.damageType = new List<string> { "Null" };
-            actor.info.effects.Add(effect);
-            actor.info.effectSprite = spreaderSprite.Clone();
-            actor.info.sound = spreaderSound;
-
-            actor.Shoot(actor.busterSprite, actor.Gun);
-        }
-
-        public void Heater(Actor actor, int damage, string effect)
-        {
-            actor.info.Reset();
-            actor.info.damage = damage;
-            actor.info.damageType = new List<string> { "Fire" };
-            actor.info.effects.Add(effect);
-            actor.info.effectSprite = heaterSprite.Clone();
-            actor.info.sound = heaterSound;
-
-            actor.Shoot(actor.busterSprite, actor.Gun);
-        }
-
-        public void Bubbler(Actor actor, int damage, string effect)
-        {
-            actor.info.Reset();
-            actor.info.damage = damage;
-            actor.info.damageType = new List<string> { "Aqua" };
-            actor.info.effects.Add(effect);
-            actor.info.effectSprite = bubblerSprite.Clone();
-            actor.info.sound = bubblerSound;
-
-            actor.Shoot(actor.busterSprite, actor.Gun);
-        }
-
-        // a speed of 1 will cover one tile per second
-        public void Wave(Actor actor, int damage, double speed)
-        {
-            Animation temp = waveSprite.Clone();
-            temp.frameTime = 1000 / (temp.frameCount * speed);
-
-            actor.info.Reset();
-            actor.info.speed = speed;
-            actor.info.sprite = temp;
-            actor.info.damage = damage;
-            actor.info.sound = waveSound;
-
-            projectileInitialization(actor);
-
-            actor.Hammer(null, actor.createWave);
-        }
-
-        public void Recover(Actor actor, int recov)
-        {
-            recoverSound.Play();
-            actor.Heal(actor, recov);
-            actor.stage.addEffect(recoverSprite.Clone(), actor.location);
-        }
-
-        internal void projectileInitialization(Actor actor)
+        public void projectileInitialization(Actor actor)
         {
             if (actor.color == "blue")
             {

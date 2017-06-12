@@ -87,7 +87,7 @@ namespace Megaman.Actors.Viruses
                         {
                             //Sets the next guy to move mode
 
-                            attackTypes.Wave(this, damage, speed);
+                            attackTypes["Wave"].Action(this, damage, speed);
 
                             break;
                         }

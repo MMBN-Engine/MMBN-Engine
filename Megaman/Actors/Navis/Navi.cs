@@ -165,7 +165,7 @@ namespace Megaman.Actors.Navis
 
         public void Buster()
         {
-            attackTypes.MegaBuster(this, Attack);
+            attackTypes["MegaBuster"].Action(this, Attack);
         }
 
         public virtual void styleChange(String Element, String Style)

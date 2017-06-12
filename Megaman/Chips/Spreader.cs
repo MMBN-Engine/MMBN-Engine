@@ -18,7 +18,7 @@ namespace Megaman.Chips
         public override void Use(Actor actor)
         {
             base.Use(actor);
-            actor.attackTypes.Spreader(actor, damage, effect);
+            actor.attackTypes["Spreader"].Action(actor, damage, effect);
         }
     }
 
@@ -82,7 +82,7 @@ namespace Megaman.Chips
         public override void Use(Actor actor)
         {
             base.Use(actor);
-            actor.attackTypes.Bubbler(actor, damage, effect);
+            actor.attackTypes["Bubbler"].Action(actor, damage, effect);
         }
     }
 
@@ -146,7 +146,7 @@ namespace Megaman.Chips
         public override void Use(Actor actor)
         {
             base.Use(actor);
-            actor.attackTypes.Heater(actor, damage, effect);
+            actor.attackTypes["Heater"].Action(actor, damage, effect);
         }
     }
 

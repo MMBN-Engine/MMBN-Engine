@@ -51,7 +51,7 @@ namespace Megaman
 
             //if (JustPressed(Keys.U)) attack.doDamage(navi.position, 10, "fire", stage);
 
-            if (JustPressed(Keys.C)) navi.attackTypes.Recover(navi, 10);
+            if (JustPressed(Keys.C)) navi.attackTypes["Recover"].Action(navi, 10);
         }
 
         public void debugFolder()

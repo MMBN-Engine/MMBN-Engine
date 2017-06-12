@@ -39,7 +39,7 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="AttackList.cs" />
+    <Compile Include="AttackType.cs" />
     <Compile Include="BattleInterface\Custom.cs" />
     <Compile Include="BattleInterface\DamageType.cs" />
     <Compile Include="BattleInterface\PanelType.cs" />

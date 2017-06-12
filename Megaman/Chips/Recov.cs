@@ -18,7 +18,7 @@ namespace Megaman.Chips
         public override void Use(Actor actor)
         {
             base.Use(actor);
-            actor.attackTypes.Recover(actor, recov);
+            actor.attackTypes["Recover"].Action(actor, recov);
         }
     }
 

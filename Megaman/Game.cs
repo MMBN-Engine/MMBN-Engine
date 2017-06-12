@@ -52,7 +52,7 @@ namespace Megaman
 
         public float screenSize;
 
-        public static AttackList attackTypes;
+        public static Dictionary<string, AttackType> attackTypes;
         
         Dictionary<string, Navi> naviList;
         Navi navi;
@@ -85,8 +85,7 @@ namespace Megaman
 
             loadAreasFromFile();
 
-            attackTypes = new AttackList();
-
+            loadAttackTypesFromFile();
 
             loadNavisFromFile();
             navi = naviList["MegaMan"];
@@ -115,7 +114,8 @@ namespace Megaman
         {
             navi.Initialize(Content, new Vector2(1,1), stage);
 
-            attackTypes.Initialize(Content);     
+            foreach (KeyValuePair<string, AttackType> entry in attackTypes)
+                entry.Value.Initialize(Content);     
             
             virus[0].Initialize(Content, new Vector2(4, 1), stage);
             virus[1].Initialize(Content, new Vector2(3, 0), stage);
@@ -457,6 +457,20 @@ namespace Megaman
             {
                 DamageType damage = (DamageType)v.Value;
                 damageTypes.Add(damage.name, damage);
+            }
+        }
+
+        void loadAttackTypesFromFile()
+        {
+            attackTypes = new Dictionary<string, AttackType>();
+            ScriptState state = Scripting.parse(modulePath + "attackTypes.txt");
+
+            List<ScriptVariable> vlist = state.Variables.ToList();
+
+            foreach (ScriptVariable v in vlist)
+            {
+                AttackType attack = (AttackType)v.Value;
+                attackTypes.Add(attack.name, attack);
             }
         }
 
