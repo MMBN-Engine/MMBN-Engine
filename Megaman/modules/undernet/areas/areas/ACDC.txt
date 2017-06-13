@@ -1,0 +1,8 @@
+using Microsoft.Xna.Framework;
+
+var ACDC1 = new {
+	name = "ACDC1",
+	tilesetName = "ACDC",
+	currentTile = new Vector2(2, 2),
+	generator = "map",
+};

@@ -1,0 +1,3 @@
+//Loads the specified area files
+
+#load "modules/undernet/areas/areas/ACDC.txt"
