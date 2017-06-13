@@ -443,25 +443,31 @@
     <Content Include="modules\undernet\gfx\chips\images\WideSwrd.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="modules\undernet\gfx\navi\MegaMan\attacks\test.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="modules\undernet\gfx\navi\MegaMan\palettes\Aqua.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="modules\undernet\gfx\navi\MegaMan\attacks\shoot.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="modules\undernet\gfx\navi\MegaMan\attacks\shoot2.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="modules\undernet\gfx\navi\MegaMan\attacks\sword.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="modules\undernet\gfx\navi\MegaMan\palettes\aqua.png">
+    <Content Include="modules\undernet\gfx\navi\MegaMan\palettes\Elec.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="modules\undernet\gfx\navi\MegaMan\palettes\elec.png">
+    <Content Include="modules\undernet\gfx\navi\MegaMan\palettes\Heat.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="modules\undernet\gfx\navi\MegaMan\palettes\heat.png">
+    <Content Include="modules\undernet\gfx\navi\MegaMan\palettes\Null.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="modules\undernet\gfx\navi\MegaMan\palettes\null.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="modules\undernet\gfx\navi\MegaMan\palettes\wood.png">
+    <Content Include="modules\undernet\gfx\navi\MegaMan\palettes\Wood.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="modules\undernet\gfx\panels\blue.png">

@@ -10,7 +10,7 @@ var MegaMan = new Navi {
 	
 	armLocation = new Vector2(30, -32),
 	origin = new Vector2(3, 53),
-    spriteWidth = 66,
+    spriteWidth = 74,
     
 	folder = "sprites/navi/megaman/",
 

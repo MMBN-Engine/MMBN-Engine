@@ -54,6 +54,21 @@ namespace Megaman
             if (JustPressed(Keys.C)) navi.attackTypes["Recover"].Action(navi, 10);
         }
 
+        public void debugContent()
+        {
+            //Content.Load<Texture2D>("sprites/navi/megaman/aqua").saveTexture("aqua2");
+            //List<Color> Null = Content.Load<Texture2D>("sprites/navi/megaman/null").getPalette();
+            //List<Color> Elec = Content.Load<Texture2D>("sprites/navi/megaman/elec").getPalette();
+            //Content.Load<Texture2D>("sprites/navi/megaman/team").changeColor(Elec,Null).saveImage("team");
+
+            Texture2D test = Scripting.loadImage("gfx/navi/MegaMan/attacks/shoot2.png");
+            Texture2D test2 = Scripting.loadImage("gfx/navi/MegaMan/attacks/test.png");
+            test = test.changeColor(test2.getPalette(), navi.palettes["Null"]);
+
+            Stream stream = File.OpenWrite("shoot3.png");
+            test.SaveAsPng(stream, test.Width, test.Height);
+        }
+
         public void debugFolder()
         {
             navi.chipFolder[0] = new Heatshot("A");

@@ -143,10 +143,7 @@ namespace Megaman
             }
             newGame();
 
-            //Content.Load<Texture2D>("sprites/navi/megaman/aqua").saveTexture("aqua2");
-            //List<Color> Null = Content.Load<Texture2D>("sprites/navi/megaman/null").getPalette();
-            //List<Color> Elec = Content.Load<Texture2D>("sprites/navi/megaman/elec").getPalette();
-            //Content.Load<Texture2D>("sprites/navi/megaman/team").changeColor(Elec,Null).saveImage("team");
+            debugContent();
         }
 
         /// <summary>
