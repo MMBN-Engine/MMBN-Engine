@@ -57,7 +57,7 @@ namespace Megaman
 
         public static void Log(string message)
         {
-            System.IO.File.WriteAllText("log.txt", message + "\n");
+            System.IO.File.AppendAllText("log.txt", message + "\n");
         }
 
         public static object getScriptValue(string field, ScriptVariable v)
@@ -77,11 +77,19 @@ namespace Megaman
         {
             filepath = Game.modulePath + filepath;
 
-            FileStream fileStream = new FileStream(filepath, FileMode.Open);
-            Texture2D image = Texture2D.FromStream(Game.graphics.GraphicsDevice, fileStream);
+            if (File.Exists(filepath))
+            {
+                FileStream fileStream = new FileStream(filepath, FileMode.Open);
+                Texture2D image = Texture2D.FromStream(Game.graphics.GraphicsDevice, fileStream);
 
-            fileStream.Close();
-            return image;
+                fileStream.Close();
+                return image;
+            }
+            else
+            {
+                Log("Cannot find file" + filepath);
+                return null;
+            }
         }
 
         public static List<string> getFilesFromFolder(string path)
