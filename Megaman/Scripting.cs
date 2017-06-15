@@ -62,7 +62,25 @@ namespace Megaman
 
         public static object getScriptValue(string field, ScriptVariable v)
         {
-            return v.Value.GetType().GetProperty(field).GetValue(v.Value);
+            if (v.Value.GetType().GetProperty(field) == null)
+                return v.Value.GetType().GetField(field).GetValue(v.Value);
+            else return v.Value.GetType().GetProperty(field).GetValue(v.Value);
+        }
+
+        public static Dictionary<string, object> getObjectsFromFile(string filepath)
+        {
+            filepath = Game.modulePath + filepath;
+            ScriptState state = Scripting.parse(filepath);
+            List<ScriptVariable> vlist = state.Variables.ToList();
+
+            Dictionary<string, object> dictionary = new Dictionary<string, object>();
+            foreach (ScriptVariable v in vlist)
+            {
+                string name = (string)getScriptValue("name", v);
+                dictionary.Add(name, v.Value);
+            }
+
+            return dictionary;
         }
 
         public static void equateFields(object o, ScriptVariable v)

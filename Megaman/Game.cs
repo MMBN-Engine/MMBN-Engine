@@ -85,16 +85,21 @@ namespace Megaman
         /// </summary>
         protected override void Initialize()
         {
-            loadPanelTypesFromFile();
-            loadDamageTypesFromFile();
+            panelTypes = Scripting.getObjectsFromFile("panelTypes.txt").
+                ToDictionary(k => k.Key, k => (PanelType)k.Value);
+            damageTypes = Scripting.getObjectsFromFile("damageTypes.txt").
+                ToDictionary(k => k.Key, k => (DamageType)k.Value);
 
-            loadChipsFromFile();
+            chipsList = Scripting.getObjectsFromFile("chips/chips.txt").
+                            ToDictionary(k => k.Key, k => (Chip)k.Value);
+            areaList = Scripting.getObjectsFromFile("areas/areas.txt").
+                            ToDictionary(k => k.Key, k => (Area)k.Value);
 
-            loadAreasFromFile();
+            attackTypes = Scripting.getObjectsFromFile("attackTypes.txt").
+                            ToDictionary(k => k.Key, k => (AttackType)k.Value); 
 
-            loadAttackTypesFromFile();
-
-            loadNavisFromFile();
+            naviList = Scripting.getObjectsFromFile("navis.txt").
+                            ToDictionary(k => k.Key, k => (Navi)k.Value);
             navi = naviList["MegaMan"];
 
             currentKeyboard = new KeyboardState();
@@ -438,21 +443,6 @@ namespace Megaman
             }
         }
 
-        void loadPanelTypesFromFile()
-        {
-            panelTypes = new Dictionary<string, PanelType>();
-            ScriptState state = Scripting.parse(modulePath + "panelTypes.txt");
-
-            List<ScriptVariable> vlist = state.Variables.ToList();
-            
-            foreach (ScriptVariable v in vlist)
-            {
-                PanelType panel = (PanelType) v.Value;
-
-                panelTypes.Add(panel.name, panel);
-            }
-        }
-
         void loadDamageTypesFromFile()
         {
             damageTypes = new Dictionary<string, DamageType>();
@@ -464,20 +454,6 @@ namespace Megaman
             {
                 DamageType damage = (DamageType)v.Value;
                 damageTypes.Add(damage.name, damage);
-            }
-        }
-
-        void loadAttackTypesFromFile()
-        {
-            attackTypes = new Dictionary<string, AttackType>();
-            ScriptState state = Scripting.parse(modulePath + "attackTypes.txt");
-
-            List<ScriptVariable> vlist = state.Variables.ToList();
-
-            foreach (ScriptVariable v in vlist)
-            {
-                AttackType attack = (AttackType)v.Value;
-                attackTypes.Add(attack.name, attack);
             }
         }
 
@@ -494,22 +470,6 @@ namespace Megaman
                 naviList.Add(navi.name, navi);
             }
         }
-
-        void loadChipsFromFile()
-        {
-            chipsList = new Dictionary<string, Chip>();
-
-            ScriptState state = Scripting.parse(modulePath + "chips/chips.txt");
-
-            List<ScriptVariable> vlist = state.Variables.ToList();
-
-            foreach (ScriptVariable v in vlist)
-            {
-                Chip chip = (Chip)v.Value;
-                chipsList.Add(chip.name, chip);
-            }
-        }
-
 
         void loadSongsFromFile()
         {

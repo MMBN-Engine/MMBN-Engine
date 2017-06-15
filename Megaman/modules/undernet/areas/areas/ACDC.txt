@@ -1,6 +1,7 @@
+using Megaman.Overworld;
 using Microsoft.Xna.Framework;
 
-var ACDC1 = new {
+var ACDC1 = new Area {
 	name = "ACDC1",
 	tilesetName = "ACDC",
 	currentTile = new Vector2(2, 2),
