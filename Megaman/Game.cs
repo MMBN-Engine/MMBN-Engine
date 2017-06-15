@@ -48,6 +48,8 @@ namespace Megaman
         
         Dictionary<string, Song> songList;
 
+        Dictionary<string, Chip> chipsList;
+
         bool debug;
 
         public float screenSize;
@@ -69,6 +71,9 @@ namespace Megaman
 
             modulePath = "modules/undernet/";
 
+            //Overwrite the log file
+            System.IO.File.WriteAllText("log.txt", "");
+
             debug = true;
         }
 
@@ -82,6 +87,8 @@ namespace Megaman
         {
             loadPanelTypesFromFile();
             loadDamageTypesFromFile();
+
+            loadChipsFromFile();
 
             loadAreasFromFile();
 
@@ -115,8 +122,11 @@ namespace Megaman
             navi.Initialize(Content, new Vector2(1,1), stage);
 
             foreach (KeyValuePair<string, AttackType> entry in attackTypes)
-                entry.Value.Initialize(Content);     
-            
+                entry.Value.Initialize(Content);
+
+            foreach (KeyValuePair<string, Chip> entry in chipsList)
+                entry.Value.Initialize(Content);
+
             virus[0].Initialize(Content, new Vector2(4, 1), stage);
             virus[1].Initialize(Content, new Vector2(3, 0), stage);
             virus[2].Initialize(Content, new Vector2(5, 2), stage);
@@ -355,10 +365,10 @@ namespace Megaman
             navi.chipFolder[21] = new Panelout1("B");
             navi.chipFolder[22] = new Panelout1("B");
             navi.chipFolder[23] = new Areagrab("L");
-            navi.chipFolder[24] = new Recover10("A");
-            navi.chipFolder[25] = new Recover10("A");
-            navi.chipFolder[26] = new Recover10("L");
-            navi.chipFolder[27] = new Recover10("L");
+            navi.chipFolder[24] = chipsList["Recov10"].setCode("A");
+            navi.chipFolder[25] = chipsList["Recov10"].setCode("A");
+            navi.chipFolder[26] = chipsList["Recov10"].setCode("L");
+            navi.chipFolder[27] = chipsList["Recov10"].setCode("L");
             navi.chipFolder[28] = new Attack10("@");
             navi.chipFolder[29] = new Attack10("@");
         }
@@ -484,6 +494,23 @@ namespace Megaman
                 naviList.Add(navi.name, navi);
             }
         }
+
+        void loadChipsFromFile()
+        {
+            chipsList = new Dictionary<string, Chip>();
+
+            ScriptState state = Scripting.parse(modulePath + "chips/chips.txt");
+
+            List<ScriptVariable> vlist = state.Variables.ToList();
+
+            foreach (ScriptVariable v in vlist)
+            {
+                Chip chip = (Chip)v.Value;
+                chipsList.Add(chip.name, chip);
+            }
+        }
+
+
         void loadSongsFromFile()
         {
             songList = new Dictionary<string, Song>();

@@ -1,0 +1,117 @@
+using System;
+using System.Collections.Generic;
+using Megaman;
+using Megaman.Chips;
+using Megaman.Actors;
+using Microsoft.Xna.Framework;
+
+internal var Spread = new Chip("") {
+	name = "Spread",
+	element = "Null",
+	attack = 30,
+	type = "standard",
+
+	onUse = (Action<Actor, Chip>) delegate(Actor actor, Chip chip)
+	{
+		actor.attackTypes["Spreader"].Action(actor, chip.damage, chip.effect);
+	},
+};
+
+var Shotgun = Spread.Clone();
+Shotgun.name = "ShotGun";
+Shotgun.MB = 8;
+Shotgun.effect = "long";
+
+var Vgun = Spread.Clone();
+Vgun.name = "V-Gun";
+Vgun.MB = 8;
+Vgun.effect = "V";
+
+var Sidegun = Spread.Clone();
+Sidegun.name = "SideGun";
+Sidegun.MB = 8;
+Sidegun.effect = "wide";
+
+var Crossgun = Spread.Clone();
+Crossgun.name = "CrossGun";
+Crossgun.MB = 12;
+Crossgun.effect = "cross";
+
+var Spreader = Spread.Clone();
+Spreader.name = "Spreader";
+Spreader.MB = 16;
+Spreader.effect = "spread";
+
+internal var aquaSpread = new Chip("") {
+	name = "aquaSpread",
+	element = "Aqua",
+	attack = 60,
+	type = "standard",
+
+	onUse = (Action<Actor, Chip>) delegate(Actor actor, Chip chip)
+	{
+		actor.attackTypes["Bubbler"].Action(actor, chip.damage, chip.effect);
+	},
+};
+  
+var Bubbler = aquaSpread.Clone();
+Bubbler.name = "Bubbler";
+Bubbler.MB = 14;
+Bubbler.effect = "long";
+
+var Bubblev = aquaSpread.Clone();
+Bubblev.name = "Bub-V";
+Bubblev.MB = 22;
+Bubblev.effect = "V";
+
+var Bubbleside = aquaSpread.Clone();
+Bubbleside.name = "BublSide";
+Bubbleside.MB = 30;
+Bubbleside.effect = "wide";
+
+var Bubblecross = aquaSpread.Clone();
+Bubblecross.name = "BubCross";
+Bubblecross.MB = 34;
+Bubblecross.effect = "cross";
+
+var Bubblespread = aquaSpread.Clone();
+Bubblespread.name = "BubSprd";
+Bubblespread.MB = 38;
+Bubblespread.effect = "spread";
+
+internal var heatSpread = new Chip("") {
+	name = "heatSpread",
+	element = "Fire",
+	attack = 40,
+	type = "standard",
+
+	onUse = (Action<Actor, Chip>) delegate(Actor actor, Chip chip)
+	{
+		actor.attackTypes["Heater"].Action(actor, chip.damage, chip.effect);
+	},
+};
+
+var Heatshot = heatSpread.Clone();
+Heatshot.name = "HeatShot";
+Heatshot.MB = 16;
+Heatshot.effect = "long";
+
+var Heatv = heatSpread.Clone();
+Heatv.name = "Heat-V";
+Heatv.MB = 24;
+Heatv.effect = "V";
+
+var Heatside = heatSpread.Clone();
+Heatside.name = "HeatSide";
+Heatside.MB = 32;
+Heatside.effect = "wide";
+
+var Heatcross = heatSpread.Clone();
+Heatcross.name = "HeatCros";
+Heatcross.MB = 36;
+Heatcross.effect = "cross";
+
+var Heatspread = heatSpread.Clone();
+Heatspread.name = "HeatSprd";
+Heatspread.MB = 40;
+Heatspread.effect = "spread";

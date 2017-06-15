@@ -34,7 +34,7 @@ namespace Megaman
         SpriteFont font, fontBase, fontRed, fontGreen, fontGray, fontYellow;
 
         private Texture2D screen, hpDisplay, bar, color;
-        public Texture2D nullElem, fireElem, elecElem, aquaElem, woodElem; 
+        public Texture2D NullElem, FireElem, elecElem, AquaElem, woodElem; 
         private Animation full, cursor, cursorOK, cursorAdd;
 
         private SoundEffect chipCancel, chipChoose, chipConfirm, chipSelect;
@@ -76,10 +76,10 @@ namespace Megaman
             bar = content.Load<Texture2D>("sprites/custom/custom-bar");
             color = content.Load<Texture2D>("sprites/custom/bar-color");
 
-            nullElem = content.Load<Texture2D>("sprites/custom/nullElem");
-            aquaElem = content.Load<Texture2D>("sprites/custom/aquaElem");
+            NullElem = content.Load<Texture2D>("sprites/custom/nullElem");
+            AquaElem = content.Load<Texture2D>("sprites/custom/aquaElem");
             elecElem = content.Load<Texture2D>("sprites/custom/elecElem");
-            fireElem = content.Load<Texture2D>("sprites/custom/fireElem");
+            FireElem = content.Load<Texture2D>("sprites/custom/fireElem");
             woodElem = content.Load<Texture2D>("sprites/custom/woodElem");
 
             loadFonts(content);

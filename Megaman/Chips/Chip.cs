@@ -23,6 +23,9 @@ namespace Megaman.Chips
         public Texture2D icon;
         public Texture2D background;
 
+        public Action<Actor, Chip> onUse;
+        public Dictionary<string, int> values;
+
         public int damage;   //damage that is actually applied
 
         public string effect;
@@ -34,6 +37,7 @@ namespace Megaman.Chips
         public Chip(string code) 
         {
             this.code = code;
+            onUse = (Action<Actor, Chip>)delegate (Actor actor, Chip chip) { };
         }
 
         public void Initialize(ContentManager content)
@@ -47,11 +51,25 @@ namespace Megaman.Chips
         public virtual void Use(Actor actor)
         {
             damage = (attack + damageMod) * damageMult;
+
+            onUse(actor, this);
         }
 
         public void attackPlus(int i, Navi navi)
         {
             //check to see if chip before exists/ has attack then add i
+        }
+
+        public Chip setCode(string code)
+        {
+            Chip temp = Clone();
+            temp.code = code;
+            return temp;
+        }
+
+        public Chip Clone()
+        {
+            return (Chip)this.MemberwiseClone();
         }
 
         public void addEffect(string effect)

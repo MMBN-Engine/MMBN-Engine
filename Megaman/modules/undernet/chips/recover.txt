@@ -1,0 +1,59 @@
+using System;
+using System.Collections.Generic;
+using Megaman;
+using Megaman.Chips;
+using Megaman.Actors;
+using Microsoft.Xna.Framework;
+
+internal var Recover = new Chip("") {
+	name = "Recover",
+	element = "Null",
+	type = "standard",
+
+	values = new Dictionary<string, int>() { {"recov", 0 }, },
+
+	onUse = (Action<Actor, Chip>) delegate(Actor actor, Chip chip)
+	{
+		actor.attackTypes["Recover"].Action(actor, chip.values["recov"]);
+	},
+};
+
+var Recover10 = Recover.Clone();
+Recover10.name = "Recov10";
+Recover10.values["recov"] = 10;
+Recover10.MB = 5;
+
+var Recover30 = Recover.Clone();
+Recover30.name = "Recov30";
+Recover30.values["recov"] = 30;
+Recover30.MB = 8;
+
+var Recover50 = Recover.Clone();
+Recover50.name = "Recov50";
+Recover50.values["recov"] = 50;
+Recover50.MB = 14;
+
+var Recover80 = Recover.Clone();
+Recover80.name = "Recov80";
+Recover80.values["recov"] = 80;
+Recover80.MB = 20;
+
+var Recover120 = Recover.Clone();
+Recover120.name = "Recov120";
+Recover120.values["recov"] = 120;
+Recover120.MB = 35;
+
+var Recover150 = Recover.Clone();
+Recover150.name = "Recov150";
+Recover150.values["recov"] = 150;
+Recover10.MB = 50;
+
+var Recover200 = Recover.Clone();
+Recover200.name = "Recov200";
+Recover200.values["recov"] = 200;
+Recover10.MB = 65;
+
+var Recover300 = Recover.Clone();
+Recover300.name = "Recov300";
+Recover300.values["recov"] = 300;
+Recover300.MB = 80;

@@ -41,11 +41,11 @@ namespace Megaman
             if (JustPressed(Keys.T)) stage.setStage("Hole");
             //if (JustPressed(Keys.Q)) navi.AirShoe = true;
             //if (JustPressed(Keys.W)) navi.AirShoe = false;
-            //if (JustPressed(Keys.E)) navi.styleChange("Elec", "Bug");
-            //if (JustPressed(Keys.A)) navi.styleChange("Aqua", "Bug");
-            //if (JustPressed(Keys.H)) navi.styleChange("Heat", "Bug");
-            //if (JustPressed(Keys.W)) navi.styleChange("Wood", "Bug");
-            //if (JustPressed(Keys.N)) navi.styleChange("Null", "Bug");
+            if (JustPressed(Keys.E)) navi.styleChange("Elec", "Bug");
+            if (JustPressed(Keys.A)) navi.styleChange("Aqua", "Bug");
+            if (JustPressed(Keys.H)) navi.styleChange("Heat", "Bug");
+            if (JustPressed(Keys.W)) navi.styleChange("Wood", "Bug");
+            if (JustPressed(Keys.N)) navi.styleChange("Null", "Bug");
 
             if (JustPressed(Keys.B)) battleStart();
 
@@ -61,44 +61,44 @@ namespace Megaman
             //List<Color> Elec = Content.Load<Texture2D>("sprites/navi/megaman/elec").getPalette();
             //Content.Load<Texture2D>("sprites/navi/megaman/team").changeColor(Elec,Null).saveImage("team");
 
-            Texture2D test = Scripting.loadImage("gfx/navi/MegaMan/attacks/shoot2.png");
-            Texture2D test2 = Scripting.loadImage("gfx/navi/MegaMan/attacks/test.png");
-            test = test.changeColor(test2.getPalette(), navi.palettes["Null"]);
+            //Texture2D test = Scripting.loadImage("gfx/navi/MegaMan/attacks/shoot2.png");
+            //Texture2D test2 = Scripting.loadImage("gfx/navi/MegaMan/attacks/test.png");
+            //test = test.changeColor(test2.getPalette(), navi.palettes["Null"]);
 
-            Stream stream = File.OpenWrite("shoot3.png");
-            test.SaveAsPng(stream, test.Width, test.Height);
+            //Stream stream = File.OpenWrite("shoot3.png");
+            //test.SaveAsPng(stream, test.Width, test.Height);
         }
 
         public void debugFolder()
         {
-            navi.chipFolder[0] = new Heatshot("A");
-            navi.chipFolder[1] = new Heatshot("A");
-            navi.chipFolder[2] = new Heatside("B");
-            navi.chipFolder[3] = new Heatside("B");
-            navi.chipFolder[4] = new Heatv("J");
-            navi.chipFolder[5] = new Heatv("J");
-            navi.chipFolder[6] = new Heatspread("J");
-            navi.chipFolder[7] = new Heatspread("D");
-            navi.chipFolder[8] = new Heatcross("D");
-            navi.chipFolder[9] = new Heatcross("D");
-            navi.chipFolder[10] = new Bubblecross("S");
-            navi.chipFolder[11] = new Bubblecross("@");
-            navi.chipFolder[12] = new Bubbler("@");
-            navi.chipFolder[13] = new Bubbler("@");
-            navi.chipFolder[14] = new Bubbler("B");
-            navi.chipFolder[15] = new Bubbler("B");
-            navi.chipFolder[16] = new Bubbler("S");
-            navi.chipFolder[17] = new Bubbler("L");
-            navi.chipFolder[18] = new Bubbler("L");
-            navi.chipFolder[19] = new Bubbler("L");
+            navi.chipFolder[0] = chipsList["HeatShot"].setCode("A");
+            navi.chipFolder[1] = chipsList["HeatShot"].setCode("A");
+            navi.chipFolder[2] = chipsList["HeatSide"].setCode("B");
+            navi.chipFolder[3] = chipsList["HeatSide"].setCode("B");
+            navi.chipFolder[4] = chipsList["Heat-V"].setCode("J");
+            navi.chipFolder[5] = chipsList["Heat-V"].setCode("J");
+            navi.chipFolder[6] = chipsList["HeatSprd"].setCode("D");
+            navi.chipFolder[7] = chipsList["HeatSprd"].setCode("D");
+            navi.chipFolder[8] = chipsList["HeatCros"].setCode("D");
+            navi.chipFolder[9] = chipsList["HeatCros"].setCode("D");
+            navi.chipFolder[10] = chipsList["BubCross"].setCode("S");
+            navi.chipFolder[11] = chipsList["BubCross"].setCode("@");
+            navi.chipFolder[12] = chipsList["Bubbler"].setCode("@");
+            navi.chipFolder[13] = chipsList["Bubbler"].setCode("@");
+            navi.chipFolder[14] = chipsList["Bubbler"].setCode("B");
+            navi.chipFolder[15] = chipsList["Bubbler"].setCode("B");
+            navi.chipFolder[16] = chipsList["Bubbler"].setCode("S");
+            navi.chipFolder[17] = chipsList["Bubbler"].setCode("L");
+            navi.chipFolder[18] = chipsList["Bubbler"].setCode("L");
+            navi.chipFolder[19] = chipsList["Bubbler"].setCode("L");
             navi.chipFolder[20] = new Widesword("L");
             navi.chipFolder[21] = new Panelout1("B");
             navi.chipFolder[22] = new Panelout1("B");
             navi.chipFolder[23] = new Areagrab("L");
-            navi.chipFolder[24] = new Recover10("A");
-            navi.chipFolder[25] = new Recover10("A");
-            navi.chipFolder[26] = new Recover10("L");
-            navi.chipFolder[27] = new Recover10("L");
+            navi.chipFolder[24] = chipsList["Recov10"].setCode("A");
+            navi.chipFolder[25] = chipsList["Recov10"].setCode("A");
+            navi.chipFolder[26] = chipsList["Recov10"].setCode("L");
+            navi.chipFolder[27] = chipsList["Recov10"].setCode("L");
             navi.chipFolder[28] = new Attack10("@");
             navi.chipFolder[29] = new Attack10("@");
         }
