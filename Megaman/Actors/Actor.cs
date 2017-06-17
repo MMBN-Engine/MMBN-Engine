@@ -105,7 +105,9 @@ namespace Megaman.Actors
             stage.actorArray[(int)position.X, (int)position.Y] = this;
             activeSprite = staticSprite;
 
-            loadPalettes();
+            palettes = Scripting.loadImageFolder(gfxFolder + "palettes/").
+                            ToDictionary(k => k.Key, k => k.Value.getPalette());
+
             loadAttackSprites();
         }
 

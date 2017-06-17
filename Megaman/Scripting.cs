@@ -105,16 +105,38 @@ namespace Megaman
             }
             else
             {
-                Log("Cannot find file" + filepath);
+                Log("Error: Cannot find file " + filepath);
                 return null;
             }
+        }
+
+        public static Dictionary<string,Texture2D> loadImageFolder(string path)
+        {
+            Dictionary<string, Texture2D> dictionary = new Dictionary<string, Texture2D>();
+
+            List<String> fileArray = Scripting.getFilesFromFolder(path);
+
+            foreach (string t in fileArray)
+            {
+                dictionary.Add(t, loadImage(path + t + ".png"));
+            }
+
+            return dictionary;
         }
 
         public static List<string> getFilesFromFolder(string path)
         {
             path = Game.modulePath + path;
 
-            return Directory.GetFiles(path).Select(Path.GetFileNameWithoutExtension).ToList();
+            if (Directory.Exists(path))
+            {
+                return Directory.GetFiles(path).Select(Path.GetFileNameWithoutExtension).ToList();
+            }
+            else
+            {
+                Log("Error: Cannot find folder " + path);
+                return null;
+            }
         }
     }
 }
