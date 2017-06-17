@@ -5,7 +5,7 @@ using Megaman.Chips;
 using Megaman.Actors;
 using Microsoft.Xna.Framework;
 
-internal var Spread = new Chip("") {
+internal var Spread = new Chip {
 	name = "Spread",
 	element = "Null",
 	attack = 30,
@@ -42,7 +42,7 @@ Spreader.name = "Spreader";
 Spreader.MB = 16;
 Spreader.effect = "spread";
 
-internal var aquaSpread = new Chip("") {
+internal var aquaSpread = new Chip {
 	name = "aquaSpread",
 	element = "Aqua",
 	attack = 60,
@@ -79,7 +79,7 @@ Bubblespread.name = "BubSprd";
 Bubblespread.MB = 38;
 Bubblespread.effect = "spread";
 
-internal var heatSpread = new Chip("") {
+internal var heatSpread = new Chip {
 	name = "heatSpread",
 	element = "Fire",
 	attack = 40,

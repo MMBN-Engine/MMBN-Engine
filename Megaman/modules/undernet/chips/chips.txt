@@ -2,3 +2,58 @@
 
 #load "modules/undernet/chips/recover.txt"
 #load "modules/undernet/chips/spreader.txt"
+
+using Megaman.Chips;
+
+var Cannon = new Chip {
+    name = "Cannon",
+    element = "Null",
+    attack = 40,
+    MB = 12,
+};
+
+var Airshot1 = new Chip {
+    name = "AirShot1",
+    element = "wind",
+    attack = 20,
+    MB = 4,
+};
+
+var Minibomb = new Chip {
+    name = "MiniBomb",
+    element = "Null",
+    attack = 50,
+    MB = 6,
+};
+
+var Sword = new Chip {
+    name = "Sword",
+    element = "Null",
+    attack = 80,
+    MB = 10,
+};
+
+var Widesword = new Chip {
+    name = "WideSwrd",
+    element = "Null",
+    attack = 80,
+    MB = 16,
+};
+
+var Panelout1 = new Chip {
+    name = "PanlOut1",
+    element = "Null",
+    MB = 4,
+};
+
+var Areagrab = new Chip {
+    name = "AreaGrab",
+    element = "Null",
+    MB = 15,
+};
+
+var Attack10 = new Chip {
+    name = "Atk+10",
+    element = "Null",
+    MB = 4,
+};

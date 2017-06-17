@@ -5,7 +5,7 @@ using Megaman.Chips;
 using Megaman.Actors;
 using Microsoft.Xna.Framework;
 
-internal var Recover = new Chip("") {
+internal var Recover = new Chip {
 	name = "Recover",
 	element = "Null",
 	type = "standard",

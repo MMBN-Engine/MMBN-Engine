@@ -10,7 +10,7 @@ namespace Megaman.Chips
 {
     abstract class standardChip : Chip
     {
-        public standardChip(string code) : base(code)
+        public standardChip(string code) : base()
         {
             type = "standard";
         }

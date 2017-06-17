@@ -346,36 +346,36 @@ namespace Megaman
 
         public void defaultFolder()
         {
-            navi.chipFolder[0] = new Cannon("A");
-            navi.chipFolder[1] = new Cannon("A");
-            navi.chipFolder[2] = new Cannon("B");
-            navi.chipFolder[3] = new Cannon("B");
-            navi.chipFolder[4] = new Shotgun("J");
-            navi.chipFolder[5] = new Shotgun("J");
-            navi.chipFolder[6] = new Shotgun("J");
-            navi.chipFolder[7] = new Vgun("D");
-            navi.chipFolder[8] = new Vgun("D");
-            navi.chipFolder[9] = new Vgun("D");
-            navi.chipFolder[10] = new Sidegun("S");
-            navi.chipFolder[11] = new Airshot1("@");
-            navi.chipFolder[12] = new Airshot1("@");
-            navi.chipFolder[13] = new Airshot1("@");
-            navi.chipFolder[14] = new Minibomb("B");
-            navi.chipFolder[15] = new Minibomb("B");
-            navi.chipFolder[16] = new Minibomb("S");
-            navi.chipFolder[17] = new Sword("L");
-            navi.chipFolder[18] = new Sword("L");
-            navi.chipFolder[19] = new Sword("L");
-            navi.chipFolder[20] = new Widesword("L");
-            navi.chipFolder[21] = new Panelout1("B");
-            navi.chipFolder[22] = new Panelout1("B");
-            navi.chipFolder[23] = new Areagrab("L");
+            navi.chipFolder[0] = chipsList["Cannon"].setCode("A");
+            navi.chipFolder[1] = chipsList["Cannon"].setCode("A");
+            navi.chipFolder[2] = chipsList["Cannon"].setCode("B");
+            navi.chipFolder[3] = chipsList["Cannon"].setCode("B");
+            navi.chipFolder[4] = chipsList["ShotGun"].setCode("J");;
+            navi.chipFolder[5] = chipsList["ShotGun"].setCode("J");;
+            navi.chipFolder[6] = chipsList["ShotGun"].setCode("J");;
+            navi.chipFolder[7] = chipsList["V-Gun"].setCode("D");;
+            navi.chipFolder[8] = chipsList["V-Gun"].setCode("D");;
+            navi.chipFolder[9] = chipsList["V-Gun"].setCode("D");;
+            navi.chipFolder[10] = chipsList["SideGun"].setCode("S");;
+            navi.chipFolder[11] = chipsList["AirShot1"].setCode("@");;
+            navi.chipFolder[12] = chipsList["AirShot1"].setCode("@");;
+            navi.chipFolder[13] = chipsList["AirShot1"].setCode("@");;
+            navi.chipFolder[14] = chipsList["MiniBomb"].setCode("B");;
+            navi.chipFolder[15] = chipsList["MiniBomb"].setCode("B");;
+            navi.chipFolder[16] = chipsList["MiniBomb"].setCode("S");;
+            navi.chipFolder[17] = chipsList["Sword"].setCode("L");;
+            navi.chipFolder[18] = chipsList["Sword"].setCode("L");;
+            navi.chipFolder[19] = chipsList["Sword"].setCode("L");;
+            navi.chipFolder[20] = chipsList["WideSwrd"].setCode("L");;
+            navi.chipFolder[21] = chipsList["PanlOut1"].setCode("B");;
+            navi.chipFolder[22] = chipsList["PanlOut1"].setCode("B");;
+            navi.chipFolder[23] = chipsList["AreaGrab"].setCode("L");;
             navi.chipFolder[24] = chipsList["Recov10"].setCode("A");
             navi.chipFolder[25] = chipsList["Recov10"].setCode("A");
             navi.chipFolder[26] = chipsList["Recov10"].setCode("L");
             navi.chipFolder[27] = chipsList["Recov10"].setCode("L");
-            navi.chipFolder[28] = new Attack10("@");
-            navi.chipFolder[29] = new Attack10("@");
+            navi.chipFolder[28] = chipsList["Atk+10"].setCode("@");;
+            navi.chipFolder[29] = chipsList["Atk+10"].setCode("@");;
         }
 
         public void battleStart()

@@ -91,16 +91,16 @@ namespace Megaman
             navi.chipFolder[17] = chipsList["Bubbler"].setCode("L");
             navi.chipFolder[18] = chipsList["Bubbler"].setCode("L");
             navi.chipFolder[19] = chipsList["Bubbler"].setCode("L");
-            navi.chipFolder[20] = new Widesword("L");
-            navi.chipFolder[21] = new Panelout1("B");
-            navi.chipFolder[22] = new Panelout1("B");
-            navi.chipFolder[23] = new Areagrab("L");
+            navi.chipFolder[20] = chipsList["WideSwrd"].setCode("L");;
+            navi.chipFolder[21] = chipsList["PanlOut1"].setCode("B");;
+            navi.chipFolder[22] = chipsList["PanlOut1"].setCode("B");;
+            navi.chipFolder[23] = chipsList["AreaGrab"].setCode("L");;
             navi.chipFolder[24] = chipsList["Recov10"].setCode("A");
             navi.chipFolder[25] = chipsList["Recov10"].setCode("A");
             navi.chipFolder[26] = chipsList["Recov10"].setCode("L");
             navi.chipFolder[27] = chipsList["Recov10"].setCode("L");
-            navi.chipFolder[28] = new Attack10("@");
-            navi.chipFolder[29] = new Attack10("@");
+            navi.chipFolder[28] = chipsList["Atk+10"].setCode("@");;
+            navi.chipFolder[29] = chipsList["Atk+10"].setCode("@");;
         }
     }
 }

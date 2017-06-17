@@ -34,9 +34,8 @@ namespace Megaman.Chips
 
         public List<string> effects;
 
-        public Chip(string code) 
+        public Chip() 
         {
-            this.code = code;
             onUse = (Action<Actor, Chip>)delegate (Actor actor, Chip chip) { };
         }
 
