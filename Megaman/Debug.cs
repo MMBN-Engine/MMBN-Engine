@@ -71,13 +71,13 @@ namespace Megaman
 
         public void debugFolder()
         {
-            navi.chipFolder[0] = chipsList["HeatShot"].setCode("A");
-            navi.chipFolder[1] = chipsList["HeatShot"].setCode("A");
-            navi.chipFolder[2] = chipsList["HeatSide"].setCode("B");
-            navi.chipFolder[3] = chipsList["HeatSide"].setCode("B");
-            navi.chipFolder[4] = chipsList["Heat-V"].setCode("J");
-            navi.chipFolder[5] = chipsList["Heat-V"].setCode("J");
-            navi.chipFolder[6] = chipsList["HeatSprd"].setCode("D");
+            navi.chipFolder[0] = chipsList["Geddon1"].setCode("A");
+            navi.chipFolder[1] = chipsList["Geddon3"].setCode("A");
+            navi.chipFolder[2] = chipsList["LavaStge"].setCode("B");
+            navi.chipFolder[3] = chipsList["IceStage"].setCode("B");
+            navi.chipFolder[4] = chipsList["GrassStg"].setCode("J");
+            navi.chipFolder[5] = chipsList["SandStge"].setCode("J");
+            navi.chipFolder[6] = chipsList["MetlStge"].setCode("D");
             navi.chipFolder[7] = chipsList["HeatSprd"].setCode("D");
             navi.chipFolder[8] = chipsList["HeatCros"].setCode("D");
             navi.chipFolder[9] = chipsList["HeatCros"].setCode("D");

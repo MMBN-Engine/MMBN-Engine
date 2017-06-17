@@ -27,6 +27,7 @@ namespace Megaman.Chips
         public Dictionary<string, int> values;
 
         public int damage;   //damage that is actually applied
+        public string keyWord; //keyword for various uses
 
         public string effect;
 
