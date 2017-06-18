@@ -443,34 +443,6 @@ namespace Megaman
             }
         }
 
-        void loadDamageTypesFromFile()
-        {
-            damageTypes = new Dictionary<string, DamageType>();
-            ScriptState state = Scripting.parse(modulePath + "damageTypes.txt");
-
-            List<ScriptVariable> vlist = state.Variables.ToList();
-
-            foreach (ScriptVariable v in vlist)
-            {
-                DamageType damage = (DamageType)v.Value;
-                damageTypes.Add(damage.name, damage);
-            }
-        }
-
-        void loadNavisFromFile()
-        {
-            naviList = new Dictionary<string, Navi>();
-            ScriptState state = Scripting.parse(modulePath + "navis.txt");
-
-            List<ScriptVariable> vlist = state.Variables.ToList();
-
-            foreach (ScriptVariable v in vlist)
-            {
-                Navi navi = (Navi)v.Value;
-                naviList.Add(navi.name, navi);
-            }
-        }
-
         void loadSongsFromFile()
         {
             songList = new Dictionary<string, Song>();
@@ -513,22 +485,6 @@ namespace Megaman
 
                 tilesetList.Add(name, new Tileset(name, origin, spriteWidth,
                     tileWidth, tileHeight, mapParse));
-            }
-        }
-
-        void loadAreasFromFile()
-        {
-            areaList = new Dictionary<string, Area>();
-
-            ScriptState state = Scripting.parse(modulePath + "areas/areas.txt");
-
-            List<ScriptVariable> v = state.Variables.ToList();
-
-            foreach (ScriptVariable foo in v)
-            {
-                Area a = new Area();
-                Scripting.equateFields(a, foo);
-                areaList.Add(a.name, a);
             }
         }
     }
