@@ -34,7 +34,7 @@ namespace Megaman
         SpriteFont font, fontBase, fontRed, fontGreen, fontGray, fontYellow;
 
         private Texture2D screen, hpDisplay, bar, color;
-        public Texture2D NullElem, FireElem, elecElem, AquaElem, woodElem; 
+        public Dictionary<string, Texture2D> elemIcons; 
         private Animation full, cursor, cursorOK, cursorAdd;
 
         private SoundEffect chipCancel, chipChoose, chipConfirm, chipSelect;
@@ -76,11 +76,7 @@ namespace Megaman
             bar = content.Load<Texture2D>("sprites/custom/custom-bar");
             color = content.Load<Texture2D>("sprites/custom/bar-color");
 
-            NullElem = content.Load<Texture2D>("sprites/custom/nullElem");
-            AquaElem = content.Load<Texture2D>("sprites/custom/aquaElem");
-            elecElem = content.Load<Texture2D>("sprites/custom/elecElem");
-            FireElem = content.Load<Texture2D>("sprites/custom/fireElem");
-            woodElem = content.Load<Texture2D>("sprites/custom/woodElem");
+            elemIcons = Scripting.loadImageFolder("gfx/custom/icons/");
 
             loadFonts(content);
             
@@ -206,8 +202,7 @@ namespace Megaman
                     spriteBatch.Draw(chip.image, new Vector2(8, 24) * resolution, 
                         scale: new Vector2(1,1)* resolution, color: Color.White);
 
-                    Texture2D element = (Texture2D)typeof(Custom).GetField(chip.element + "Elem").GetValue(this);
-                    spriteBatch.Draw(element, new Vector2(25, 81) * resolution, 
+                    spriteBatch.Draw(elemIcons[chip.element], new Vector2(25, 81) * resolution, 
                         scale: new Vector2(1, 1) * resolution, color: Color.White);
 
                     spriteBatch.DrawString(fontYellow, chip.code, new Vector2(10, 83) * resolution,
