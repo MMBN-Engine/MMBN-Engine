@@ -203,6 +203,9 @@
     <Content Include="modules\undernet\chips\chips.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="modules\undernet\chips\sword.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="modules\undernet\chips\stage.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -221,6 +224,9 @@
     <Content Include="modules\undernet\gfx\chips\icons\AirShot3.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="modules\undernet\gfx\chips\icons\AquaSwrd.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="modules\undernet\gfx\chips\icons\AreaGrab.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -228,6 +234,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="modules\undernet\gfx\chips\icons\Aura.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="modules\undernet\gfx\chips\icons\BambSwrd.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="modules\undernet\gfx\chips\icons\Barr100.png">
@@ -258,6 +267,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="modules\undernet\gfx\chips\icons\CrossGun.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="modules\undernet\gfx\chips\icons\ElecSwrd.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="modules\undernet\gfx\chips\icons\FireSwrd.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="modules\undernet\gfx\chips\icons\Geddon1.png">
@@ -294,6 +309,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="modules\undernet\gfx\chips\icons\LifeAura.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="modules\undernet\gfx\chips\icons\LongSwrd.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="modules\undernet\gfx\chips\icons\M-Cannon.png">
@@ -362,6 +380,9 @@
     <Content Include="modules\undernet\gfx\chips\images\AirShot3.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="modules\undernet\gfx\chips\images\AquaSwrd.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="modules\undernet\gfx\chips\images\AreaGrab.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -369,6 +390,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="modules\undernet\gfx\chips\images\Aura.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="modules\undernet\gfx\chips\images\BambSwrd.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="modules\undernet\gfx\chips\images\Barr100.png">
@@ -399,6 +423,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="modules\undernet\gfx\chips\images\CrossGun.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="modules\undernet\gfx\chips\images\ElecSwrd.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="modules\undernet\gfx\chips\images\FireSwrd.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="modules\undernet\gfx\chips\images\Geddon1.png">
@@ -435,6 +465,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="modules\undernet\gfx\chips\images\LifeAura.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="modules\undernet\gfx\chips\images\LongSwrd.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="modules\undernet\gfx\chips\images\M-Cannon.png">

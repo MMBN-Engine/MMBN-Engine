@@ -1,0 +1,90 @@
+using System;
+using System.Collections.Generic;
+using Megaman;
+using Megaman.Chips;
+using Megaman.Actors;
+using Microsoft.Xna.Framework;
+
+var Sword = new Chip {
+    name = "Sword",
+    element = "Null",
+    attack = 80,
+    MB = 10,
+
+	onUse = (Action<Actor, Chip>) delegate(Actor actor, Chip chip)
+	{
+		actor.attackTypes["Sword"].Action(actor, chip.damage, "Null");
+	},
+};
+
+var Widesword = new Chip {
+    name = "WideSwrd",
+    element = "Null",
+    attack = 80,
+    MB = 16,
+
+	onUse = (Action<Actor, Chip>) delegate(Actor actor, Chip chip)
+	{
+		actor.attackTypes["WideSword"].Action(actor, chip.damage, "Null");
+	},
+};
+
+var Longsword = new Chip {
+    name = "LongSwrd",
+    element = "Null",
+    attack = 80,
+    MB = 24,
+
+	onUse = (Action<Actor, Chip>) delegate(Actor actor, Chip chip)
+	{
+		actor.attackTypes["LongSword"].Action(actor, chip.damage, "Null");
+	},
+};
+
+var Firesword = new Chip {
+    name = "FireSwrd",
+    element = "Fire",
+    attack = 130,
+    MB = 20,
+
+	onUse = (Action<Actor, Chip>) delegate(Actor actor, Chip chip)
+	{
+		actor.attackTypes["WideSword"].Action(actor, chip.damage, "Fire");
+	},
+};
+
+var Aquaswrd = new Chip {
+    name = "AquaSwrd",
+    element = "Aqua",
+    attack = 150,
+    MB = 25,
+
+	onUse = (Action<Actor, Chip>) delegate(Actor actor, Chip chip)
+	{
+		actor.attackTypes["WideSword"].Action(actor, chip.damage, "Aqua");
+	},
+};
+
+var Elecswrd = new Chip {
+    name = "ElecSwrd",
+    element = "Elec",
+    attack = 130,
+    MB = 23,
+
+	onUse = (Action<Actor, Chip>) delegate(Actor actor, Chip chip)
+	{
+		actor.attackTypes["WideSword"].Action(actor, chip.damage, "Elec");
+	},
+};
+
+var Bambswrd = new Chip {
+    name = "BambSwrd",
+    element = "Wood",
+    attack = 140,
+    MB = 180,
+
+	onUse = (Action<Actor, Chip>) delegate(Actor actor, Chip chip)
+	{
+		actor.attackTypes["WideSword"].Action(actor, chip.damage, "Wood");
+	},
+};

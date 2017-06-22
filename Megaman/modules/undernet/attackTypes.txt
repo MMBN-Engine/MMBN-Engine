@@ -135,3 +135,59 @@ var Recover = new AttackType {
         actor.stage.addEffect(self.recoverSprite.Clone(), actor.location);
     },
 };
+
+//Sword(Actor actor, int damage, string damageType)
+var Sword = new AttackType {
+	name = "Sword",
+	onAction = (ParamsAction) delegate (object[] args) 
+	{
+		AttackType self = (AttackType)args[0];
+		Actor actor = (Actor)args[1];
+		int damage = (int)args[2];
+		string damageType = (string)args[3];
+	
+        actor.info.Reset();
+        actor.info.damage = damage;
+		actor.info.damageType = new List<string>{ damageType };
+
+        actor.Slash(actor.busterSprite, actor.Sword);
+    },
+};
+
+//WideSword(Actor actor, int damage, string damageType)
+var WideSword = new AttackType {
+	name = "WideSword",
+	onAction = (ParamsAction) delegate (object[] args) 
+	{
+		AttackType self = (AttackType)args[0];
+		Actor actor = (Actor)args[1];
+		int damage = (int)args[2];		
+		string damageType = (string)args[3];
+	
+        actor.info.Reset();
+        actor.info.damage = damage;
+		actor.info.effects = new List<string>{ "wide" };
+		actor.info.damageType = new List<string>{ damageType };
+
+        actor.Slash(actor.busterSprite, actor.Sword);
+    },
+};
+
+//LongSword(Actor actor, int damage, string damageType)
+var LongSword = new AttackType {
+	name = "LongSword",
+	onAction = (ParamsAction) delegate (object[] args) 
+	{
+		AttackType self = (AttackType)args[0];
+		Actor actor = (Actor)args[1];
+		int damage = (int)args[2];		
+		string damageType = (string)args[3];
+	
+        actor.info.Reset();
+        actor.info.damage = damage;
+		actor.info.effects = new List<string>{ "long" };
+		actor.info.damageType = new List<string>{ damageType };
+
+        actor.Slash(actor.busterSprite, actor.Sword);
+    },
+};

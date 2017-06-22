@@ -368,17 +368,15 @@ namespace Megaman.Actors
         public void Slash(Animation animation, attackMethod attackHandle)
         {
             if (!canAttack()) return;
-            //swordSprite.active = true;
-            //swordSprite = animation;
             doAttack("sword");
             isSlashing = true;
+
+            this.attackHandle = attackHandle;
         }
 
         public void Hammer(Animation animation, attackMethod attackHandle)
         {
             if (!canAttack()) return;
-            //gunSprite = animation;
-            //gunSprite.Reset();
             doAttack("bomb");
 
             this.attackHandle = attackHandle;

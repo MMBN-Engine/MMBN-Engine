@@ -3,6 +3,7 @@
 #load "modules/undernet/chips/recover.txt"
 #load "modules/undernet/chips/spreader.txt"
 #load "modules/undernet/chips/stage.txt"
+#load "modules/undernet/chips/sword.txt"
 
 using Megaman.Chips;
 
@@ -25,20 +26,6 @@ var Minibomb = new Chip {
     element = "Null",
     attack = 50,
     MB = 6,
-};
-
-var Sword = new Chip {
-    name = "Sword",
-    element = "Null",
-    attack = 80,
-    MB = 10,
-};
-
-var Widesword = new Chip {
-    name = "WideSwrd",
-    element = "Null",
-    attack = 80,
-    MB = 16,
 };
 
 var Panelout1 = new Chip {
