@@ -52,7 +52,6 @@ namespace Megaman
             }
 
             return results.Result;
-
         }
 
         public static void Log(string message)
@@ -72,6 +71,9 @@ namespace Megaman
             filepath = Game.modulePath + filepath;
             ScriptState state = Scripting.parse(filepath);
             List<ScriptVariable> vlist = state.Variables.ToList();
+
+            //Remove entries that start with an underscore
+            vlist.RemoveAll(v => v.Name[0] == '_');
 
             Dictionary<string, object> dictionary = new Dictionary<string, object>();
             foreach (ScriptVariable v in vlist)

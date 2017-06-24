@@ -5,8 +5,7 @@ using Megaman.Chips;
 using Megaman.Actors;
 using Microsoft.Xna.Framework;
 
-internal var Stage = new Chip {
-	name = "Stage",
+var _Stage = new Chip {
 	element = "Null",
 	type = "standard",
 
@@ -16,37 +15,37 @@ internal var Stage = new Chip {
 	},
 };
 
-var Geddon1 = Stage.Clone();
+var Geddon1 = _Stage.Clone();
 Geddon1.name = "Geddon1";
 Geddon1.keyWord = "Cracked";
 Geddon1.MB = 10;
 
-var Geddon3 = Stage.Clone();
+var Geddon3 = _Stage.Clone();
 Geddon3.name = "Geddon3";
 Geddon3.keyWord = "Swamp";
 Geddon3.MB = 90;
 
-var LavaStge = Stage.Clone();
+var LavaStge = _Stage.Clone();
 LavaStge.name = "LavaStge";
 LavaStge.keyWord = "Lava";
 LavaStge.MB = 22;
 
-var IceStage = Stage.Clone();
+var IceStage = _Stage.Clone();
 IceStage.name = "IceStage";
 IceStage.keyWord = "Ice";
 IceStage.MB = 20;
 
-var GrassStg = Stage.Clone();
+var GrassStg = _Stage.Clone();
 GrassStg.name = "GrassStg";
 GrassStg.keyWord = "Grass";
 GrassStg.MB = 10;
 
-var SandStge = Stage.Clone();
+var SandStge = _Stage.Clone();
 SandStge.name = "SandStge";
 SandStge.keyWord = "Sand";
 SandStge.MB = 18;
 
-var MetlStge = Stage.Clone();
+var MetlStge = _Stage.Clone();
 MetlStge.name = "MetlStge";
 MetlStge.keyWord = "Metal";
 MetlStge.MB = 18;

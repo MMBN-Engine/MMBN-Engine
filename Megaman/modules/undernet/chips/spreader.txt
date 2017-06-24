@@ -5,8 +5,7 @@ using Megaman.Chips;
 using Megaman.Actors;
 using Microsoft.Xna.Framework;
 
-internal var Spread = new Chip {
-	name = "Spread",
+var _Spread = new Chip {
 	element = "Null",
 	attack = 30,
 	type = "standard",
@@ -17,33 +16,32 @@ internal var Spread = new Chip {
 	},
 };
 
-var Shotgun = Spread.Clone();
+var Shotgun = _Spread.Clone(); 
 Shotgun.name = "ShotGun";
 Shotgun.MB = 8;
 Shotgun.effect = "long";
 
-var Vgun = Spread.Clone();
+var Vgun = _Spread.Clone(); 
 Vgun.name = "V-Gun";
 Vgun.MB = 8;
 Vgun.effect = "V";
 
-var Sidegun = Spread.Clone();
+var Sidegun = _Spread.Clone(); 
 Sidegun.name = "SideGun";
 Sidegun.MB = 8;
 Sidegun.effect = "wide";
 
-var Crossgun = Spread.Clone();
+var Crossgun = _Spread.Clone(); 
 Crossgun.name = "CrossGun";
 Crossgun.MB = 12;
 Crossgun.effect = "cross";
 
-var Spreader = Spread.Clone();
+var Spreader = _Spread.Clone(); 
 Spreader.name = "Spreader";
 Spreader.MB = 16;
 Spreader.effect = "spread";
 
-internal var aquaSpread = new Chip {
-	name = "aquaSpread",
+var _aquaSpread = new Chip {
 	element = "Aqua",
 	attack = 60,
 	type = "standard",
@@ -54,33 +52,32 @@ internal var aquaSpread = new Chip {
 	},
 };
   
-var Bubbler = aquaSpread.Clone();
+var Bubbler = _aquaSpread.Clone();
 Bubbler.name = "Bubbler";
 Bubbler.MB = 14;
 Bubbler.effect = "long";
 
-var Bubblev = aquaSpread.Clone();
+var Bubblev = _aquaSpread.Clone();
 Bubblev.name = "Bub-V";
 Bubblev.MB = 22;
 Bubblev.effect = "V";
 
-var Bubbleside = aquaSpread.Clone();
+var Bubbleside = _aquaSpread.Clone();
 Bubbleside.name = "BublSide";
 Bubbleside.MB = 30;
 Bubbleside.effect = "wide";
 
-var Bubblecross = aquaSpread.Clone();
+var Bubblecross = _aquaSpread.Clone();
 Bubblecross.name = "BubCross";
 Bubblecross.MB = 34;
 Bubblecross.effect = "cross";
 
-var Bubblespread = aquaSpread.Clone();
+var Bubblespread = _aquaSpread.Clone();
 Bubblespread.name = "BubSprd";
 Bubblespread.MB = 38;
 Bubblespread.effect = "spread";
 
-internal var heatSpread = new Chip {
-	name = "heatSpread",
+var _heatSpread = new Chip {
 	element = "Fire",
 	attack = 40,
 	type = "standard",
@@ -91,27 +88,27 @@ internal var heatSpread = new Chip {
 	},
 };
 
-var Heatshot = heatSpread.Clone();
+var Heatshot = _heatSpread.Clone();
 Heatshot.name = "HeatShot";
 Heatshot.MB = 16;
 Heatshot.effect = "long";
 
-var Heatv = heatSpread.Clone();
+var Heatv = _heatSpread.Clone();
 Heatv.name = "Heat-V";
 Heatv.MB = 24;
 Heatv.effect = "V";
 
-var Heatside = heatSpread.Clone();
+var Heatside = _heatSpread.Clone();
 Heatside.name = "HeatSide";
 Heatside.MB = 32;
 Heatside.effect = "wide";
 
-var Heatcross = heatSpread.Clone();
+var Heatcross = _heatSpread.Clone();
 Heatcross.name = "HeatCros";
 Heatcross.MB = 36;
 Heatcross.effect = "cross";
 
-var Heatspread = heatSpread.Clone();
-Heatspread.name = "HeatSprd";
-Heatspread.MB = 40;
-Heatspread.effect = "spread";
+var heatSpread = _heatSpread.Clone();
+heatSpread.name = "HeatSprd";
+heatSpread.MB = 40;
+heatSpread.effect = "spread";

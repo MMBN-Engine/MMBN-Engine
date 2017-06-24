@@ -5,8 +5,7 @@ using Megaman.Chips;
 using Megaman.Actors;
 using Microsoft.Xna.Framework;
 
-internal var Recover = new Chip {
-	name = "Recover",
+var _Recover = new Chip {
 	element = "Null",
 	type = "standard",
 
@@ -18,42 +17,42 @@ internal var Recover = new Chip {
 	},
 };
 
-var Recover10 = Recover.Clone();
+var Recover10 = _Recover.Clone();
 Recover10.name = "Recov10";
 Recover10.values["recov"] = 10;
 Recover10.MB = 5;
 
-var Recover30 = Recover.Clone();
+var Recover30 = _Recover.Clone();
 Recover30.name = "Recov30";
 Recover30.values["recov"] = 30;
 Recover30.MB = 8;
 
-var Recover50 = Recover.Clone();
+var Recover50 = _Recover.Clone();
 Recover50.name = "Recov50";
 Recover50.values["recov"] = 50;
 Recover50.MB = 14;
 
-var Recover80 = Recover.Clone();
+var Recover80 = _Recover.Clone();
 Recover80.name = "Recov80";
 Recover80.values["recov"] = 80;
 Recover80.MB = 20;
 
-var Recover120 = Recover.Clone();
+var Recover120 = _Recover.Clone();
 Recover120.name = "Recov120";
 Recover120.values["recov"] = 120;
 Recover120.MB = 35;
 
-var Recover150 = Recover.Clone();
+var Recover150 = _Recover.Clone();
 Recover150.name = "Recov150";
 Recover150.values["recov"] = 150;
 Recover10.MB = 50;
 
-var Recover200 = Recover.Clone();
+var Recover200 = _Recover.Clone();
 Recover200.name = "Recov200";
 Recover200.values["recov"] = 200;
 Recover10.MB = 65;
 
-var Recover300 = Recover.Clone();
+var Recover300 = _Recover.Clone();
 Recover300.name = "Recov300";
 Recover300.values["recov"] = 300;
 Recover300.MB = 80;
