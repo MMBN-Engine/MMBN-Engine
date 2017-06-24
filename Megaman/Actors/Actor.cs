@@ -34,7 +34,7 @@ namespace Megaman.Actors
         //Definitions for the loading the attack sprites
         public Vector2 origin;
         public int spriteWidth;
-        internal int attackSpeed;
+        public int attackSpeed, moveSpeed;
 
         public Dictionary<string, List<Color>> palettes;
 

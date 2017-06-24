@@ -55,6 +55,7 @@ namespace Megaman.Actors.Navis
             chargeElapsed = 0;
 
             attackSpeed = 30;
+            moveSpeed = 30;
 
             Attack = 1;
             Rapid = 1;
@@ -99,11 +100,11 @@ namespace Megaman.Actors.Navis
 
         private void loadBattleSprites(ContentManager content)
         {
-            staticSprite.Initialize(content.Load<Texture2D>(folder + "navi"),
+            staticSprite.Initialize(Scripting.loadImage(gfxFolder + "navi.png"),
                 origin, spriteWidth, 0, true);
 
-            moveSprite.Initialize(content.Load<Texture2D>(folder + "move"),
-                origin, spriteWidth, 30, false);
+            moveSprite.Initialize(Scripting.loadImage(gfxFolder + "move.png"),
+                origin, spriteWidth, moveSpeed, false);
 
             busterSprite.Initialize(content.Load<Texture2D>("sprites/navi/megaman/busterGuts"),
                 new Vector2(-1, 3), 40, 30, false);

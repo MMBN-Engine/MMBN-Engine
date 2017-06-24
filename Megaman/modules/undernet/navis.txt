@@ -19,3 +19,19 @@ var MegaMan = new Navi {
         navi.attackTypes["MegaBuster"].Action(navi, navi.Attack * 10);
     },
 };
+
+var NormalNavi = new Navi {
+	name = "NormalNavi",
+	MaxHP = 100,
+	
+	armLocation = new Vector2(30, -32),
+	origin = new Vector2(5, 56),
+    spriteWidth = 70,
+    
+	folder = "sprites/navi/megaman/",
+
+	chargedAttack = (Action<Navi>)delegate (Navi navi)
+    {
+        navi.attackTypes["MegaBuster"].Action(navi, navi.Attack * 10);
+    },
+};
