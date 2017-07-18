@@ -132,11 +132,11 @@ namespace Megaman
             foreach (KeyValuePair<string, Chip> entry in chipsList)
                 entry.Value.Initialize(Content);
 
-            //virus[0].Initialize(Content, new Vector2(4, 1), stage);
-            //virus[1].Initialize(Content, new Vector2(3, 0), stage);
-            //virus[2].Initialize(Content, new Vector2(5, 2), stage);
+            virus[0].Initialize(Content, new Vector2(4, 1), stage);
+            virus[1].Initialize(Content, new Vector2(3, 0), stage);
+            virus[2].Initialize(Content, new Vector2(5, 2), stage);
 
-            //foreach (Virus foo in virus) foo.AiInitialize();
+            foreach (Virus foo in virus) foo.AiInitialize();
             
             spriteBatch = new SpriteBatch(GraphicsDevice);
 

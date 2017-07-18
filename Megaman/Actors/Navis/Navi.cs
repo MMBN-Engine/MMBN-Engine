@@ -43,6 +43,8 @@ namespace Megaman.Actors.Navis
         public Animation swordSprite;
         internal Vector2 swordLocation;
 
+        internal string styleElement = "Null";
+
         //This is not pretty, it would be better if we did not have to have self as a parameter
         public Action<Navi> chargedAttack;
 
@@ -171,21 +173,15 @@ namespace Megaman.Actors.Navis
 
         public virtual void styleChange(String Element, String Style)
         {
-            foreach (KeyValuePair<string, DamageType> entry in Game.damageTypes)
-            {
-                if (!entry.Value.defaultDef) Body[entry.Key] = false;
-            }
+            staticSprite.map = staticSprite.map.changeColor(palettes[styleElement], palettes[Element]);
+            moveSprite.map = moveSprite.map.changeColor(palettes[styleElement], palettes[Element]);
+            busterSprite.map = busterSprite.map.changeColor(palettes[styleElement], palettes[Element]);
+            foreach (KeyValuePair<string,Animation> entry in attackSprites)
+                entry.Value.map = entry.Value.map.changeColor(palettes[styleElement], palettes[Element]);
 
-            Body[Element] = true;
+            standingSprite.map = standingSprite.map.changeColor(palettes[styleElement], palettes[Element]);
 
-            //staticSprite.map = staticSprite.map.changeColor(palette1, palette2);
-            //moveSprite.map = moveSprite.map.changeColor(palette1, palette2);
-            //busterSprite.map = busterSprite.map.changeColor(palette1, palette2);
-            //foreach (Animation foo in attackSprites) foo.map = foo.map.changeColor(palette1, palette2);
-
-            //standingSprite.map = standingSprite.map.changeColor(palette1, palette2);
-
-            //palette1 = palette2;
+            styleElement = Element;
         }
 
         public virtual void overWorldDraw(SpriteBatch spriteBatch, float resolution)
