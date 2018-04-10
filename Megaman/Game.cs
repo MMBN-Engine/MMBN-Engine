@@ -234,13 +234,15 @@ namespace Megaman
 
                 stage.Draw(spriteBatch, screenSize);
 
-                foreach (Actor foo in stage.actorArray)
+                for (int j = 0; j < 3; j++)
                 {
-                    if (foo != null) foo.Draw(spriteBatch, screenSize);
+                    for (int i = 0; i < 6; i++)
+                    {
+                        stage.actorArray[i, j]?.Draw(spriteBatch, screenSize);
+                        foreach (Projectile foo in stage.projectileList[i, j])
+                            foo.Draw(spriteBatch, screenSize);
+                    }
                 }
-
-                foreach (Projectile foo in stage.projectileList)
-                    foo.Draw(spriteBatch, screenSize);
 
                 //Draw effects on top of actors
                 for (int i = 0; i < stage.stageEffects.effect.Count; i++)

@@ -19,7 +19,7 @@ namespace Megaman.Projectiles
         public Projectile(Actor actor)
         {
             activeSprite = actor.info.sprite;
-            actor.stage.addProjectile(this);
+            actor.stage.addProjectile(this, position);
             color = actor.color;
             base.Initialize(null, actor.info.position, actor.stage);
             isActive = true;

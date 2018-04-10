@@ -39,7 +39,7 @@ namespace Megaman
                 location = location1;
             }
         }
-        public List<Projectile> projectileList;
+        public List<Projectile>[,] projectileList;
         public effectsList stageEffects;
 
         public Stage() 
@@ -47,7 +47,7 @@ namespace Megaman
             panelDef = Game.panelTypes;
 
             stageEffects = new effectsList(new List<Animation>(), new List<Vector2>());
-            projectileList = new List<Projectile>();
+            projectileList = new List<Projectile>[width, height];
 
             width = 6;
             height = 3;
@@ -61,6 +61,12 @@ namespace Megaman
             PanelType = new string[width,height];
             Area = new string[width, height];
             actorArray = new Actor[width, height];
+
+            //Set up projectile list and initialize each list
+            projectileList = new List<Projectile>[width, height];
+            for (int i = 0; i < width; i++)
+                for (int j = 0; j < height; j++)
+                    projectileList[i, j] = new List<Projectile>();
 
             for (int i = 0;i < width;++i)
                 for(int j = 0; j <height;j++)
@@ -103,11 +109,14 @@ namespace Megaman
                 }
             }
 
-            for (int i = projectileList.Count - 1; i >= 0; i--)
+            foreach (List<Projectile> proj in projectileList)
             {
-                if (!projectileList[i].isActive)
+                for (int i = proj.Count - 1; i >= 0; i--)
                 {
-                    projectileList.RemoveAt(i);
+                    if (!proj[i].isActive)
+                    {
+                        proj.RemoveAt(i);
+                    }
                 }
             }
 
@@ -115,7 +124,8 @@ namespace Megaman
                 foo.Update(gameTime);
             //This needs to be a for loop, since projectiles may clone during run
             //And we can't do foreach of the size changes
-            for (int i = 0; i < projectileList.Count; i++) projectileList[i].Update(gameTime);
+            foreach (List<Projectile> proj in projectileList)
+                for (int i = 0; i < proj.Count; i++) proj[i].Update(gameTime);
         }
 
         public void setStage(string panelType)
@@ -184,9 +194,9 @@ namespace Megaman
                 getActor(position).onStep(getActor(position), panelType);
         }
 
-        public virtual void addProjectile(Projectile projectile)
+        public virtual void addProjectile(Projectile projectile, Vector2 location)
         {
-            projectileList.Add(projectile);
+            projectileList[(int)location.X, (int)location.Y].Add(projectile);
         }
     }
 }

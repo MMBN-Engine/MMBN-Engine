@@ -616,9 +616,6 @@
     <Content Include="modules\undernet\gfx\navi\NormalNavi\palettes\Light.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="modules\undernet\gfx\navi\NormalNavi\palettes\normalnavi1.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="modules\undernet\gfx\navi\NormalNavi\palettes\normalnavi2.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

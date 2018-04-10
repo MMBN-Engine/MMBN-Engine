@@ -73,7 +73,7 @@ namespace Megaman.Projectiles
                 Wave newWave = (Wave)this.MemberwiseClone();
                 newWave.Reset();
                 newWave.position += new Vector2(1, 0) * Math.Sign(speed.X);
-                stage.addProjectile(newWave);
+                stage.addProjectile(newWave, newWave.position);
                 sound?.Play();
             }
         }
