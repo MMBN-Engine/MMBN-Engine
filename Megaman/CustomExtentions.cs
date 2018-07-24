@@ -11,18 +11,13 @@ namespace CustomExtensions
     {
         public delegate void ParamsAction(params object[] arguments);
 
+        // Obtains list of all unique colors in texture 
         public static List<Color> getPalette(this Texture2D texture)
         {
             Color[] colorMap = new Color[texture.Width * texture.Height];
             texture.GetData(colorMap);
-            
-            //Sets up list of colors in sprite
-            List<Color> palette = new List<Color>();
-            for (int i = 0; i < colorMap.Length; i++)
-                if (!palette.Contains(colorMap[i]))
-                    palette.Add(colorMap[i]);
 
-            return palette;
+            return colorMap.Distinct().ToList();
         }
 
         public static Texture2D changeColor(this Texture2D map, List<Color> palette, List<Color> palette2)
@@ -86,6 +81,16 @@ namespace CustomExtensions
                 list[k] = list[n];
                 list[n] = value;
             }
+        }
+
+        //Use vector 2d to index 2x2 array
+        public static T GetValue<T>(this T[,] array, Vector2 index)
+        {
+            return array[(int)index.X, (int)index.Y];
+        }
+        public static void SetValue<T>(this T[,] array, Vector2 index, T value)
+        {
+            array[(int)index.X, (int)index.Y] = value;
         }
 
         public static Vector2 Mod(this Vector2 vector2, Vector2 add, Vector2 mod)

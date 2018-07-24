@@ -53,7 +53,7 @@ namespace Megaman.Actors.Viruses
             metPosition = checkMet();
 
             //Sets the ai status for the first mettaur to move, rest to guard
-            MettaurBase Met = (MettaurBase) stage.actorArray[(int) metPosition[0].X, (int) metPosition[0].Y];
+            MettaurBase Met = (MettaurBase) stage.actorArray.GetValue(metPosition[0]);
             Met.MetMoveStatus = true;
             if (!(this == Met)) setGuard();
         }
@@ -135,7 +135,7 @@ namespace Megaman.Actors.Viruses
             int MetNum = 0;
             for (int j = 0; j < metPosition.Count; j++)
             {
-                if (stage.actorArray[(int)metPosition[j].X, (int)metPosition[j].Y] == this)
+                if (stage.actorArray.GetValue(metPosition[j]) == this)
                 {
                     MetNum = j;
                     break;
@@ -143,7 +143,7 @@ namespace Megaman.Actors.Viruses
             }
 
             int index = (MetNum + 1) % metPosition.Count;
-            MettaurBase Met = (MettaurBase)stage.actorArray[(int)metPosition[index].X, (int)metPosition[index].Y];
+            MettaurBase Met = (MettaurBase)stage.actorArray.GetValue(metPosition[index]);
             Met.breakGuard();
             Met.didAttack = false;
             Met.elapsedTime = 0;

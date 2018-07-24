@@ -6,6 +6,7 @@ using System.Text;
 using Megaman.Actors;
 using Megaman.Actors.Viruses;
 using Megaman.Projectiles;
+using CustomExtensions;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -179,24 +180,24 @@ namespace Megaman
 
         public Actor getActor(Vector2 position)
         {
-            return actorArray[(int)position.X, (int)position.Y];
+            return actorArray.GetValue(position);
         }
 
         public string getPanelType(Vector2 position)
         {
-            return PanelType[(int)position.X, (int)position.Y];
+            return PanelType.GetValue(position);
         }
 
         public void setPanel(Vector2 position, string panelType)
         {
-            PanelType[(int)position.X, (int)position.Y] = panelType;
+            PanelType.SetValue(position, panelType);
             if (getActor(position) != null)
                 getActor(position).onStep(getActor(position), panelType);
         }
 
         public virtual void addProjectile(Projectile projectile, Vector2 location)
         {
-            projectileList[(int)location.X, (int)location.Y].Add(projectile);
+            projectileList.GetValue(location).Add(projectile);
         }
     }
 }

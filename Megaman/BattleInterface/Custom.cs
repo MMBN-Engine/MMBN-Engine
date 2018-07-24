@@ -194,7 +194,7 @@ namespace Megaman
             if (open == true)
             {
 
-                Chip chip = chipArray[(int)cursorPosition.X, (int)cursorPosition.Y];
+                Chip chip = chipArray.GetValue(cursorPosition);
 
                 //Draw chip
                 if (chip != null)
@@ -318,7 +318,7 @@ namespace Megaman
 
         public void Select()
         {
-            Chip chip = chipArray[(int)cursorPosition.X, (int)cursorPosition.Y];
+            Chip chip = chipArray.GetValue(cursorPosition);
 
             if (chip != null)
             {

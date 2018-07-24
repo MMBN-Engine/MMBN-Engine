@@ -75,7 +75,7 @@ namespace Megaman.Actors.Viruses
         public override void Delete()
         {
             stage.addEffect(deathSprite, location);
-            stage.actorArray[(int)position.X, (int)position.Y] = null;
+            stage.actorArray.SetValue(position, (Actor) null);
             deathSound.Play();
         }
 

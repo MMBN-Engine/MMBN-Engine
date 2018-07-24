@@ -102,7 +102,7 @@ namespace Megaman.Actors
                 else Body.Add(entry.Key, false);
             }
             
-            stage.actorArray[(int)position.X, (int)position.Y] = this;
+            stage.actorArray.SetValue(position, this);
             activeSprite = staticSprite;
 
             palettes = Scripting.loadImageFolder(gfxFolder + "palettes/").
@@ -262,12 +262,12 @@ namespace Megaman.Actors
             //checks to see if the tile exists and is controlled by the right dude and no one is there
             if (position.X + move.X > -1 && position.X + move.X < stage.PanelType.GetLength(0) &&
                 position.Y + move.Y > -1 && position.Y + move.Y < stage.PanelType.GetLength(1)
-                && color.Equals(stage.Area[(int)(position.X + move.X), (int)(position.Y + move.Y)])
-                && stage.actorArray[(int)(position.X + move.X), (int)(position.Y + move.Y)] == null)
+                && color.Equals(stage.Area.GetValue(position + move))
+                && stage.actorArray.GetValue(position + move) == null)
             {
                 //can't step on broken panels without airshoes
-                if (stage.PanelType[(int)(position.X + move.X), (int)(position.Y + move.Y)].Equals("Broken")
-                    | stage.PanelType[(int)(position.X + move.X), (int)(position.Y + move.Y)].Equals("Hole"))
+                if (stage.PanelType.GetValue(position + move).Equals("Broken")
+                    | stage.PanelType.GetValue(position + move).Equals("Hole"))
                     
                     if (AirShoe) return true;
                     else return false;
@@ -284,14 +284,14 @@ namespace Megaman.Actors
             if (!FlotShoe)
             {
                 //we crack broken panels
-                if (stage.PanelType[(int)position.X, (int)position.Y].Equals("Cracked") && !FlotShoe)
-                    stage.PanelType[(int)position.X, (int)position.Y] = "Broken";
+                if (stage.PanelType.GetValue(position).Equals("Cracked") && !FlotShoe)
+                    stage.PanelType.SetValue(position, "Broken");
             }
 
             // Tells the stage we moved
-            stage.actorArray[(int)position.X, (int)position.Y] = null;
+            stage.actorArray.SetValue(position, (Actor) null);
             position += move;
-            stage.actorArray[(int)position.X, (int)position.Y] = this;
+            stage.actorArray.SetValue(position, this);
         }
 
         public bool canAttack()

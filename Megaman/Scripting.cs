@@ -66,7 +66,7 @@ namespace Megaman
             else return v.Value.GetType().GetProperty(field).GetValue(v.Value);
         }
 
-        public static Dictionary<string, object> getObjectsFromFile(string filepath)
+        public static Dictionary<object, object> getObjectsFromFile(string filepath, string keyField)
         {
             filepath = Game.modulePath + filepath;
             ScriptState state = Scripting.parse(filepath);
@@ -75,11 +75,10 @@ namespace Megaman
             //Remove entries that start with an underscore
             vlist.RemoveAll(v => v.Name[0] == '_');
 
-            Dictionary<string, object> dictionary = new Dictionary<string, object>();
+            Dictionary<object, object> dictionary = new Dictionary<object, object>();
             foreach (ScriptVariable v in vlist)
             {
-                string name = (string)getScriptValue("name", v);
-                dictionary.Add(name, v.Value);
+                dictionary.Add(getScriptValue(keyField, v), v.Value);
             }
 
             return dictionary;

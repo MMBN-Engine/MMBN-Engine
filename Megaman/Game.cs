@@ -85,21 +85,21 @@ namespace Megaman
         /// </summary>
         protected override void Initialize()
         {
-            panelTypes = Scripting.getObjectsFromFile("panelTypes.txt").
-                ToDictionary(k => k.Key, k => (PanelType)k.Value);
-            damageTypes = Scripting.getObjectsFromFile("damageTypes.txt").
-                ToDictionary(k => k.Key, k => (DamageType)k.Value);
+            panelTypes = Scripting.getObjectsFromFile("panelTypes.txt","name").
+                ToDictionary(k => (string)k.Key, k => (PanelType)k.Value);
+            damageTypes = Scripting.getObjectsFromFile("damageTypes.txt","name").
+                ToDictionary(k => (string)k.Key, k => (DamageType)k.Value);
 
-            chipsList = Scripting.getObjectsFromFile("chips/chips.txt").
-                            ToDictionary(k => k.Key, k => (Chip)k.Value);
-            areaList = Scripting.getObjectsFromFile("areas/areas.txt").
-                            ToDictionary(k => k.Key, k => (Area)k.Value);
+            chipsList = Scripting.getObjectsFromFile("chips/chips.txt", "name").
+                            ToDictionary(k => (string)k.Key, k => (Chip)k.Value);
+            areaList = Scripting.getObjectsFromFile("areas/areas.txt", "name").
+                            ToDictionary(k => (string)k.Key, k => (Area)k.Value);
 
-            attackTypes = Scripting.getObjectsFromFile("attackTypes.txt").
-                            ToDictionary(k => k.Key, k => (AttackType)k.Value); 
+            attackTypes = Scripting.getObjectsFromFile("attackTypes.txt", "name").
+                            ToDictionary(k => (string)k.Key, k => (AttackType)k.Value); 
 
-            naviList = Scripting.getObjectsFromFile("navis.txt").
-                            ToDictionary(k => k.Key, k => (Navi)k.Value);
+            naviList = Scripting.getObjectsFromFile("navis.txt", "name").
+                            ToDictionary(k => (string)k.Key, k => (Navi)k.Value);
             navi = naviList["NormalNavi"];
 
             currentKeyboard = new KeyboardState();
